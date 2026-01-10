@@ -1,0 +1,15 @@
+# TradeDirection
+
+## Example Usage
+
+```typescript
+import { TradeDirection } from "@draft/archdao-api-typescript/models/components";
+
+let value: TradeDirection = "sell";
+```
+
+## Values
+
+```typescript
+"buy" | "sell"
+```
