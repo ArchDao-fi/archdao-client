@@ -86,9 +86,9 @@ run();
 
 ### Errors
 
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| errors.APIError | 4XX, 5XX        | \*/\*           |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## createProposal
 
@@ -169,7 +169,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 400, 401, 404    | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## getProposal
 
@@ -241,7 +241,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## cancelProposal
 
@@ -316,7 +316,7 @@ run();
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | errors.Err         | 400, 401, 403, 404 | application/json   |
-| errors.APIError    | 4XX, 5XX           | \*/\*              |
+| errors.ArchError   | 4XX, 5XX           | \*/\*              |
 
 ## initializeProposal
 
@@ -391,7 +391,7 @@ run();
 | Error Type              | Status Code             | Content Type            |
 | ----------------------- | ----------------------- | ----------------------- |
 | errors.Err              | 400, 401, 403, 404, 409 | application/json        |
-| errors.APIError         | 4XX, 5XX                | \*/\*                   |
+| errors.ArchError        | 4XX, 5XX                | \*/\*                   |
 
 ## listProposalStakes
 
@@ -464,7 +464,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## listProposalTrades
 
@@ -537,4 +537,4 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |

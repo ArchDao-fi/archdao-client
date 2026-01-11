@@ -82,7 +82,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 401, 403         | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## changeUserRole
 
@@ -163,7 +163,7 @@ run();
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | errors.Err         | 400, 401, 403, 404 | application/json   |
-| errors.APIError    | 4XX, 5XX           | \*/\*              |
+| errors.ArchError   | 4XX, 5XX           | \*/\*              |
 
 ## listAuditLogs
 
@@ -232,4 +232,4 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 401, 403         | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |

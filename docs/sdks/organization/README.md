@@ -83,9 +83,9 @@ run();
 
 ### Errors
 
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| errors.APIError | 4XX, 5XX        | \*/\*           |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## createOrganization
 
@@ -164,7 +164,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 400, 401         | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## getOrganization
 
@@ -236,7 +236,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## editOrganization
 
@@ -311,7 +311,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 401, 403, 404    | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## changeOrganizationStatus
 
@@ -392,7 +392,7 @@ run();
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | errors.Err         | 400, 401, 403, 404 | application/json   |
-| errors.APIError    | 4XX, 5XX           | \*/\*              |
+| errors.ArchError   | 4XX, 5XX           | \*/\*              |
 
 ## activateRaise
 
@@ -467,4 +467,4 @@ run();
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | errors.Err         | 400, 401, 403, 404 | application/json   |
-| errors.APIError    | 4XX, 5XX           | \*/\*              |
+| errors.ArchError   | 4XX, 5XX           | \*/\*              |

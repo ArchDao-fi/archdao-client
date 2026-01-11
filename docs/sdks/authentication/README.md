@@ -85,7 +85,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 400              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## login
 
@@ -164,7 +164,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 400, 404         | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## logout
 
@@ -235,7 +235,7 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 401              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## getSelf
 
@@ -305,4 +305,4 @@ run();
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
 | errors.Err       | 401              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
