@@ -21,7 +21,7 @@ export type GetProposalRequest = {
  */
 export type GetProposalResponseBody = {
   success: boolean;
-  data?: components.ProposalDetail | undefined;
+  data?: components.Proposal | undefined;
 };
 
 /** @internal */
@@ -139,13 +139,13 @@ export const GetProposalResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.ProposalDetail$inboundSchema.optional(),
+  data: components.Proposal$inboundSchema.optional(),
 });
 
 /** @internal */
 export type GetProposalResponseBody$Outbound = {
   success: boolean;
-  data?: components.ProposalDetail$Outbound | undefined;
+  data?: components.Proposal$Outbound | undefined;
 };
 
 /** @internal */
@@ -155,7 +155,7 @@ export const GetProposalResponseBody$outboundSchema: z.ZodType<
   GetProposalResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.ProposalDetail$outboundSchema.optional(),
+  data: components.Proposal$outboundSchema.optional(),
 });
 
 /**

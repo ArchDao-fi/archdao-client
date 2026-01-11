@@ -7,6 +7,18 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  BaseProposal,
+  BaseProposal$inboundSchema,
+  BaseProposal$Outbound,
+  BaseProposal$outboundSchema,
+} from "./baseproposal.js";
+import {
+  ContactInformation,
+  ContactInformation$inboundSchema,
+  ContactInformation$Outbound,
+  ContactInformation$outboundSchema,
+} from "./contactinformation.js";
+import {
   Link,
   Link$inboundSchema,
   Link$Outbound,
@@ -22,12 +34,6 @@ import {
   OrganizationType$inboundSchema,
   OrganizationType$outboundSchema,
 } from "./organizationtype.js";
-import {
-  ProposalSummary,
-  ProposalSummary$inboundSchema,
-  ProposalSummary$Outbound,
-  ProposalSummary$outboundSchema,
-} from "./proposalsummary.js";
 import {
   Raise,
   Raise$inboundSchema,
@@ -63,12 +69,13 @@ export type OrganizationDetail = {
   type?: OrganizationType | undefined;
   status?: OrganizationStatus | undefined;
   links?: Array<Link> | undefined;
+  contactInformation?: Array<ContactInformation> | undefined;
   token?: Token | undefined;
   treasury?: Treasury | undefined;
   user?: User | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
-  proposals?: Array<ProposalSummary> | undefined;
+  proposals?: Array<BaseProposal> | undefined;
   raise?: Raise | undefined;
 };
 
@@ -87,6 +94,7 @@ export const OrganizationDetail$inboundSchema: z.ZodType<
   type: OrganizationType$inboundSchema.optional(),
   status: OrganizationStatus$inboundSchema.optional(),
   links: z.array(Link$inboundSchema).optional(),
+  contactInformation: z.array(ContactInformation$inboundSchema).optional(),
   token: Token$inboundSchema.optional(),
   treasury: Treasury$inboundSchema.optional(),
   user: User$inboundSchema.optional(),
@@ -94,7 +102,7 @@ export const OrganizationDetail$inboundSchema: z.ZodType<
     .optional(),
   updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
-  proposals: z.array(ProposalSummary$inboundSchema).optional(),
+  proposals: z.array(BaseProposal$inboundSchema).optional(),
   raise: Raise$inboundSchema.optional(),
 });
 
@@ -109,12 +117,13 @@ export type OrganizationDetail$Outbound = {
   type?: string | undefined;
   status?: string | undefined;
   links?: Array<Link$Outbound> | undefined;
+  contactInformation?: Array<ContactInformation$Outbound> | undefined;
   token?: Token$Outbound | undefined;
   treasury?: Treasury$Outbound | undefined;
   user?: User$Outbound | undefined;
   created?: string | undefined;
   updated?: string | undefined;
-  proposals?: Array<ProposalSummary$Outbound> | undefined;
+  proposals?: Array<BaseProposal$Outbound> | undefined;
   raise?: Raise$Outbound | undefined;
 };
 
@@ -133,12 +142,13 @@ export const OrganizationDetail$outboundSchema: z.ZodType<
   type: OrganizationType$outboundSchema.optional(),
   status: OrganizationStatus$outboundSchema.optional(),
   links: z.array(Link$outboundSchema).optional(),
+  contactInformation: z.array(ContactInformation$outboundSchema).optional(),
   token: Token$outboundSchema.optional(),
   treasury: Treasury$outboundSchema.optional(),
   user: User$outboundSchema.optional(),
   created: z.date().transform(v => v.toISOString()).optional(),
   updated: z.date().transform(v => v.toISOString()).optional(),
-  proposals: z.array(ProposalSummary$outboundSchema).optional(),
+  proposals: z.array(BaseProposal$outboundSchema).optional(),
   raise: Raise$outboundSchema.optional(),
 });
 
