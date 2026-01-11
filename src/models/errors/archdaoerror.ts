@@ -3,7 +3,7 @@
  */
 
 /** The base class for all HTTP error responses */
-export class ArchdaoError extends Error {
+export class ArchDaoError extends Error {
   /** HTTP status code */
   public readonly statusCode: number;
   /** HTTP body */
@@ -30,6 +30,6 @@ export class ArchdaoError extends Error {
     this.contentType = httpMeta.response.headers.get("content-type") || "";
     this.rawResponse = httpMeta.response;
 
-    this.name = "ArchdaoError";
+    this.name = "ArchDaoError";
   }
 }

@@ -6,7 +6,7 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
-import { ArchdaoError } from "./archdaoerror.js";
+import { ArchDaoError } from "./archdaoerror.js";
 import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type ErrorT = {
@@ -32,7 +32,7 @@ export type ErrData = {
 /**
  * Error response returned when an operation fails
  */
-export class Err extends ArchdaoError {
+export class Err extends ArchDaoError {
   success: boolean;
   error: ErrorT;
 

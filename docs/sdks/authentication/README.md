@@ -21,14 +21,14 @@ Returns a nonce that the user must sign with their wallet. Creates the user if t
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -43,17 +43,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { authenticationCreateNonce } from "@archdao/archdao-client/funcs/authenticationCreateNonce.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationCreateNonce(archdao, {
+  const res = await authenticationCreateNonce(archDAO, {
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
   if (res.ok) {
@@ -96,14 +96,14 @@ Verifies the wallet signature and returns a JWT token valid for 30 days.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.login({
+  const result = await archDAO.authentication.login({
     address: "0x1234567890abcdef1234567890abcdef12345678",
     nonce: "1704067200000",
     signature: "0xabcd...",
@@ -120,17 +120,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { authenticationLogin } from "@archdao/archdao-client/funcs/authenticationLogin.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationLogin(archdao, {
+  const res = await authenticationLogin(archDAO, {
     address: "0x1234567890abcdef1234567890abcdef12345678",
     nonce: "1704067200000",
     signature: "0xabcd...",
@@ -175,14 +175,14 @@ Deactivates the current nonce. Optionally deactivate all nonces to logout from a
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.logout();
+  const result = await archDAO.authentication.logout();
 
   console.log(result);
 }
@@ -195,17 +195,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { authenticationLogout } from "@archdao/archdao-client/funcs/authenticationLogout.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationLogout(archdao);
+  const res = await authenticationLogout(archDAO);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -246,14 +246,14 @@ Returns the authenticated user's information including active sessions.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.getSelf();
+  const result = await archDAO.authentication.getSelf();
 
   console.log(result);
 }
@@ -266,17 +266,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { authenticationGetSelf } from "@archdao/archdao-client/funcs/authenticationGetSelf.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationGetSelf(archdao);
+  const res = await authenticationGetSelf(archDAO);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);

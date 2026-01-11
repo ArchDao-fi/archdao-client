@@ -26,12 +26,12 @@ Returns proposals with visibility rules. Unauthenticated users see public propos
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.proposal.listProposals({
+  const result = await archDAO.proposal.listProposals({
     status: "draft,staking,active",
     organizationId: "1,2,3",
   });
@@ -47,15 +47,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposals } from "@archdao/archdao-client/funcs/proposalListProposals.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await proposalListProposals(archdao, {
+  const res = await proposalListProposals(archDAO, {
     status: "draft,staking,active",
     organizationId: "1,2,3",
   });
@@ -99,14 +99,14 @@ Creates a new proposal in draft status.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.createProposal({
+  const result = await archDAO.proposal.createProposal({
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
@@ -124,17 +124,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalCreateProposal } from "@archdao/archdao-client/funcs/proposalCreateProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCreateProposal(archdao, {
+  const res = await proposalCreateProposal(archDAO, {
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
@@ -180,12 +180,12 @@ Returns full proposal details. Draft proposals are only visible to authorized us
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.proposal.getProposal({
+  const result = await archDAO.proposal.getProposal({
     id: 264645,
   });
 
@@ -200,15 +200,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalGetProposal } from "@archdao/archdao-client/funcs/proposalGetProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await proposalGetProposal(archdao, {
+  const res = await proposalGetProposal(archDAO, {
     id: 264645,
   });
   if (res.ok) {
@@ -252,14 +252,14 @@ Cancels a proposal. Only allowed before trading begins (draft or staking status)
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.cancelProposal({
+  const result = await archDAO.proposal.cancelProposal({
     id: 330250,
   });
 
@@ -274,17 +274,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalCancelProposal } from "@archdao/archdao-client/funcs/proposalCancelProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCancelProposal(archdao, {
+  const res = await proposalCancelProposal(archDAO, {
     id: 330250,
   });
   if (res.ok) {
@@ -327,14 +327,14 @@ Submits a draft proposal to the staking phase.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.initializeProposal({
+  const result = await archDAO.proposal.initializeProposal({
     id: 301133,
   });
 
@@ -349,17 +349,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalInitializeProposal } from "@archdao/archdao-client/funcs/proposalInitializeProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalInitializeProposal(archdao, {
+  const res = await proposalInitializeProposal(archDAO, {
     id: 301133,
   });
   if (res.ok) {
@@ -400,14 +400,14 @@ Returns a paginated list of stakes for a proposal.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.listProposalStakes({
+  const result = await archDAO.proposal.listProposalStakes({
     id: 854415,
   });
 
@@ -422,17 +422,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposalStakes } from "@archdao/archdao-client/funcs/proposalListProposalStakes.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalStakes(archdao, {
+  const res = await proposalListProposalStakes(archDAO, {
     id: 854415,
   });
   if (res.ok) {
@@ -473,14 +473,14 @@ Returns a paginated list of trades for a proposal's decision markets.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.listProposalTrades({
+  const result = await archDAO.proposal.listProposalTrades({
     id: 977484,
   });
 
@@ -495,17 +495,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposalTrades } from "@archdao/archdao-client/funcs/proposalListProposalTrades.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalTrades(archdao, {
+  const res = await proposalListProposalTrades(archDAO, {
     id: 977484,
   });
   if (res.ok) {

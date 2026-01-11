@@ -22,14 +22,14 @@ Admin-only endpoint to list all users with optional filters.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.admin.listUsers({});
+  const result = await archDAO.admin.listUsers({});
 
   console.log(result);
 }
@@ -42,17 +42,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { adminListUsers } from "@archdao/archdao-client/funcs/adminListUsers.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await adminListUsers(archdao, {});
+  const res = await adminListUsers(archDAO, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -93,14 +93,14 @@ Admin-only endpoint to promote or demote users.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.admin.changeUserRole({
+  const result = await archDAO.admin.changeUserRole({
     id: 282852,
     requestBody: {
       role: "user",
@@ -118,17 +118,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { adminChangeUserRole } from "@archdao/archdao-client/funcs/adminChangeUserRole.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await adminChangeUserRole(archdao, {
+  const res = await adminChangeUserRole(archDAO, {
     id: 282852,
     requestBody: {
       role: "user",
@@ -172,14 +172,14 @@ Admin-only endpoint to view audit trail of admin actions.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.admin.listAuditLogs({});
+  const result = await archDAO.admin.listAuditLogs({});
 
   console.log(result);
 }
@@ -192,17 +192,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { adminListAuditLogs } from "@archdao/archdao-client/funcs/adminListAuditLogs.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await adminListAuditLogs(archdao, {});
+  const res = await adminListAuditLogs(archDAO, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);

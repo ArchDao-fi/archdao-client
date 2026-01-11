@@ -25,12 +25,12 @@ Returns a paginated list of organizations. Visibility varies by authentication s
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.organization.listOrganizations({
+  const result = await archDAO.organization.listOrganizations({
     status: "approved,active",
   });
 
@@ -45,15 +45,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationListOrganizations } from "@archdao/archdao-client/funcs/organizationListOrganizations.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await organizationListOrganizations(archdao, {
+  const res = await organizationListOrganizations(archDAO, {
     status: "approved,active",
   });
   if (res.ok) {
@@ -96,14 +96,14 @@ Creates a new organization (external or ICO type). Uses multipart/form-data for 
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.createOrganization({
+  const result = await archDAO.organization.createOrganization({
     name: "<value>",
     description: "since unto hollow fedora greatly hmph",
     contactInformation: "<value>",
@@ -120,17 +120,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationCreateOrganization } from "@archdao/archdao-client/funcs/organizationCreateOrganization.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationCreateOrganization(archdao, {
+  const res = await organizationCreateOrganization(archDAO, {
     name: "<value>",
     description: "since unto hollow fedora greatly hmph",
     contactInformation: "<value>",
@@ -175,12 +175,12 @@ Returns full organization details including proposals.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.organization.getOrganization({
+  const result = await archDAO.organization.getOrganization({
     slug: "<value>",
   });
 
@@ -195,15 +195,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationGetOrganization } from "@archdao/archdao-client/funcs/organizationGetOrganization.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await organizationGetOrganization(archdao, {
+  const res = await organizationGetOrganization(archDAO, {
     slug: "<value>",
   });
   if (res.ok) {
@@ -247,14 +247,14 @@ Admin-only endpoint to edit organization details.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.editOrganization({
+  const result = await archDAO.organization.editOrganization({
     id: 384554,
   });
 
@@ -269,17 +269,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationEditOrganization } from "@archdao/archdao-client/funcs/organizationEditOrganization.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationEditOrganization(archdao, {
+  const res = await organizationEditOrganization(archDAO, {
     id: 384554,
   });
   if (res.ok) {
@@ -322,14 +322,14 @@ Admin-only endpoint to approve, reject, or activate organizations.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.changeOrganizationStatus({
+  const result = await archDAO.organization.changeOrganizationStatus({
     id: 985976,
     requestBody: {
       status: "failed",
@@ -347,17 +347,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationChangeOrganizationStatus } from "@archdao/archdao-client/funcs/organizationChangeOrganizationStatus.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationChangeOrganizationStatus(archdao, {
+  const res = await organizationChangeOrganizationStatus(archDAO, {
     id: 985976,
     requestBody: {
       status: "failed",
@@ -403,14 +403,14 @@ Admin-only endpoint to activate the raise for ICO organizations. Raise starts im
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.activateRaise({
+  const result = await archDAO.organization.activateRaise({
     id: 398388,
   });
 
@@ -425,17 +425,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { organizationActivateRaise } from "@archdao/archdao-client/funcs/organizationActivateRaise.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationActivateRaise(archdao, {
+  const res = await organizationActivateRaise(archDAO, {
     id: 398388,
   });
   if (res.ok) {
