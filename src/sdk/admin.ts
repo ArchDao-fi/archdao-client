@@ -36,6 +36,8 @@ export class Admin extends ClientSDK {
    *
    * @remarks
    * Admin-only endpoint to promote or demote users.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `USER_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async changeUserRole(
     request: operations.ChangeUserRoleRequest,

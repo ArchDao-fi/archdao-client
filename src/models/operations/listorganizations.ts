@@ -42,7 +42,7 @@ export type Pagination = {
 };
 
 /**
- * Organizations retrieved
+ * Success response wrapper
  */
 export type ListOrganizationsResponseBody = {
   success: boolean;

@@ -43,6 +43,8 @@ export class Proposal extends ClientSDK {
    *
    * @remarks
    * Creates a new proposal in draft status.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ACTION_DATA`, `EMPTY_ACTIONS`, `ORGANIZATION_NOT_FOUND`, `INSUFFICIENT_TOKEN_BALANCE`, `INVALID_TOKEN`
    */
   async createProposal(
     request: components.CreateProposalRequest,
@@ -60,6 +62,8 @@ export class Proposal extends ClientSDK {
    *
    * @remarks
    * Returns full proposal details. Draft proposals are only visible to authorized users.
+   *
+   * **Error Codes:** `PROPOSAL_NOT_FOUND`, `NOT_AUTHORIZED`
    */
   async getProposal(
     request: operations.GetProposalRequest,
@@ -79,6 +83,8 @@ export class Proposal extends ClientSDK {
    *
    * @remarks
    * Cancels a proposal. Only allowed before trading begins (draft or staking status).
+   *
+   * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async cancelProposal(
     request: operations.CancelProposalRequest,
@@ -96,6 +102,8 @@ export class Proposal extends ClientSDK {
    *
    * @remarks
    * Submits a draft proposal to the staking phase.
+   *
+   * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `PROPOSAL_ALREADY_ACTIVE`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async initializeProposal(
     request: operations.InitializeProposalRequest,

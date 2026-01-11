@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 /**
- * Proposal created
+ * Success response wrapper
  */
 export type CreateProposalResponseBody = {
   success: boolean;

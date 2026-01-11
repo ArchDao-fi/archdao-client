@@ -1,6 +1,6 @@
 # CreateNonceResponseBody
 
-Nonce generated successfully
+Success response wrapper
 
 ## Example Usage
 
@@ -17,7 +17,7 @@ let value: CreateNonceResponseBody = {
 
 ## Fields
 
-| Field                                              | Type                                               | Required                                           | Description                                        | Example                                            |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `success`                                          | *boolean*                                          | :heavy_check_mark:                                 | N/A                                                | true                                               |
-| `data`                                             | [operations.Data](../../models/operations/data.md) | :heavy_minus_sign:                                 | N/A                                                |                                                    |
+| Field                                              | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `success`                                          | *boolean*                                          | :heavy_check_mark:                                 | N/A                                                |
+| `data`                                             | [operations.Data](../../models/operations/data.md) | :heavy_minus_sign:                                 | N/A                                                |

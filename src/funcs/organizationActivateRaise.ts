@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Admin-only endpoint to activate the raise for ICO organizations. Raise starts immediately with duration from system settings.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `RAISE_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function organizationActivateRaise(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function organizationActivateRaise(
 ): APIPromise<
   Result<
     operations.ActivateRaiseResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.ActivateRaiseResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -152,7 +154,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.ActivateRaiseResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -163,7 +165,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.ActivateRaiseResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

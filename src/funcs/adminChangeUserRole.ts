@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Admin-only endpoint to promote or demote users.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `USER_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function adminChangeUserRole(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function adminChangeUserRole(
 ): APIPromise<
   Result<
     operations.ChangeUserRoleResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.ChangeUserRoleResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -153,7 +155,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.ChangeUserRoleResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -164,7 +166,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.ChangeUserRoleResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

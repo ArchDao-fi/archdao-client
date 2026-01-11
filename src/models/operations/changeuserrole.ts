@@ -19,7 +19,7 @@ export type ChangeUserRoleRequest = {
 };
 
 /**
- * Role updated
+ * Success response wrapper
  */
 export type ChangeUserRoleResponseBody = {
   success: boolean;

@@ -380,7 +380,7 @@ async function run() {
       console.log(error.headers);
 
       // Depending on the method different errors may be thrown
-      if (error instanceof errors.ErrorResponse) {
+      if (error instanceof errors.Err) {
         console.log(error.data$.success); // boolean
         console.log(error.data$.error); // errors.ErrorT
       }
@@ -395,7 +395,7 @@ run();
 ### Error Classes
 **Primary errors:**
 * [`ArchdaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
-  * [`ErrorResponse`](docs/models/errors/errorresponse.md): Bad Request - Invalid input data. *
+  * [`Err`](docs/models/errors/err.md): Error response returned when an operation fails. *
 
 <details><summary>Less common errors (6)</summary>
 

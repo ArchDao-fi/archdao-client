@@ -23,7 +23,7 @@ export type ChangeOrganizationStatusRequest = {
 };
 
 /**
- * Status updated
+ * Success response wrapper
  */
 export type ChangeOrganizationStatusResponseBody = {
   success: boolean;

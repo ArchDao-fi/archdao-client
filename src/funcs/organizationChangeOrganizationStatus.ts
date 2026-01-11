@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Admin-only endpoint to approve, reject, or activate organizations.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function organizationChangeOrganizationStatus(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function organizationChangeOrganizationStatus(
 ): APIPromise<
   Result<
     operations.ChangeOrganizationStatusResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.ChangeOrganizationStatusResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -154,7 +156,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.ChangeOrganizationStatusResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -165,7 +167,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.ChangeOrganizationStatusResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

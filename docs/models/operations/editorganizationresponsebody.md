@@ -1,6 +1,6 @@
 # EditOrganizationResponseBody
 
-Organization updated
+Success response wrapper
 
 ## Example Usage
 
@@ -27,7 +27,7 @@ let value: EditOrganizationResponseBody = {
 
 ## Fields
 
-| Field                                                              | Type                                                               | Required                                                           | Description                                                        | Example                                                            |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `success`                                                          | *boolean*                                                          | :heavy_check_mark:                                                 | N/A                                                                | true                                                               |
-| `data`                                                             | [components.Organization](../../models/components/organization.md) | :heavy_minus_sign:                                                 | N/A                                                                |                                                                    |
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `success`                                                          | *boolean*                                                          | :heavy_check_mark:                                                 | N/A                                                                |
+| `data`                                                             | [components.Organization](../../models/components/organization.md) | :heavy_minus_sign:                                                 | N/A                                                                |

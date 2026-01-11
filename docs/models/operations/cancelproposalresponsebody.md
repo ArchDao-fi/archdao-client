@@ -1,6 +1,6 @@
 # CancelProposalResponseBody
 
-Proposal cancelled
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Proposal cancelled
 import { CancelProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CancelProposalResponseBody = {
-  success: true,
+  success: false,
   data: {
     status: "cancelled",
   },
@@ -17,7 +17,7 @@ let value: CancelProposalResponseBody = {
 
 ## Fields
 
-| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `success`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            | true                                                                           |
-| `data`                                                                         | [operations.CancelProposalData](../../models/operations/cancelproposaldata.md) | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `success`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `data`                                                                         | [operations.CancelProposalData](../../models/operations/cancelproposaldata.md) | :heavy_minus_sign:                                                             | N/A                                                                            |

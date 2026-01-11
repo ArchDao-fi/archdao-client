@@ -1,6 +1,6 @@
 # CreateOrganizationResponseBody
 
-Organization created
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Organization created
 import { CreateOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CreateOrganizationResponseBody = {
-  success: true,
+  success: false,
   data: {
     token: {
       name: "Example Token",
@@ -27,7 +27,7 @@ let value: CreateOrganizationResponseBody = {
 
 ## Fields
 
-| Field                                                              | Type                                                               | Required                                                           | Description                                                        | Example                                                            |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `success`                                                          | *boolean*                                                          | :heavy_check_mark:                                                 | N/A                                                                | true                                                               |
-| `data`                                                             | [components.Organization](../../models/components/organization.md) | :heavy_minus_sign:                                                 | N/A                                                                |                                                                    |
+| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `success`                                                          | *boolean*                                                          | :heavy_check_mark:                                                 | N/A                                                                |
+| `data`                                                             | [components.Organization](../../models/components/organization.md) | :heavy_minus_sign:                                                 | N/A                                                                |

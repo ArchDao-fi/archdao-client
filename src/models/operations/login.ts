@@ -30,7 +30,7 @@ export type LoginData = {
 };
 
 /**
- * Login successful
+ * Success response wrapper
  */
 export type LoginResponseBody = {
   success: boolean;

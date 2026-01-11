@@ -1,6 +1,6 @@
 # ListAuditLogsResponseBody
 
-Audit logs retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Audit logs retrieved
 import { ListAuditLogsResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListAuditLogsResponseBody = {
-  success: true,
+  success: false,
   pagination: {
     page: 1,
     limit: 20,
@@ -28,8 +28,8 @@ let value: ListAuditLogsResponseBody = {
 
 ## Fields
 
-| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              | Example                                                                                  |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `success`                                                                                | *boolean*                                                                                | :heavy_check_mark:                                                                       | N/A                                                                                      | true                                                                                     |
-| `pagination`                                                                             | [operations.ListAuditLogsPagination](../../models/operations/listauditlogspagination.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |                                                                                          |
-| `data`                                                                                   | [components.AuditLog](../../models/components/auditlog.md)[]                             | :heavy_minus_sign:                                                                       | N/A                                                                                      |                                                                                          |
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `success`                                                                                | *boolean*                                                                                | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `pagination`                                                                             | [operations.ListAuditLogsPagination](../../models/operations/listauditlogspagination.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `data`                                                                                   | [components.AuditLog](../../models/components/auditlog.md)[]                             | :heavy_minus_sign:                                                                       | N/A                                                                                      |

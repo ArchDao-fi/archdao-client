@@ -36,6 +36,8 @@ import { isReadableStream } from "../types/streams.js";
  *
  * @remarks
  * Admin-only endpoint to edit organization details.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function organizationEditOrganization(
   client: ArchdaoCore,
@@ -44,7 +46,7 @@ export function organizationEditOrganization(
 ): APIPromise<
   Result<
     operations.EditOrganizationResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -70,7 +72,7 @@ async function $do(
   [
     Result<
       operations.EditOrganizationResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -217,7 +219,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.EditOrganizationResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -228,7 +230,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.EditOrganizationResponseBody$inboundSchema),
-    M.jsonErr([401, 403, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([401, 403, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

@@ -16,6 +16,8 @@ Wallet-based authentication endpoints
 
 Returns a nonce that the user must sign with their wallet. Creates the user if they do not exist.
 
+**Error Codes:** `VALIDATION_ERROR`
+
 ### Example Usage
 
 ```typescript
@@ -80,14 +82,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 400              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## login
 
 Verifies the wallet signature and returns a JWT token valid for 30 days.
+
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_SIGNATURE`, `USER_NOT_FOUND`, `NONCE_NOT_FOUND`, `INACTIVE_NONCE`
 
 ### Example Usage
 
@@ -157,14 +161,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 404             | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 400, 404         | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## logout
 
 Deactivates the current nonce. Optionally deactivate all nonces to logout from all devices.
+
+**Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
 
 ### Example Usage
 
@@ -222,18 +228,20 @@ run();
 
 ### Response
 
-**Promise\<[components.SuccessResponse](../../models/components/successresponse.md)\>**
+**Promise\<[components.Ok](../../models/components/ok.md)\>**
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 401              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## getSelf
 
 Returns the authenticated user's information including active sessions.
+
+**Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
 
 ### Example Usage
 
@@ -294,7 +302,7 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 401              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |

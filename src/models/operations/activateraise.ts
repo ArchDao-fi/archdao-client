@@ -13,7 +13,7 @@ export type ActivateRaiseRequest = {
 };
 
 /**
- * Raise configured
+ * Success response wrapper
  */
 export type ActivateRaiseResponseBody = {
   success: boolean;

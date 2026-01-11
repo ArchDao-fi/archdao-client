@@ -46,7 +46,7 @@ export type ListProposalsPagination = {
 };
 
 /**
- * Proposals retrieved
+ * Success response wrapper
  */
 export type ListProposalsResponseBody = {
   success: boolean;

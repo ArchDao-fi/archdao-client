@@ -1,6 +1,6 @@
 # ActivateRaiseResponseBody
 
-Raise configured
+Success response wrapper
 
 ## Example Usage
 
@@ -27,7 +27,7 @@ let value: ActivateRaiseResponseBody = {
 
 ## Fields
 
-| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          | Example                                                                              |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `success`                                                                            | *boolean*                                                                            | :heavy_check_mark:                                                                   | N/A                                                                                  | true                                                                                 |
-| `data`                                                                               | [components.OrganizationWithRaise](../../models/components/organizationwithraise.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |                                                                                      |
+| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `success`                                                                            | *boolean*                                                                            | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `data`                                                                               | [components.OrganizationWithRaise](../../models/components/organizationwithraise.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |

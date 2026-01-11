@@ -1,6 +1,6 @@
 # ChangeUserRoleResponseBody
 
-Role updated
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Role updated
 import { ChangeUserRoleResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ChangeUserRoleResponseBody = {
-  success: true,
+  success: false,
   data: {
     id: 1,
     address: "0x1234567890abcdef1234567890abcdef12345678",
@@ -19,7 +19,7 @@ let value: ChangeUserRoleResponseBody = {
 
 ## Fields
 
-| Field                                              | Type                                               | Required                                           | Description                                        | Example                                            |
-| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| `success`                                          | *boolean*                                          | :heavy_check_mark:                                 | N/A                                                | true                                               |
-| `data`                                             | [components.User](../../models/components/user.md) | :heavy_minus_sign:                                 | N/A                                                |                                                    |
+| Field                                              | Type                                               | Required                                           | Description                                        |
+| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |
+| `success`                                          | *boolean*                                          | :heavy_check_mark:                                 | N/A                                                |
+| `data`                                             | [components.User](../../models/components/user.md) | :heavy_minus_sign:                                 | N/A                                                |
