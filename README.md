@@ -19,7 +19,7 @@ ArchDAO API: Backend API for the ArchDAO futarchy-based governance platform. All
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [@draft/archdao-api-typescript](#draftarchdao-api-typescript)
+* [@archdao/archdao-client](#archdaoarchdao-client)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
   * [SDK Example Usage](#sdk-example-usage)
@@ -46,25 +46,25 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add @draft/archdao-api-typescript
+npm add @archdao/archdao-client
 ```
 
 ### PNPM
 
 ```bash
-pnpm add @draft/archdao-api-typescript
+pnpm add @archdao/archdao-client
 ```
 
 ### Bun
 
 ```bash
-bun add @draft/archdao-api-typescript
+bun add @archdao/archdao-client
 ```
 
 ### Yarn
 
 ```bash
-yarn add @draft/archdao-api-typescript zod
+yarn add @archdao/archdao-client zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -86,14 +86,14 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ### Example
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -118,14 +118,14 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -140,15 +140,14 @@ run();
 
 Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript();
+const archdao = new Archdao();
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.listOrganizations(
-    {},
-    {},
-  );
+  const result = await archdao.organization.listOrganizations({
+    status: "approved,active",
+  }, {});
 
   console.log(result);
 }
@@ -173,10 +172,10 @@ run();
 
 ### [authentication](docs/sdks/authentication/README.md)
 
-* [getNonce](docs/sdks/authentication/README.md#getnonce) - Get a new nonce for wallet signing
-* [login](docs/sdks/authentication/README.md#login) - Login with wallet signature
-* [logout](docs/sdks/authentication/README.md#logout) - Logout user
-* [getMe](docs/sdks/authentication/README.md#getme) - Get current user info
+* [createNonce](docs/sdks/authentication/README.md#createnonce) - Create Nonce
+* [login](docs/sdks/authentication/README.md#login) - Login
+* [logout](docs/sdks/authentication/README.md#logout) - Logout
+* [getSelf](docs/sdks/authentication/README.md#getself) - Get Self
 
 ### [organization](docs/sdks/organization/README.md)
 
@@ -185,11 +184,11 @@ run();
 * [getOrganization](docs/sdks/organization/README.md#getorganization) - Get organization by slug
 * [editOrganization](docs/sdks/organization/README.md#editorganization) - Edit organization
 * [changeOrganizationStatus](docs/sdks/organization/README.md#changeorganizationstatus) - Change organization status
-* [configureRaise](docs/sdks/organization/README.md#configureraise) - Configure raise settings
+* [activateRaise](docs/sdks/organization/README.md#activateraise) - Activate raise
 
 ### [proposal](docs/sdks/proposal/README.md)
 
-* [listProposals](docs/sdks/proposal/README.md#listproposals) - List user's proposals
+* [listProposals](docs/sdks/proposal/README.md#listproposals) - List proposals
 * [createProposal](docs/sdks/proposal/README.md#createproposal) - Create proposal
 * [getProposal](docs/sdks/proposal/README.md#getproposal) - Get proposal details
 * [cancelProposal](docs/sdks/proposal/README.md#cancelproposal) - Cancel proposal
@@ -218,12 +217,12 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`adminChangeUserRole`](docs/sdks/admin/README.md#changeuserrole) - Change user role
 - [`adminListAuditLogs`](docs/sdks/admin/README.md#listauditlogs) - List audit logs
 - [`adminListUsers`](docs/sdks/admin/README.md#listusers) - List users
-- [`authenticationGetMe`](docs/sdks/authentication/README.md#getme) - Get current user info
-- [`authenticationGetNonce`](docs/sdks/authentication/README.md#getnonce) - Get a new nonce for wallet signing
-- [`authenticationLogin`](docs/sdks/authentication/README.md#login) - Login with wallet signature
-- [`authenticationLogout`](docs/sdks/authentication/README.md#logout) - Logout user
+- [`authenticationCreateNonce`](docs/sdks/authentication/README.md#createnonce) - Create Nonce
+- [`authenticationGetSelf`](docs/sdks/authentication/README.md#getself) - Get Self
+- [`authenticationLogin`](docs/sdks/authentication/README.md#login) - Login
+- [`authenticationLogout`](docs/sdks/authentication/README.md#logout) - Logout
+- [`organizationActivateRaise`](docs/sdks/organization/README.md#activateraise) - Activate raise
 - [`organizationChangeOrganizationStatus`](docs/sdks/organization/README.md#changeorganizationstatus) - Change organization status
-- [`organizationConfigureRaise`](docs/sdks/organization/README.md#configureraise) - Configure raise settings
 - [`organizationCreateOrganization`](docs/sdks/organization/README.md#createorganization) - Create organization
 - [`organizationEditOrganization`](docs/sdks/organization/README.md#editorganization) - Edit organization
 - [`organizationGetOrganization`](docs/sdks/organization/README.md#getorganization) - Get organization by slug
@@ -232,7 +231,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`proposalCreateProposal`](docs/sdks/proposal/README.md#createproposal) - Create proposal
 - [`proposalGetProposal`](docs/sdks/proposal/README.md#getproposal) - Get proposal details
 - [`proposalInitializeProposal`](docs/sdks/proposal/README.md#initializeproposal) - Initialize proposal
-- [`proposalListProposals`](docs/sdks/proposal/README.md#listproposals) - List user's proposals
+- [`proposalListProposals`](docs/sdks/proposal/README.md#listproposals) - List proposals
 - [`proposalListProposalStakes`](docs/sdks/proposal/README.md#listproposalstakes) - List proposal stakes
 - [`proposalListProposalTrades`](docs/sdks/proposal/README.md#listproposaltrades) - List proposal trades
 
@@ -254,14 +253,14 @@ Certain SDK methods accept files as part of a multi-part request. It is possible
 > - **Node.js v18:** A file stream can be created using the `fileFrom` helper from [`fetch-blob/from.js`](https://www.npmjs.com/package/fetch-blob).
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.createOrganization({
+  const result = await archdao.organization.createOrganization({
     name: "<value>",
     description: "since unto hollow fedora greatly hmph",
     contactInformation: "<value>",
@@ -282,14 +281,14 @@ Some of the endpoints in this SDK support retries.  If you use the SDK without a
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   }, {
     retries: {
@@ -313,9 +312,9 @@ run();
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -330,7 +329,7 @@ const archdaoApiTypescript = new ArchdaoApiTypescript({
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -345,7 +344,7 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`ArchdaoAPITypescriptError`](./src/models/errors/archdaoapitypescripterror.ts) is the base class for all HTTP error responses. It has the following properties:
+[`ArchdaoError`](./src/models/errors/archdaoerror.ts) is the base class for all HTTP error responses. It has the following properties:
 
 | Property            | Type       | Description                                                                             |
 | ------------------- | ---------- | --------------------------------------------------------------------------------------- |
@@ -358,23 +357,23 @@ run();
 
 ### Example
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
-import * as errors from "@draft/archdao-api-typescript/models/errors";
+import { Archdao } from "@archdao/archdao-client";
+import * as errors from "@archdao/archdao-client/models/errors";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
   try {
-    const result = await archdaoApiTypescript.authentication.getNonce({
+    const result = await archdao.authentication.createNonce({
       address: "0x1234567890abcdef1234567890abcdef12345678",
     });
 
     console.log(result);
   } catch (error) {
     // The base class for HTTP error responses
-    if (error instanceof errors.ArchdaoAPITypescriptError) {
+    if (error instanceof errors.ArchdaoError) {
       console.log(error.message);
       console.log(error.statusCode);
       console.log(error.body);
@@ -395,7 +394,7 @@ run();
 
 ### Error Classes
 **Primary errors:**
-* [`ArchdaoAPITypescriptError`](./src/models/errors/archdaoapitypescripterror.ts): The base class for HTTP error responses.
+* [`ArchdaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
   * [`ErrorResponse`](docs/models/errors/errorresponse.md): Bad Request - Invalid input data. *
 
 <details><summary>Less common errors (6)</summary>
@@ -410,7 +409,7 @@ run();
 * [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
 
 
-**Inherit from [`ArchdaoAPITypescriptError`](./src/models/errors/archdaoapitypescripterror.ts)**:
+**Inherit from [`ArchdaoError`](./src/models/errors/archdaoerror.ts)**:
 * [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
@@ -425,15 +424,15 @@ run();
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   serverURL: "https://api.archdao.fi/v1",
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -463,8 +462,8 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
-import { HTTPClient } from "@draft/archdao-api-typescript/lib/http";
+import { Archdao } from "@archdao/archdao-client";
+import { HTTPClient } from "@archdao/archdao-client/lib/http";
 
 const httpClient = new HTTPClient({
   // fetcher takes a function that has the same signature as native `fetch`.
@@ -490,7 +489,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new ArchdaoApiTypescript({ httpClient });
+const sdk = new Archdao({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -505,9 +504,9 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const sdk = new ArchdaoApiTypescript({ debugLogger: console });
+const sdk = new Archdao({ debugLogger: console });
 ```
 <!-- End Debugging [debug] -->
 

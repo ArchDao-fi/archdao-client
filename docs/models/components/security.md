@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Security } from "@draft/archdao-api-typescript/models/components";
+import { Security } from "@archdao/archdao-client/models/components";
 
 let value: Security = {
   bearerAuth: "<value>",

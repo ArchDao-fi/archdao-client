@@ -8,118 +8,118 @@ actions:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listAuditLogs"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.admin.listAuditLogs({});\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.admin.listAuditLogs({});\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/admin/user"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listUsers"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.admin.listUsers({});\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.admin.listUsers({});\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/admin/user/{id}/role"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "changeUserRole"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.admin.changeUserRole({\n    id: 282852,\n    requestBody: {\n      role: \"user\",\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.admin.changeUserRole({\n    id: 282852,\n    requestBody: {\n      role: \"user\",\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/auth/login"]["post"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "login"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.authentication.login({\n    address: \"0x1234567890abcdef1234567890abcdef12345678\",\n    nonce: \"1704067200000\",\n    signature: \"0xabcd...\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.authentication.login({\n    address: \"0x1234567890abcdef1234567890abcdef12345678\",\n    nonce: \"1704067200000\",\n    signature: \"0xabcd...\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/auth/logout"]["post"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "logout"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.authentication.logout();\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.authentication.logout();\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/auth/me"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
-          "label": "getMe"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.authentication.getMe();\n\n  console.log(result);\n}\n\nrun();"
+          "label": "getSelf"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.authentication.getSelf();\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/auth/nonce"]["post"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
-          "label": "getNonce"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.authentication.getNonce({\n    address: \"0x1234567890abcdef1234567890abcdef12345678\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "label": "createNonce"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.authentication.createNonce({\n    address: \"0x1234567890abcdef1234567890abcdef12345678\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listOrganizations"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript();\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.listOrganizations({});\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao();\n\nasync function run() {\n  const result = await archdao.organization.listOrganizations({\n    status: \"approved,active\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization"]["post"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "createOrganization"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.createOrganization({\n    name: \"<value>\",\n    description: \"since unto hollow fedora greatly hmph\",\n    contactInformation: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.organization.createOrganization({\n    name: \"<value>\",\n    description: \"since unto hollow fedora greatly hmph\",\n    contactInformation: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization/slug/{slug}"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "getOrganization"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript();\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.getOrganization({\n    slug: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao();\n\nasync function run() {\n  const result = await archdao.organization.getOrganization({\n    slug: \"<value>\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization/{id}"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "editOrganization"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.editOrganization({\n    id: 384554,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.organization.editOrganization({\n    id: 384554,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization/{id}/raise"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
-          "label": "configureRaise"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.configureRaise({\n    id: 396097,\n    requestBody: {\n      startDate: new Date(\"2026-12-29T03:23:25.992Z\"),\n      endDate: new Date(\"2025-08-02T17:54:26.046Z\"),\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "label": "activateRaise"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.organization.activateRaise({\n    id: 398388,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization/{id}/status"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "changeOrganizationStatus"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.organization.changeOrganizationStatus({\n    id: 985976,\n    requestBody: {\n      status: \"failed\",\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.organization.changeOrganizationStatus({\n    id: 985976,\n    requestBody: {\n      status: \"failed\",\n    },\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listProposals"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.listProposals({});\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao();\n\nasync function run() {\n  const result = await archdao.proposal.listProposals({\n    status: \"draft,staking,active\",\n    organizationId: \"1,2,3\",\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal"]["post"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "createProposal"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.createProposal({\n    organizationId: 816972,\n    title: \"<value>\",\n    description: \"hence alarmed but doubtfully unknown swanling plus tame stratify mmm\",\n    actions: [],\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.proposal.createProposal({\n    organizationId: 816972,\n    title: \"<value>\",\n    description: \"hence alarmed but doubtfully unknown swanling plus tame stratify mmm\",\n    actions: [],\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal/{id}"]["delete"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "cancelProposal"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.cancelProposal({\n    id: 330250,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.proposal.cancelProposal({\n    id: 330250,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal/{id}"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "getProposal"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript();\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.getProposal({\n    id: 264645,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao();\n\nasync function run() {\n  const result = await archdao.proposal.getProposal({\n    id: 264645,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal/{id}/initialize"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "initializeProposal"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.initializeProposal({\n    id: 301133,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.proposal.initializeProposal({\n    id: 301133,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal/{id}/stakes"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listProposalStakes"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.listProposalStakes({\n    id: 854415,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.proposal.listProposalStakes({\n    id: 854415,\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/proposal/{id}/trades"]["get"]
     update:
       "x-codeSamples":
         - "lang": "typescript"
           "label": "listProposalTrades"
-          "source": "import { ArchdaoApiTypescript } from \"@draft/archdao-api-typescript\";\n\nconst archdaoApiTypescript = new ArchdaoApiTypescript({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdaoApiTypescript.proposal.listProposalTrades({\n    id: 977484,\n  });\n\n  console.log(result);\n}\n\nrun();"
+          "source": "import { Archdao } from \"@archdao/archdao-client\";\n\nconst archdao = new Archdao({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archdao.proposal.listProposalTrades({\n    id: 977484,\n  });\n\n  console.log(result);\n}\n\nrun();"

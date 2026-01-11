@@ -17,18 +17,24 @@ export type ListUsersRequest = {
    * Items per page
    */
   limit?: number | undefined;
-  role?: components.UserRole | undefined;
   /**
-   * Search by address or name
+   * Text to search for across searchable fields
    */
   search?: string | undefined;
+  /**
+   * Comma-separated list of fields to search. Must be valid searchable fields. If omitted, uses default search fields.
+   */
+  fields?: string | undefined;
+  /**
+   * Filter by user role
+   */
+  role?: components.UserRole | undefined;
 };
 
 export type ListUsersPagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -48,16 +54,18 @@ export const ListUsersRequest$inboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  role: components.UserRole$inboundSchema.optional(),
   search: z.string().optional(),
+  fields: z.string().optional(),
+  role: components.UserRole$inboundSchema.optional(),
 });
 
 /** @internal */
 export type ListUsersRequest$Outbound = {
   page: number;
   limit: number;
-  role?: string | undefined;
   search?: string | undefined;
+  fields?: string | undefined;
+  role?: string | undefined;
 };
 
 /** @internal */
@@ -68,8 +76,9 @@ export const ListUsersRequest$outboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  role: components.UserRole$outboundSchema.optional(),
   search: z.string().optional(),
+  fields: z.string().optional(),
+  role: components.UserRole$outboundSchema.optional(),
 });
 
 /**
@@ -110,17 +119,15 @@ export const ListUsersPagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type ListUsersPagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -130,9 +137,8 @@ export const ListUsersPagination$outboundSchema: z.ZodType<
   ListUsersPagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

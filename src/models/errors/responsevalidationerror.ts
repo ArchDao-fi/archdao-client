@@ -3,10 +3,10 @@
  */
 
 import * as z from "zod";
-import { ArchdaoAPITypescriptError } from "./archdaoapitypescripterror.js";
+import { ArchdaoError } from "./archdaoerror.js";
 import { formatZodError } from "./sdkvalidationerror.js";
 
-export class ResponseValidationError extends ArchdaoAPITypescriptError {
+export class ResponseValidationError extends ArchdaoError {
   /**
    * The raw value that failed validation.
    */

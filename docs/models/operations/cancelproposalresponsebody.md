@@ -5,7 +5,7 @@ Proposal cancelled
 ## Example Usage
 
 ```typescript
-import { CancelProposalResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { CancelProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CancelProposalResponseBody = {
   success: true,

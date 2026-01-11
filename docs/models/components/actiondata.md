@@ -5,7 +5,7 @@ Type-specific parameters for the action
 ## Example Usage
 
 ```typescript
-import { ActionData } from "@draft/archdao-api-typescript/models/components";
+import { ActionData } from "@archdao/archdao-client/models/components";
 
 let value: ActionData = {};
 ```

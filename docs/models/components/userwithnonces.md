@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { UserWithNonces } from "@draft/archdao-api-typescript/models/components";
+import { UserWithNonces } from "@archdao/archdao-client/models/components";
 
 let value: UserWithNonces = {
   id: 1,

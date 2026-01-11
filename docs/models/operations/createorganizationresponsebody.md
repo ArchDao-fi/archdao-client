@@ -5,7 +5,7 @@ Organization created
 ## Example Usage
 
 ```typescript
-import { CreateOrganizationResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { CreateOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CreateOrganizationResponseBody = {
   success: true,

@@ -7,7 +7,7 @@ Proposal and governance endpoints
 
 ### Available Operations
 
-* [listProposals](#listproposals) - List user's proposals
+* [listProposals](#listproposals) - List proposals
 * [createProposal](#createproposal) - Create proposal
 * [getProposal](#getproposal) - Get proposal details
 * [cancelProposal](#cancelproposal) - Cancel proposal
@@ -17,19 +17,24 @@ Proposal and governance endpoints
 
 ## listProposals
 
-Returns proposals created by the authenticated user.
+Returns proposals with visibility rules. Unauthenticated users see public proposals (staking, active, resolved, executed). Authenticated users also see their own drafts. Admins see all.
+
+**Searchable fields:** `title`
+
+**Default search field:** `title`
 
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
+const archdao = new Archdao();
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.listProposals({});
+  const result = await archdao.proposal.listProposals({
+    status: "draft,staking,active",
+    organizationId: "1,2,3",
+  });
 
   console.log(result);
 }
@@ -42,17 +47,18 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalListProposals } from "@draft/archdao-api-typescript/funcs/proposalListProposals.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposals } from "@archdao/archdao-client/funcs/proposalListProposals.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
+const archdao = new ArchdaoCore();
 
 async function run() {
-  const res = await proposalListProposals(archdaoApiTypescript, {});
+  const res = await proposalListProposals(archdao, {
+    status: "draft,staking,active",
+    organizationId: "1,2,3",
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -69,6 +75,7 @@ run();
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `request`                                                                                                                                                                      | [operations.ListProposalsRequest](../../models/operations/listproposalsrequest.md)                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `security`                                                                                                                                                                     | [operations.ListProposalsSecurity](../../models/operations/listproposalssecurity.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The security requirements to use for the request.                                                                                                                              |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -79,10 +86,9 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| errors.APIError | 4XX, 5XX        | \*/\*           |
 
 ## createProposal
 
@@ -91,14 +97,14 @@ Creates a new proposal in draft status.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.createProposal({
+  const result = await archdao.proposal.createProposal({
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
@@ -116,17 +122,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalCreateProposal } from "@draft/archdao-api-typescript/funcs/proposalCreateProposal.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalCreateProposal } from "@archdao/archdao-client/funcs/proposalCreateProposal.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCreateProposal(archdaoApiTypescript, {
+  const res = await proposalCreateProposal(archdao, {
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
@@ -170,12 +176,12 @@ Returns full proposal details. Draft proposals are only visible to authorized us
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript();
+const archdao = new Archdao();
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.getProposal({
+  const result = await archdao.proposal.getProposal({
     id: 264645,
   });
 
@@ -190,15 +196,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalGetProposal } from "@draft/archdao-api-typescript/funcs/proposalGetProposal.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalGetProposal } from "@archdao/archdao-client/funcs/proposalGetProposal.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore();
+const archdao = new ArchdaoCore();
 
 async function run() {
-  const res = await proposalGetProposal(archdaoApiTypescript, {
+  const res = await proposalGetProposal(archdao, {
     id: 264645,
   });
   if (res.ok) {
@@ -240,14 +246,14 @@ Cancels a proposal. Only allowed before trading begins (draft or staking status)
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.cancelProposal({
+  const result = await archdao.proposal.cancelProposal({
     id: 330250,
   });
 
@@ -262,17 +268,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalCancelProposal } from "@draft/archdao-api-typescript/funcs/proposalCancelProposal.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalCancelProposal } from "@archdao/archdao-client/funcs/proposalCancelProposal.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCancelProposal(archdaoApiTypescript, {
+  const res = await proposalCancelProposal(archdao, {
     id: 330250,
   });
   if (res.ok) {
@@ -313,14 +319,14 @@ Submits a draft proposal to the staking phase.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.initializeProposal({
+  const result = await archdao.proposal.initializeProposal({
     id: 301133,
   });
 
@@ -335,17 +341,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalInitializeProposal } from "@draft/archdao-api-typescript/funcs/proposalInitializeProposal.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalInitializeProposal } from "@archdao/archdao-client/funcs/proposalInitializeProposal.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalInitializeProposal(archdaoApiTypescript, {
+  const res = await proposalInitializeProposal(archdao, {
     id: 301133,
   });
   if (res.ok) {
@@ -386,14 +392,14 @@ Returns a paginated list of stakes for a proposal.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.listProposalStakes({
+  const result = await archdao.proposal.listProposalStakes({
     id: 854415,
   });
 
@@ -408,17 +414,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalListProposalStakes } from "@draft/archdao-api-typescript/funcs/proposalListProposalStakes.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposalStakes } from "@archdao/archdao-client/funcs/proposalListProposalStakes.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalStakes(archdaoApiTypescript, {
+  const res = await proposalListProposalStakes(archdao, {
     id: 854415,
   });
   if (res.ok) {
@@ -459,14 +465,14 @@ Returns a paginated list of trades for a proposal's decision markets.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.proposal.listProposalTrades({
+  const result = await archdao.proposal.listProposalTrades({
     id: 977484,
   });
 
@@ -481,17 +487,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { proposalListProposalTrades } from "@draft/archdao-api-typescript/funcs/proposalListProposalTrades.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposalTrades } from "@archdao/archdao-client/funcs/proposalListProposalTrades.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalTrades(archdaoApiTypescript, {
+  const res = await proposalListProposalTrades(archdao, {
     id: 977484,
   });
   if (res.ok) {

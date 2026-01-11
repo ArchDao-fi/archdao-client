@@ -7,6 +7,11 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  MarketSide,
+  MarketSide$inboundSchema,
+  MarketSide$outboundSchema,
+} from "./marketside.js";
+import {
   TradeDirection,
   TradeDirection$inboundSchema,
   TradeDirection$outboundSchema,
@@ -14,21 +19,20 @@ import {
 
 export type Trade = {
   id?: number | undefined;
-  decisionMarketId?: number | undefined;
+  side?: MarketSide | undefined;
   address?: string | undefined;
   direction?: TradeDirection | undefined;
   amount?: number | undefined;
   price?: number | undefined;
   txHash?: string | undefined;
   created?: Date | undefined;
-  updated?: Date | undefined;
 };
 
 /** @internal */
 export const Trade$inboundSchema: z.ZodType<Trade, z.ZodTypeDef, unknown> = z
   .object({
     id: z.number().int().optional(),
-    decisionMarketId: z.number().int().optional(),
+    side: MarketSide$inboundSchema.optional(),
     address: z.string().optional(),
     direction: TradeDirection$inboundSchema.optional(),
     amount: z.number().optional(),
@@ -36,21 +40,18 @@ export const Trade$inboundSchema: z.ZodType<Trade, z.ZodTypeDef, unknown> = z
     txHash: z.string().optional(),
     created: z.string().datetime({ offset: true }).transform(v => new Date(v))
       .optional(),
-    updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
-      .optional(),
   });
 
 /** @internal */
 export type Trade$Outbound = {
   id?: number | undefined;
-  decisionMarketId?: number | undefined;
+  side?: string | undefined;
   address?: string | undefined;
   direction?: string | undefined;
   amount?: number | undefined;
   price?: number | undefined;
   txHash?: string | undefined;
   created?: string | undefined;
-  updated?: string | undefined;
 };
 
 /** @internal */
@@ -60,14 +61,13 @@ export const Trade$outboundSchema: z.ZodType<
   Trade
 > = z.object({
   id: z.number().int().optional(),
-  decisionMarketId: z.number().int().optional(),
+  side: MarketSide$outboundSchema.optional(),
   address: z.string().optional(),
   direction: TradeDirection$outboundSchema.optional(),
   amount: z.number().optional(),
   price: z.number().optional(),
   txHash: z.string().optional(),
   created: z.date().transform(v => v.toISOString()).optional(),
-  updated: z.date().transform(v => v.toISOString()).optional(),
 });
 
 /**

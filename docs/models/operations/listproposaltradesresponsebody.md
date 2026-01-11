@@ -5,15 +5,14 @@ Trades retrieved
 ## Example Usage
 
 ```typescript
-import { ListProposalTradesResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListProposalTradesResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListProposalTradesResponseBody = {
   success: true,
   pagination: {
     page: 1,
-    pageSize: 20,
-    totalItems: 100,
-    totalPages: 5,
+    limit: 20,
+    total: 100,
   },
 };
 ```

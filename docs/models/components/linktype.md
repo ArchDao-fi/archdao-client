@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LinkType } from "@draft/archdao-api-typescript/models/components";
+import { LinkType } from "@archdao/archdao-client/models/components";
 
 let value: LinkType = "website";
 ```

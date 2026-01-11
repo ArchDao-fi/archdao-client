@@ -5,7 +5,7 @@ Status updated
 ## Example Usage
 
 ```typescript
-import { ChangeOrganizationStatusResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ChangeOrganizationStatusResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ChangeOrganizationStatusResponseBody = {
   success: true,

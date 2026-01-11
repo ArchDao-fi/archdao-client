@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ErrorT } from "@draft/archdao-api-typescript/models/errors";
+import { ErrorT } from "@archdao/archdao-client/models/errors";
 
 let value: ErrorT = {
   code: "VALIDATION_ERROR",

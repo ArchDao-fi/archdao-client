@@ -5,7 +5,7 @@ Organization retrieved
 ## Example Usage
 
 ```typescript
-import { GetOrganizationResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { GetOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetOrganizationResponseBody = {
   success: true,

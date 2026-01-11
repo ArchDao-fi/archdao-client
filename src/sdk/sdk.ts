@@ -8,7 +8,7 @@ import { Authentication } from "./authentication.js";
 import { Organization } from "./organization.js";
 import { Proposal } from "./proposal.js";
 
-export class ArchdaoApiTypescript extends ClientSDK {
+export class Archdao extends ClientSDK {
   private _authentication?: Authentication;
   get authentication(): Authentication {
     return (this._authentication ??= new Authentication(this._options));

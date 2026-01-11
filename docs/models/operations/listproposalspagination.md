@@ -3,13 +3,12 @@
 ## Example Usage
 
 ```typescript
-import { ListProposalsPagination } from "@draft/archdao-api-typescript/models/operations";
+import { ListProposalsPagination } from "@archdao/archdao-client/models/operations";
 
 let value: ListProposalsPagination = {
   page: 1,
-  pageSize: 20,
-  totalItems: 100,
-  totalPages: 5,
+  limit: 20,
+  total: 100,
 };
 ```
 
@@ -18,6 +17,5 @@ let value: ListProposalsPagination = {
 | Field              | Type               | Required           | Description        | Example            |
 | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
 | `page`             | *number*           | :heavy_check_mark: | N/A                | 1                  |
-| `pageSize`         | *number*           | :heavy_check_mark: | N/A                | 20                 |
-| `totalItems`       | *number*           | :heavy_check_mark: | N/A                | 100                |
-| `totalPages`       | *number*           | :heavy_check_mark: | N/A                | 5                  |
+| `limit`            | *number*           | :heavy_check_mark: | N/A                | 20                 |
+| `total`            | *number*           | :heavy_check_mark: | N/A                | 100                |

@@ -7,14 +7,78 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+export type ProposalStakeUser = {
+  id?: number | undefined;
+  address?: string | undefined;
+  name?: string | undefined;
+};
+
 export type ProposalStake = {
   id?: number | undefined;
-  proposalId?: number | undefined;
-  userId?: number | undefined;
+  user?: ProposalStakeUser | undefined;
   amount?: number | undefined;
   created?: Date | undefined;
-  updated?: Date | undefined;
 };
+
+/** @internal */
+export const ProposalStakeUser$inboundSchema: z.ZodType<
+  ProposalStakeUser,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  id: z.number().int().optional(),
+  address: z.string().optional(),
+  name: z.string().optional(),
+});
+
+/** @internal */
+export type ProposalStakeUser$Outbound = {
+  id?: number | undefined;
+  address?: string | undefined;
+  name?: string | undefined;
+};
+
+/** @internal */
+export const ProposalStakeUser$outboundSchema: z.ZodType<
+  ProposalStakeUser$Outbound,
+  z.ZodTypeDef,
+  ProposalStakeUser
+> = z.object({
+  id: z.number().int().optional(),
+  address: z.string().optional(),
+  name: z.string().optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ProposalStakeUser$ {
+  /** @deprecated use `ProposalStakeUser$inboundSchema` instead. */
+  export const inboundSchema = ProposalStakeUser$inboundSchema;
+  /** @deprecated use `ProposalStakeUser$outboundSchema` instead. */
+  export const outboundSchema = ProposalStakeUser$outboundSchema;
+  /** @deprecated use `ProposalStakeUser$Outbound` instead. */
+  export type Outbound = ProposalStakeUser$Outbound;
+}
+
+export function proposalStakeUserToJSON(
+  proposalStakeUser: ProposalStakeUser,
+): string {
+  return JSON.stringify(
+    ProposalStakeUser$outboundSchema.parse(proposalStakeUser),
+  );
+}
+
+export function proposalStakeUserFromJSON(
+  jsonString: string,
+): SafeParseResult<ProposalStakeUser, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ProposalStakeUser$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ProposalStakeUser' from JSON`,
+  );
+}
 
 /** @internal */
 export const ProposalStake$inboundSchema: z.ZodType<
@@ -23,23 +87,18 @@ export const ProposalStake$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.number().int().optional(),
-  proposalId: z.number().int().optional(),
-  userId: z.number().int().optional(),
+  user: z.lazy(() => ProposalStakeUser$inboundSchema).optional(),
   amount: z.number().optional(),
   created: z.string().datetime({ offset: true }).transform(v => new Date(v))
-    .optional(),
-  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
 });
 
 /** @internal */
 export type ProposalStake$Outbound = {
   id?: number | undefined;
-  proposalId?: number | undefined;
-  userId?: number | undefined;
+  user?: ProposalStakeUser$Outbound | undefined;
   amount?: number | undefined;
   created?: string | undefined;
-  updated?: string | undefined;
 };
 
 /** @internal */
@@ -49,11 +108,9 @@ export const ProposalStake$outboundSchema: z.ZodType<
   ProposalStake
 > = z.object({
   id: z.number().int().optional(),
-  proposalId: z.number().int().optional(),
-  userId: z.number().int().optional(),
+  user: z.lazy(() => ProposalStakeUser$outboundSchema).optional(),
   amount: z.number().optional(),
   created: z.date().transform(v => v.toISOString()).optional(),
-  updated: z.date().transform(v => v.toISOString()).optional(),
 });
 
 /**

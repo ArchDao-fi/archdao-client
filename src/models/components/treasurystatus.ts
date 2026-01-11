@@ -7,7 +7,9 @@ import { ClosedEnum } from "../../types/enums.js";
 
 export const TreasuryStatus = {
   Pending: "pending",
+  Inactive: "inactive",
   Active: "active",
+  Approved: "approved",
 } as const;
 export type TreasuryStatus = ClosedEnum<typeof TreasuryStatus>;
 

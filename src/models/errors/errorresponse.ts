@@ -6,7 +6,7 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
-import { ArchdaoAPITypescriptError } from "./archdaoapitypescripterror.js";
+import { ArchdaoError } from "./archdaoerror.js";
 import { SDKValidationError } from "./sdkvalidationerror.js";
 
 export type ErrorT = {
@@ -26,7 +26,7 @@ export type ErrorResponseData = {
 /**
  * Bad Request - Invalid input data
  */
-export class ErrorResponse extends ArchdaoAPITypescriptError {
+export class ErrorResponse extends ArchdaoError {
   success: boolean;
   error: ErrorT;
 

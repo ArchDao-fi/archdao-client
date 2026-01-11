@@ -24,8 +24,6 @@ export type CreateProposalRequest = {
   title: string;
   description: string;
   actions: Array<Actions>;
-  lpAllocation?: number | undefined;
-  passThresholdBps?: number | undefined;
 };
 
 /** @internal */
@@ -138,8 +136,6 @@ export const CreateProposalRequest$inboundSchema: z.ZodType<
   title: z.string(),
   description: z.string(),
   actions: z.array(z.lazy(() => Actions$inboundSchema)),
-  lpAllocation: z.number().int().default(50),
-  passThresholdBps: z.number().int().default(100),
 });
 
 /** @internal */
@@ -148,8 +144,6 @@ export type CreateProposalRequest$Outbound = {
   title: string;
   description: string;
   actions: Array<Actions$Outbound>;
-  lpAllocation: number;
-  passThresholdBps: number;
 };
 
 /** @internal */
@@ -162,8 +156,6 @@ export const CreateProposalRequest$outboundSchema: z.ZodType<
   title: z.string(),
   description: z.string(),
   actions: z.array(z.lazy(() => Actions$outboundSchema)),
-  lpAllocation: z.number().int().default(50),
-  passThresholdBps: z.number().int().default(100),
 });
 
 /**
