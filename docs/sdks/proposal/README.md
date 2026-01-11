@@ -94,6 +94,8 @@ run();
 
 Creates a new proposal in draft status.
 
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_ACTION_DATA`, `EMPTY_ACTIONS`, `ORGANIZATION_NOT_FOUND`, `INSUFFICIENT_TOKEN_BALANCE`, `INVALID_TOKEN`
+
 ### Example Usage
 
 ```typescript
@@ -164,14 +166,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 404        | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 400, 401, 404    | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## getProposal
 
 Returns full proposal details. Draft proposals are only visible to authorized users.
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `NOT_AUTHORIZED`
 
 ### Example Usage
 
@@ -234,14 +238,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 404                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 404              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## cancelProposal
 
 Cancels a proposal. Only allowed before trading begins (draft or staking status).
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -307,14 +313,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 403, 404   | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| errors.Err         | 400, 401, 403, 404 | application/json   |
+| errors.APIError    | 4XX, 5XX           | \*/\*              |
 
 ## initializeProposal
 
 Submits a draft proposal to the staking phase.
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `PROPOSAL_ALREADY_ACTIVE`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -382,7 +390,7 @@ run();
 
 | Error Type              | Status Code             | Content Type            |
 | ----------------------- | ----------------------- | ----------------------- |
-| errors.ErrorResponse    | 400, 401, 403, 404, 409 | application/json        |
+| errors.Err              | 400, 401, 403, 404, 409 | application/json        |
 | errors.APIError         | 4XX, 5XX                | \*/\*                   |
 
 ## listProposalStakes
@@ -453,10 +461,10 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 404                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 404              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## listProposalTrades
 
@@ -526,7 +534,7 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 404                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 404              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |

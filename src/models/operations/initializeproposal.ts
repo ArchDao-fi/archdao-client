@@ -13,7 +13,7 @@ export type InitializeProposalRequest = {
 };
 
 /**
- * Proposal initialized
+ * Success response wrapper
  */
 export type InitializeProposalResponseBody = {
   success: boolean;

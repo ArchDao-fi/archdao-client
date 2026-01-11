@@ -36,6 +36,8 @@ import { isReadableStream } from "../types/streams.js";
  *
  * @remarks
  * Creates a new organization (external or ICO type). Uses multipart/form-data for image uploads.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
  */
 export function organizationCreateOrganization(
   client: ArchdaoCore,
@@ -44,7 +46,7 @@ export function organizationCreateOrganization(
 ): APIPromise<
   Result<
     operations.CreateOrganizationResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -70,7 +72,7 @@ async function $do(
   [
     Result<
       operations.CreateOrganizationResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -205,7 +207,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.CreateOrganizationResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -216,7 +218,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(201, operations.CreateOrganizationResponseBody$inboundSchema),
-    M.jsonErr([400, 401], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

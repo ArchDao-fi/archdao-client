@@ -91,6 +91,8 @@ run();
 
 Creates a new organization (external or ICO type). Uses multipart/form-data for image uploads.
 
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
+
 ### Example Usage
 
 ```typescript
@@ -159,14 +161,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401             | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 400, 401         | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## getOrganization
 
 Returns full organization details including proposals.
+
+**Error Codes:** `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`
 
 ### Example Usage
 
@@ -229,14 +233,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 404                  | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 404              | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## editOrganization
 
 Admin-only endpoint to edit organization details.
+
+**Error Codes:** `VALIDATION_ERROR`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -302,14 +308,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401, 403, 404        | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 401, 403, 404    | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## changeOrganizationStatus
 
 Admin-only endpoint to approve, reject, or activate organizations.
+
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -381,14 +389,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 403, 404   | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| errors.Err         | 400, 401, 403, 404 | application/json   |
+| errors.APIError    | 4XX, 5XX           | \*/\*              |
 
 ## activateRaise
 
 Admin-only endpoint to activate the raise for ICO organizations. Raise starts immediately with duration from system settings.
+
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `RAISE_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -454,7 +464,7 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 403, 404   | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| errors.Err         | 400, 401, 403, 404 | application/json   |
+| errors.APIError    | 4XX, 5XX           | \*/\*              |

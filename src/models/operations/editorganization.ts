@@ -37,7 +37,7 @@ export type EditOrganizationRequest = {
 };
 
 /**
- * Organization updated
+ * Success response wrapper
  */
 export type EditOrganizationResponseBody = {
   success: boolean;

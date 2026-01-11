@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Verifies the wallet signature and returns a JWT token valid for 30 days.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `INVALID_SIGNATURE`, `USER_NOT_FOUND`, `NONCE_NOT_FOUND`, `INACTIVE_NONCE`
  */
 export function authenticationLogin(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function authenticationLogin(
 ): APIPromise<
   Result<
     operations.LoginResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.LoginResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -146,7 +148,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.LoginResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -157,7 +159,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.LoginResponseBody$inboundSchema),
-    M.jsonErr([400, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

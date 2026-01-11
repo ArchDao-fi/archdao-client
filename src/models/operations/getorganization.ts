@@ -17,7 +17,7 @@ export type GetOrganizationRequest = {
 };
 
 /**
- * Organization retrieved
+ * Success response wrapper
  */
 export type GetOrganizationResponseBody = {
   success: boolean;

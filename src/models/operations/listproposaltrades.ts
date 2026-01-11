@@ -44,7 +44,7 @@ export type ListProposalTradesPagination = {
 };
 
 /**
- * Trades retrieved
+ * Success response wrapper
  */
 export type ListProposalTradesResponseBody = {
   success: boolean;

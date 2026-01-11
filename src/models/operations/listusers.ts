@@ -38,7 +38,7 @@ export type ListUsersPagination = {
 };
 
 /**
- * Users retrieved
+ * Success response wrapper
  */
 export type ListUsersResponseBody = {
   success: boolean;

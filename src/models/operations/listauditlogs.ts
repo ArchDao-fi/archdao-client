@@ -32,7 +32,7 @@ export type ListAuditLogsPagination = {
 };
 
 /**
- * Audit logs retrieved
+ * Success response wrapper
  */
 export type ListAuditLogsResponseBody = {
   success: boolean;

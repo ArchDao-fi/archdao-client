@@ -38,7 +38,7 @@ export function proposalListProposalStakes(
 ): APIPromise<
   Result<
     operations.ListProposalStakesResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +64,7 @@ async function $do(
   [
     Result<
       operations.ListProposalStakesResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -158,7 +158,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.ListProposalStakesResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -169,7 +169,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.ListProposalStakesResponseBody$inboundSchema),
-    M.jsonErr(404, errors.ErrorResponse$inboundSchema),
+    M.jsonErr(404, errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

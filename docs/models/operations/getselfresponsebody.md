@@ -1,6 +1,6 @@
 # GetSelfResponseBody
 
-User info retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -26,7 +26,7 @@ let value: GetSelfResponseBody = {
 
 ## Fields
 
-| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            | Example                                                                |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `success`                                                              | *boolean*                                                              | :heavy_check_mark:                                                     | N/A                                                                    | true                                                                   |
-| `data`                                                                 | [components.UserWithNonces](../../models/components/userwithnonces.md) | :heavy_minus_sign:                                                     | N/A                                                                    |                                                                        |
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `success`                                                              | *boolean*                                                              | :heavy_check_mark:                                                     | N/A                                                                    |
+| `data`                                                                 | [components.UserWithNonces](../../models/components/userwithnonces.md) | :heavy_minus_sign:                                                     | N/A                                                                    |

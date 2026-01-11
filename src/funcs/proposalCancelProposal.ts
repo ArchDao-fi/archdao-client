@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Cancels a proposal. Only allowed before trading begins (draft or staking status).
+ *
+ * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function proposalCancelProposal(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function proposalCancelProposal(
 ): APIPromise<
   Result<
     operations.CancelProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.CancelProposalResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -152,7 +154,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.CancelProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -163,7 +165,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.CancelProposalResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

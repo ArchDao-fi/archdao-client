@@ -7,7 +7,7 @@ import { ErrorT } from "@archdao/archdao-client/models/errors";
 
 let value: ErrorT = {
   code: "VALIDATION_ERROR",
-  message: "One or more fields failed validation.",
+  message: "<value>",
   fields: [
     {
       field: "name",
@@ -19,8 +19,8 @@ let value: ErrorT = {
 
 ## Fields
 
-| Field                                                            | Type                                                             | Required                                                         | Description                                                      | Example                                                          |
-| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `code`                                                           | *string*                                                         | :heavy_check_mark:                                               | N/A                                                              | VALIDATION_ERROR                                                 |
-| `message`                                                        | *string*                                                         | :heavy_check_mark:                                               | N/A                                                              | One or more fields failed validation.                            |
-| `fields`                                                         | [components.FieldError](../../models/components/fielderror.md)[] | :heavy_minus_sign:                                               | N/A                                                              |                                                                  |
+| Field                                                             | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `code`                                                            | [components.ErrCode](../../models/components/errcode.md)          | :heavy_check_mark:                                                | All error codes that can be returned from the backend             |
+| `message`                                                         | *string*                                                          | :heavy_check_mark:                                                | N/A                                                               |
+| `fields`                                                          | [components.FieldError](../../models/components/fielderror.md)[]  | :heavy_minus_sign:                                                | Field-level validation errors (only present for VALIDATION_ERROR) |

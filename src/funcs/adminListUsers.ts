@@ -42,7 +42,7 @@ export function adminListUsers(
 ): APIPromise<
   Result<
     operations.ListUsersResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -68,7 +68,7 @@ async function $do(
   [
     Result<
       operations.ListUsersResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -158,7 +158,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.ListUsersResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -169,7 +169,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.ListUsersResponseBody$inboundSchema),
-    M.jsonErr([401, 403], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([401, 403], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

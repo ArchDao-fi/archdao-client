@@ -27,7 +27,7 @@ export type ListProposalStakesPagination = {
 };
 
 /**
- * Stakes retrieved
+ * Success response wrapper
  */
 export type ListProposalStakesResponseBody = {
   success: boolean;

@@ -60,9 +60,9 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 
 export const SDK_METADATA = {
   language: "typescript",
-  openapiDocVersion: "1.1.1",
-  sdkVersion: "1.1.1",
+  openapiDocVersion: "1.2.0",
+  sdkVersion: "1.2.0",
   genVersion: "2.634.2",
   userAgent:
-    "speakeasy-sdk/typescript 1.1.1 2.634.2 1.1.1 @archdao/archdao-client",
+    "speakeasy-sdk/typescript 1.2.0 2.634.2 1.2.0 @archdao/archdao-client",
 } as const;

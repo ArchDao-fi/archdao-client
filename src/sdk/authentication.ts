@@ -17,6 +17,8 @@ export class Authentication extends ClientSDK {
    *
    * @remarks
    * Returns a nonce that the user must sign with their wallet. Creates the user if they do not exist.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`
    */
   async createNonce(
     request: operations.CreateNonceRequestBody,
@@ -34,6 +36,8 @@ export class Authentication extends ClientSDK {
    *
    * @remarks
    * Verifies the wallet signature and returns a JWT token valid for 30 days.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_SIGNATURE`, `USER_NOT_FOUND`, `NONCE_NOT_FOUND`, `INACTIVE_NONCE`
    */
   async login(
     request: operations.LoginRequestBody,
@@ -51,11 +55,13 @@ export class Authentication extends ClientSDK {
    *
    * @remarks
    * Deactivates the current nonce. Optionally deactivate all nonces to logout from all devices.
+   *
+   * **Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
    */
   async logout(
     request?: operations.LogoutRequestBody | undefined,
     options?: RequestOptions,
-  ): Promise<components.SuccessResponse> {
+  ): Promise<components.Ok> {
     return unwrapAsync(authenticationLogout(
       this,
       request,
@@ -68,6 +74,8 @@ export class Authentication extends ClientSDK {
    *
    * @remarks
    * Returns the authenticated user's information including active sessions.
+   *
+   * **Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
    */
   async getSelf(
     options?: RequestOptions,

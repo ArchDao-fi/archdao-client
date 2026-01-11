@@ -1,6 +1,6 @@
 # ListOrganizationsResponseBody
 
-Organizations retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Organizations retrieved
 import { ListOrganizationsResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListOrganizationsResponseBody = {
-  success: true,
+  success: false,
   pagination: {
     page: 1,
     limit: 20,
@@ -34,8 +34,8 @@ let value: ListOrganizationsResponseBody = {
 
 ## Fields
 
-| Field                                                                | Type                                                                 | Required                                                             | Description                                                          | Example                                                              |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `success`                                                            | *boolean*                                                            | :heavy_check_mark:                                                   | N/A                                                                  | true                                                                 |
-| `pagination`                                                         | [operations.Pagination](../../models/operations/pagination.md)       | :heavy_minus_sign:                                                   | N/A                                                                  |                                                                      |
-| `data`                                                               | [components.Organization](../../models/components/organization.md)[] | :heavy_minus_sign:                                                   | N/A                                                                  |                                                                      |
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `success`                                                            | *boolean*                                                            | :heavy_check_mark:                                                   | N/A                                                                  |
+| `pagination`                                                         | [operations.Pagination](../../models/operations/pagination.md)       | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `data`                                                               | [components.Organization](../../models/components/organization.md)[] | :heavy_minus_sign:                                                   | N/A                                                                  |

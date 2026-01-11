@@ -1,6 +1,6 @@
 # GetProposalResponseBody
 
-Proposal retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,13 +8,13 @@ Proposal retrieved
 import { GetProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetProposalResponseBody = {
-  success: true,
+  success: false,
 };
 ```
 
 ## Fields
 
-| Field                                                      | Type                                                       | Required                                                   | Description                                                | Example                                                    |
-| ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
-| `success`                                                  | *boolean*                                                  | :heavy_check_mark:                                         | N/A                                                        | true                                                       |
-| `data`                                                     | [components.Proposal](../../models/components/proposal.md) | :heavy_minus_sign:                                         | N/A                                                        |                                                            |
+| Field                                                      | Type                                                       | Required                                                   | Description                                                |
+| ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| `success`                                                  | *boolean*                                                  | :heavy_check_mark:                                         | N/A                                                        |
+| `data`                                                     | [components.Proposal](../../models/components/proposal.md) | :heavy_minus_sign:                                         | N/A                                                        |

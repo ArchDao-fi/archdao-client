@@ -9,7 +9,7 @@ import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 /**
- * User info retrieved
+ * Success response wrapper
  */
 export type GetSelfResponseBody = {
   success: boolean;

@@ -41,6 +41,8 @@ export class Organization extends ClientSDK {
    *
    * @remarks
    * Creates a new organization (external or ICO type). Uses multipart/form-data for image uploads.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
    */
   async createOrganization(
     request: operations.CreateOrganizationRequestBody,
@@ -58,6 +60,8 @@ export class Organization extends ClientSDK {
    *
    * @remarks
    * Returns full organization details including proposals.
+   *
+   * **Error Codes:** `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`
    */
   async getOrganization(
     request: operations.GetOrganizationRequest,
@@ -77,6 +81,8 @@ export class Organization extends ClientSDK {
    *
    * @remarks
    * Admin-only endpoint to edit organization details.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async editOrganization(
     request: operations.EditOrganizationRequest,
@@ -94,6 +100,8 @@ export class Organization extends ClientSDK {
    *
    * @remarks
    * Admin-only endpoint to approve, reject, or activate organizations.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async changeOrganizationStatus(
     request: operations.ChangeOrganizationStatusRequest,
@@ -111,6 +119,8 @@ export class Organization extends ClientSDK {
    *
    * @remarks
    * Admin-only endpoint to activate the raise for ICO organizations. Raise starts immediately with duration from system settings.
+   *
+   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `RAISE_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async activateRaise(
     request: operations.ActivateRaiseRequest,

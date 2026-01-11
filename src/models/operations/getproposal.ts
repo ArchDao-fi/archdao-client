@@ -17,7 +17,7 @@ export type GetProposalRequest = {
 };
 
 /**
- * Proposal retrieved
+ * Success response wrapper
  */
 export type GetProposalResponseBody = {
   success: boolean;

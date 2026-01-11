@@ -79,14 +79,16 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401, 403             | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 401, 403         | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |
 
 ## changeUserRole
 
 Admin-only endpoint to promote or demote users.
+
+**Error Codes:** `VALIDATION_ERROR`, `USER_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
 
 ### Example Usage
 
@@ -158,10 +160,10 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 400, 401, 403, 404   | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| errors.Err         | 400, 401, 403, 404 | application/json   |
+| errors.APIError    | 4XX, 5XX           | \*/\*              |
 
 ## listAuditLogs
 
@@ -227,7 +229,7 @@ run();
 
 ### Errors
 
-| Error Type           | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| errors.ErrorResponse | 401, 403             | application/json     |
-| errors.APIError      | 4XX, 5XX             | \*/\*                |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.Err       | 401, 403         | application/json |
+| errors.APIError  | 4XX, 5XX         | \*/\*            |

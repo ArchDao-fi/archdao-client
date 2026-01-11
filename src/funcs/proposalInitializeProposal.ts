@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Submits a draft proposal to the staking phase.
+ *
+ * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `PROPOSAL_ALREADY_ACTIVE`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
  */
 export function proposalInitializeProposal(
   client: ArchdaoCore,
@@ -38,7 +40,7 @@ export function proposalInitializeProposal(
 ): APIPromise<
   Result<
     operations.InitializeProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,7 +66,7 @@ async function $do(
   [
     Result<
       operations.InitializeProposalResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -152,7 +154,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.InitializeProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -163,7 +165,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.InitializeProposalResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404, 409], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 403, 404, 409], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

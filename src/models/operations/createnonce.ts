@@ -19,7 +19,7 @@ export type Data = {
 };
 
 /**
- * Nonce generated successfully
+ * Success response wrapper
  */
 export type CreateNonceResponseBody = {
   success: boolean;

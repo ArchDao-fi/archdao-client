@@ -1,6 +1,6 @@
 # GetOrganizationResponseBody
 
-Organization retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Organization retrieved
 import { GetOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetOrganizationResponseBody = {
-  success: true,
+  success: false,
   data: {
     token: {
       name: "Example Token",
@@ -27,7 +27,7 @@ let value: GetOrganizationResponseBody = {
 
 ## Fields
 
-| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `success`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            | true                                                                           |
-| `data`                                                                         | [components.OrganizationDetail](../../models/components/organizationdetail.md) | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `success`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `data`                                                                         | [components.OrganizationDetail](../../models/components/organizationdetail.md) | :heavy_minus_sign:                                                             | N/A                                                                            |

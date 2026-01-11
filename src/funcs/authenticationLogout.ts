@@ -31,6 +31,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Deactivates the current nonce. Optionally deactivate all nonces to logout from all devices.
+ *
+ * **Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
  */
 export function authenticationLogout(
   client: ArchdaoCore,
@@ -38,8 +40,8 @@ export function authenticationLogout(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    components.SuccessResponse,
-    | errors.ErrorResponse
+    components.Ok,
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -64,8 +66,8 @@ async function $do(
 ): Promise<
   [
     Result<
-      components.SuccessResponse,
-      | errors.ErrorResponse
+      components.Ok,
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -149,8 +151,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    components.SuccessResponse,
-    | errors.ErrorResponse
+    components.Ok,
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -160,8 +162,8 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, components.SuccessResponse$inboundSchema),
-    M.jsonErr(401, errors.ErrorResponse$inboundSchema),
+    M.json(200, components.Ok$inboundSchema),
+    M.jsonErr(401, errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

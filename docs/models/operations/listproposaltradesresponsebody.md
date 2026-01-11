@@ -1,6 +1,6 @@
 # ListProposalTradesResponseBody
 
-Trades retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Trades retrieved
 import { ListProposalTradesResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListProposalTradesResponseBody = {
-  success: true,
+  success: false,
   pagination: {
     page: 1,
     limit: 20,
@@ -19,8 +19,8 @@ let value: ListProposalTradesResponseBody = {
 
 ## Fields
 
-| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        | Example                                                                                            |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `success`                                                                                          | *boolean*                                                                                          | :heavy_check_mark:                                                                                 | N/A                                                                                                | true                                                                                               |
-| `pagination`                                                                                       | [operations.ListProposalTradesPagination](../../models/operations/listproposaltradespagination.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |                                                                                                    |
-| `data`                                                                                             | [components.Trade](../../models/components/trade.md)[]                                             | :heavy_minus_sign:                                                                                 | N/A                                                                                                |                                                                                                    |
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `success`                                                                                          | *boolean*                                                                                          | :heavy_check_mark:                                                                                 | N/A                                                                                                |
+| `pagination`                                                                                       | [operations.ListProposalTradesPagination](../../models/operations/listproposaltradespagination.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `data`                                                                                             | [components.Trade](../../models/components/trade.md)[]                                             | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

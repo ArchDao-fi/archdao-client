@@ -55,7 +55,7 @@ export type CreateOrganizationRequestBody = {
 };
 
 /**
- * Organization created
+ * Success response wrapper
  */
 export type CreateOrganizationResponseBody = {
   success: boolean;

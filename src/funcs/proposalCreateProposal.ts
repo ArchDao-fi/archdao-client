@@ -31,6 +31,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Creates a new proposal in draft status.
+ *
+ * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ACTION_DATA`, `EMPTY_ACTIONS`, `ORGANIZATION_NOT_FOUND`, `INSUFFICIENT_TOKEN_BALANCE`, `INVALID_TOKEN`
  */
 export function proposalCreateProposal(
   client: ArchdaoCore,
@@ -39,7 +41,7 @@ export function proposalCreateProposal(
 ): APIPromise<
   Result<
     operations.CreateProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -65,7 +67,7 @@ async function $do(
   [
     Result<
       operations.CreateProposalResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -147,7 +149,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.CreateProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -158,7 +160,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(201, operations.CreateProposalResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 404], errors.ErrorResponse$inboundSchema),
+    M.jsonErr([400, 401, 404], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

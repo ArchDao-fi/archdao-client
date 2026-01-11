@@ -1,6 +1,6 @@
 # ListUsersResponseBody
 
-Users retrieved
+Success response wrapper
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ Users retrieved
 import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListUsersResponseBody = {
-  success: true,
+  success: false,
   pagination: {
     page: 1,
     limit: 20,
@@ -26,8 +26,8 @@ let value: ListUsersResponseBody = {
 
 ## Fields
 
-| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `success`                                                                        | *boolean*                                                                        | :heavy_check_mark:                                                               | N/A                                                                              | true                                                                             |
-| `pagination`                                                                     | [operations.ListUsersPagination](../../models/operations/listuserspagination.md) | :heavy_minus_sign:                                                               | N/A                                                                              |                                                                                  |
-| `data`                                                                           | [components.User](../../models/components/user.md)[]                             | :heavy_minus_sign:                                                               | N/A                                                                              |                                                                                  |
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `success`                                                                        | *boolean*                                                                        | :heavy_check_mark:                                                               | N/A                                                                              |
+| `pagination`                                                                     | [operations.ListUsersPagination](../../models/operations/listuserspagination.md) | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `data`                                                                           | [components.User](../../models/components/user.md)[]                             | :heavy_minus_sign:                                                               | N/A                                                                              |

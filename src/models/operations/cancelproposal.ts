@@ -17,7 +17,7 @@ export type CancelProposalData = {
 };
 
 /**
- * Proposal cancelled
+ * Success response wrapper
  */
 export type CancelProposalResponseBody = {
   success: boolean;

@@ -30,6 +30,8 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Returns full proposal details. Draft proposals are only visible to authorized users.
+ *
+ * **Error Codes:** `PROPOSAL_NOT_FOUND`, `NOT_AUTHORIZED`
  */
 export function proposalGetProposal(
   client: ArchdaoCore,
@@ -39,7 +41,7 @@ export function proposalGetProposal(
 ): APIPromise<
   Result<
     operations.GetProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -67,7 +69,7 @@ async function $do(
   [
     Result<
       operations.GetProposalResponseBody,
-      | errors.ErrorResponse
+      | errors.Err
       | ArchdaoError
       | ResponseValidationError
       | ConnectionError
@@ -161,7 +163,7 @@ async function $do(
 
   const [result] = await M.match<
     operations.GetProposalResponseBody,
-    | errors.ErrorResponse
+    | errors.Err
     | ArchdaoError
     | ResponseValidationError
     | ConnectionError
@@ -172,7 +174,7 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.GetProposalResponseBody$inboundSchema),
-    M.jsonErr(404, errors.ErrorResponse$inboundSchema),
+    M.jsonErr(404, errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
