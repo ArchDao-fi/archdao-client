@@ -5,7 +5,7 @@ Nonce generated successfully
 ## Example Usage
 
 ```typescript
-import { GetNonceResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { GetNonceResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetNonceResponseBody = {
   success: true,

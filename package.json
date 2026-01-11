@@ -1,11 +1,11 @@
 {
-  "name": "@draft/archdao-api-typescript",
+  "name": "@archdao/archdao-client",
   "version": "1.0.0",
-  "author": "Draft",
+  "author": "Soc",
   "type": "module",
   "tshy": {
     "sourceDialects": [
-      "@draft/archdao-api-typescript/source"
+      "@archdao/archdao-client/source"
     ],
     "exports": {
       ".": "./src/index.ts",

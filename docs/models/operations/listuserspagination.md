@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ListUsersPagination } from "@draft/archdao-api-typescript/models/operations";
+import { ListUsersPagination } from "@archdao/archdao-client/models/operations";
 
 let value: ListUsersPagination = {
   page: 1,

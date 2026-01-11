@@ -5,7 +5,7 @@ Users retrieved
 ## Example Usage
 
 ```typescript
-import { ListUsersResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListUsersResponseBody = {
   success: true,

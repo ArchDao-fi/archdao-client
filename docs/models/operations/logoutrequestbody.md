@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LogoutRequestBody } from "@draft/archdao-api-typescript/models/operations";
+import { LogoutRequestBody } from "@archdao/archdao-client/models/operations";
 
 let value: LogoutRequestBody = {};
 ```

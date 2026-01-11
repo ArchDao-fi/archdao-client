@@ -5,7 +5,7 @@ Trades retrieved
 ## Example Usage
 
 ```typescript
-import { ListProposalTradesResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListProposalTradesResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListProposalTradesResponseBody = {
   success: true,

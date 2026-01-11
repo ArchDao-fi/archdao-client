@@ -5,7 +5,7 @@ Raise configured
 ## Example Usage
 
 ```typescript
-import { ConfigureRaiseResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ConfigureRaiseResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ConfigureRaiseResponseBody = {
   success: true,

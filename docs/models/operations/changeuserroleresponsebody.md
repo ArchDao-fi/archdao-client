@@ -5,7 +5,7 @@ Role updated
 ## Example Usage
 
 ```typescript
-import { ChangeUserRoleResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ChangeUserRoleResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ChangeUserRoleResponseBody = {
   success: true,

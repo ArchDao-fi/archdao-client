@@ -5,7 +5,7 @@ Audit logs retrieved
 ## Example Usage
 
 ```typescript
-import { ListAuditLogsResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListAuditLogsResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListAuditLogsResponseBody = {
   success: true,

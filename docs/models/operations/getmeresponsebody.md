@@ -5,7 +5,7 @@ User info retrieved
 ## Example Usage
 
 ```typescript
-import { GetMeResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { GetMeResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetMeResponseBody = {
   success: true,

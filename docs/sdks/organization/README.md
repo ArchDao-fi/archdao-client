@@ -21,12 +21,12 @@ Returns a paginated list of organizations. Visibility varies by authentication s
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript();
+const archdao = new Archdao();
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.listOrganizations({});
+  const result = await archdao.organization.listOrganizations({});
 
   console.log(result);
 }
@@ -39,15 +39,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationListOrganizations } from "@draft/archdao-api-typescript/funcs/organizationListOrganizations.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationListOrganizations } from "@archdao/archdao-client/funcs/organizationListOrganizations.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore();
+const archdao = new ArchdaoCore();
 
 async function run() {
-  const res = await organizationListOrganizations(archdaoApiTypescript, {});
+  const res = await organizationListOrganizations(archdao, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -86,14 +86,14 @@ Creates a new organization (external or ICO type). Uses multipart/form-data for 
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.createOrganization({
+  const result = await archdao.organization.createOrganization({
     name: "<value>",
     description: "since unto hollow fedora greatly hmph",
     contactInformation: "<value>",
@@ -110,17 +110,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationCreateOrganization } from "@draft/archdao-api-typescript/funcs/organizationCreateOrganization.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationCreateOrganization } from "@archdao/archdao-client/funcs/organizationCreateOrganization.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationCreateOrganization(archdaoApiTypescript, {
+  const res = await organizationCreateOrganization(archdao, {
     name: "<value>",
     description: "since unto hollow fedora greatly hmph",
     contactInformation: "<value>",
@@ -163,12 +163,12 @@ Returns full organization details including proposals.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript();
+const archdao = new Archdao();
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.getOrganization({
+  const result = await archdao.organization.getOrganization({
     slug: "<value>",
   });
 
@@ -183,15 +183,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationGetOrganization } from "@draft/archdao-api-typescript/funcs/organizationGetOrganization.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationGetOrganization } from "@archdao/archdao-client/funcs/organizationGetOrganization.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore();
+const archdao = new ArchdaoCore();
 
 async function run() {
-  const res = await organizationGetOrganization(archdaoApiTypescript, {
+  const res = await organizationGetOrganization(archdao, {
     slug: "<value>",
   });
   if (res.ok) {
@@ -233,14 +233,14 @@ Admin-only endpoint to edit organization details.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.editOrganization({
+  const result = await archdao.organization.editOrganization({
     id: 384554,
   });
 
@@ -255,17 +255,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationEditOrganization } from "@draft/archdao-api-typescript/funcs/organizationEditOrganization.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationEditOrganization } from "@archdao/archdao-client/funcs/organizationEditOrganization.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationEditOrganization(archdaoApiTypescript, {
+  const res = await organizationEditOrganization(archdao, {
     id: 384554,
   });
   if (res.ok) {
@@ -306,14 +306,14 @@ Admin-only endpoint to approve, reject, or activate organizations.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.changeOrganizationStatus({
+  const result = await archdao.organization.changeOrganizationStatus({
     id: 985976,
     requestBody: {
       status: "failed",
@@ -331,17 +331,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationChangeOrganizationStatus } from "@draft/archdao-api-typescript/funcs/organizationChangeOrganizationStatus.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationChangeOrganizationStatus } from "@archdao/archdao-client/funcs/organizationChangeOrganizationStatus.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationChangeOrganizationStatus(archdaoApiTypescript, {
+  const res = await organizationChangeOrganizationStatus(archdao, {
     id: 985976,
     requestBody: {
       status: "failed",
@@ -385,14 +385,14 @@ Admin-only endpoint to set raise dates for ICO organizations.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.organization.configureRaise({
+  const result = await archdao.organization.configureRaise({
     id: 396097,
     requestBody: {
       startDate: new Date("2026-12-29T03:23:25.992Z"),
@@ -411,17 +411,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { organizationConfigureRaise } from "@draft/archdao-api-typescript/funcs/organizationConfigureRaise.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { organizationConfigureRaise } from "@archdao/archdao-client/funcs/organizationConfigureRaise.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await organizationConfigureRaise(archdaoApiTypescript, {
+  const res = await organizationConfigureRaise(archdao, {
     id: 396097,
     requestBody: {
       startDate: new Date("2026-12-29T03:23:25.992Z"),

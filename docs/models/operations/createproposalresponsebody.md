@@ -5,7 +5,7 @@ Proposal created
 ## Example Usage
 
 ```typescript
-import { CreateProposalResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { CreateProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CreateProposalResponseBody = {
   success: true,

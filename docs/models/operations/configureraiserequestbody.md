@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ConfigureRaiseRequestBody } from "@draft/archdao-api-typescript/models/operations";
+import { ConfigureRaiseRequestBody } from "@archdao/archdao-client/models/operations";
 
 let value: ConfigureRaiseRequestBody = {
   startDate: new Date("2024-11-23T01:24:02.050Z"),

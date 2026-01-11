@@ -5,7 +5,7 @@ Stakes retrieved
 ## Example Usage
 
 ```typescript
-import { ListProposalStakesResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListProposalStakesResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListProposalStakesResponseBody = {
   success: true,

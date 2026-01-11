@@ -5,7 +5,7 @@ Proposal retrieved
 ## Example Usage
 
 ```typescript
-import { GetProposalResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { GetProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: GetProposalResponseBody = {
   success: true,

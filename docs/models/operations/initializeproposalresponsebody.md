@@ -5,7 +5,7 @@ Proposal initialized
 ## Example Usage
 
 ```typescript
-import { InitializeProposalResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { InitializeProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: InitializeProposalResponseBody = {
   success: true,

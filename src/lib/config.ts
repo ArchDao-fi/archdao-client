@@ -64,5 +64,5 @@ export const SDK_METADATA = {
   sdkVersion: "1.0.0",
   genVersion: "2.634.2",
   userAgent:
-    "speakeasy-sdk/typescript 1.0.0 2.634.2 1.0.0 @draft/archdao-api-typescript",
+    "speakeasy-sdk/typescript 1.0.0 2.634.2 1.0.0 @archdao/archdao-client",
 } as const;
