@@ -5,7 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  ProposalStake,
+  ProposalStake$inboundSchema,
+  ProposalStake$Outbound,
+  ProposalStake$outboundSchema,
+} from "../components/proposalstake.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListProposalStakesRequest = {
@@ -32,8 +43,10 @@ export type ListProposalStakesPagination = {
 export type ListProposalStakesResponseBody = {
   success: boolean;
   pagination?: ListProposalStakesPagination | undefined;
-  data?: Array<components.ProposalStake> | undefined;
+  data?: Array<ProposalStake> | undefined;
 };
+
+export type ListProposalStakesResponse = Err | ListProposalStakesResponseBody;
 
 /** @internal */
 export const ListProposalStakesRequest$inboundSchema: z.ZodType<
@@ -166,14 +179,14 @@ export const ListProposalStakesResponseBody$inboundSchema: z.ZodType<
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalStakesPagination$inboundSchema)
     .optional(),
-  data: z.array(components.ProposalStake$inboundSchema).optional(),
+  data: z.array(ProposalStake$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListProposalStakesResponseBody$Outbound = {
   success: boolean;
   pagination?: ListProposalStakesPagination$Outbound | undefined;
-  data?: Array<components.ProposalStake$Outbound> | undefined;
+  data?: Array<ProposalStake$Outbound> | undefined;
 };
 
 /** @internal */
@@ -185,7 +198,7 @@ export const ListProposalStakesResponseBody$outboundSchema: z.ZodType<
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalStakesPagination$outboundSchema)
     .optional(),
-  data: z.array(components.ProposalStake$outboundSchema).optional(),
+  data: z.array(ProposalStake$outboundSchema).optional(),
 });
 
 /**
@@ -218,5 +231,61 @@ export function listProposalStakesResponseBodyFromJSON(
     jsonString,
     (x) => ListProposalStakesResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListProposalStakesResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListProposalStakesResponse$inboundSchema: z.ZodType<
+  ListProposalStakesResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ListProposalStakesResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ListProposalStakesResponse$Outbound =
+  | Err$Outbound
+  | ListProposalStakesResponseBody$Outbound;
+
+/** @internal */
+export const ListProposalStakesResponse$outboundSchema: z.ZodType<
+  ListProposalStakesResponse$Outbound,
+  z.ZodTypeDef,
+  ListProposalStakesResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ListProposalStakesResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListProposalStakesResponse$ {
+  /** @deprecated use `ListProposalStakesResponse$inboundSchema` instead. */
+  export const inboundSchema = ListProposalStakesResponse$inboundSchema;
+  /** @deprecated use `ListProposalStakesResponse$outboundSchema` instead. */
+  export const outboundSchema = ListProposalStakesResponse$outboundSchema;
+  /** @deprecated use `ListProposalStakesResponse$Outbound` instead. */
+  export type Outbound = ListProposalStakesResponse$Outbound;
+}
+
+export function listProposalStakesResponseToJSON(
+  listProposalStakesResponse: ListProposalStakesResponse,
+): string {
+  return JSON.stringify(
+    ListProposalStakesResponse$outboundSchema.parse(listProposalStakesResponse),
+  );
+}
+
+export function listProposalStakesResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListProposalStakesResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListProposalStakesResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListProposalStakesResponse' from JSON`,
   );
 }

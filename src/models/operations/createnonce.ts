@@ -5,6 +5,12 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CreateNonceRequestBody = {
@@ -25,6 +31,8 @@ export type CreateNonceResponseBody = {
   success: boolean;
   data?: Data | undefined;
 };
+
+export type CreateNonceResponse = Err | CreateNonceResponseBody;
 
 /** @internal */
 export const CreateNonceRequestBody$inboundSchema: z.ZodType<
@@ -178,5 +186,61 @@ export function createNonceResponseBodyFromJSON(
     jsonString,
     (x) => CreateNonceResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateNonceResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateNonceResponse$inboundSchema: z.ZodType<
+  CreateNonceResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => CreateNonceResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type CreateNonceResponse$Outbound =
+  | Err$Outbound
+  | CreateNonceResponseBody$Outbound;
+
+/** @internal */
+export const CreateNonceResponse$outboundSchema: z.ZodType<
+  CreateNonceResponse$Outbound,
+  z.ZodTypeDef,
+  CreateNonceResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => CreateNonceResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateNonceResponse$ {
+  /** @deprecated use `CreateNonceResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateNonceResponse$inboundSchema;
+  /** @deprecated use `CreateNonceResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateNonceResponse$outboundSchema;
+  /** @deprecated use `CreateNonceResponse$Outbound` instead. */
+  export type Outbound = CreateNonceResponse$Outbound;
+}
+
+export function createNonceResponseToJSON(
+  createNonceResponse: CreateNonceResponse,
+): string {
+  return JSON.stringify(
+    CreateNonceResponse$outboundSchema.parse(createNonceResponse),
+  );
+}
+
+export function createNonceResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateNonceResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateNonceResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateNonceResponse' from JSON`,
   );
 }

@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ActivateRaiseResponseBody } from "@archdao/archdao-client/models/operations";
+import { ActivateRaiseResponseBody } from "@archdao/archdao-client/models/operations/activateraise.js";
 
 let value: ActivateRaiseResponseBody = {
   success: true,

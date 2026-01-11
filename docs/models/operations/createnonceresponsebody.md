@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { CreateNonceResponseBody } from "@archdao/archdao-client/models/operations";
+import { CreateNonceResponseBody } from "@archdao/archdao-client/models/operations/createnonce.js";
 
 let value: CreateNonceResponseBody = {
   success: true,

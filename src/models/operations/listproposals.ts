@@ -5,7 +5,12 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  BaseProposal,
+  BaseProposal$inboundSchema,
+  BaseProposal$Outbound,
+  BaseProposal$outboundSchema,
+} from "../components/baseproposal.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListProposalsSecurity = {
@@ -51,7 +56,7 @@ export type ListProposalsPagination = {
 export type ListProposalsResponseBody = {
   success: boolean;
   pagination?: ListProposalsPagination | undefined;
-  data?: Array<components.BaseProposal> | undefined;
+  data?: Array<BaseProposal> | undefined;
 };
 
 /** @internal */
@@ -245,14 +250,14 @@ export const ListProposalsResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalsPagination$inboundSchema).optional(),
-  data: z.array(components.BaseProposal$inboundSchema).optional(),
+  data: z.array(BaseProposal$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListProposalsResponseBody$Outbound = {
   success: boolean;
   pagination?: ListProposalsPagination$Outbound | undefined;
-  data?: Array<components.BaseProposal$Outbound> | undefined;
+  data?: Array<BaseProposal$Outbound> | undefined;
 };
 
 /** @internal */
@@ -263,7 +268,7 @@ export const ListProposalsResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalsPagination$outboundSchema).optional(),
-  data: z.array(components.BaseProposal$outboundSchema).optional(),
+  data: z.array(BaseProposal$outboundSchema).optional(),
 });
 
 /**

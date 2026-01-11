@@ -7,7 +7,18 @@ import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { blobLikeSchema } from "../../types/blobs.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Organization,
+  Organization$inboundSchema,
+  Organization$Outbound,
+  Organization$outboundSchema,
+} from "../components/organization.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type EditOrganizationImage = {
@@ -41,8 +52,10 @@ export type EditOrganizationRequest = {
  */
 export type EditOrganizationResponseBody = {
   success: boolean;
-  data?: components.Organization | undefined;
+  data?: Organization | undefined;
 };
+
+export type EditOrganizationResponse = Err | EditOrganizationResponseBody;
 
 /** @internal */
 export const EditOrganizationImage$inboundSchema: z.ZodType<
@@ -322,13 +335,13 @@ export const EditOrganizationResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$inboundSchema.optional(),
+  data: Organization$inboundSchema.optional(),
 });
 
 /** @internal */
 export type EditOrganizationResponseBody$Outbound = {
   success: boolean;
-  data?: components.Organization$Outbound | undefined;
+  data?: Organization$Outbound | undefined;
 };
 
 /** @internal */
@@ -338,7 +351,7 @@ export const EditOrganizationResponseBody$outboundSchema: z.ZodType<
   EditOrganizationResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$outboundSchema.optional(),
+  data: Organization$outboundSchema.optional(),
 });
 
 /**
@@ -371,5 +384,61 @@ export function editOrganizationResponseBodyFromJSON(
     jsonString,
     (x) => EditOrganizationResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'EditOrganizationResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const EditOrganizationResponse$inboundSchema: z.ZodType<
+  EditOrganizationResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => EditOrganizationResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type EditOrganizationResponse$Outbound =
+  | Err$Outbound
+  | EditOrganizationResponseBody$Outbound;
+
+/** @internal */
+export const EditOrganizationResponse$outboundSchema: z.ZodType<
+  EditOrganizationResponse$Outbound,
+  z.ZodTypeDef,
+  EditOrganizationResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => EditOrganizationResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace EditOrganizationResponse$ {
+  /** @deprecated use `EditOrganizationResponse$inboundSchema` instead. */
+  export const inboundSchema = EditOrganizationResponse$inboundSchema;
+  /** @deprecated use `EditOrganizationResponse$outboundSchema` instead. */
+  export const outboundSchema = EditOrganizationResponse$outboundSchema;
+  /** @deprecated use `EditOrganizationResponse$Outbound` instead. */
+  export type Outbound = EditOrganizationResponse$Outbound;
+}
+
+export function editOrganizationResponseToJSON(
+  editOrganizationResponse: EditOrganizationResponse,
+): string {
+  return JSON.stringify(
+    EditOrganizationResponse$outboundSchema.parse(editOrganizationResponse),
+  );
+}
+
+export function editOrganizationResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<EditOrganizationResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => EditOrganizationResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'EditOrganizationResponse' from JSON`,
   );
 }

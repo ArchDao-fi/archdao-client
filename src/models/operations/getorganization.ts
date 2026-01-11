@@ -5,7 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  OrganizationDetail,
+  OrganizationDetail$inboundSchema,
+  OrganizationDetail$Outbound,
+  OrganizationDetail$outboundSchema,
+} from "../components/organizationdetail.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetOrganizationSecurity = {
@@ -21,8 +32,10 @@ export type GetOrganizationRequest = {
  */
 export type GetOrganizationResponseBody = {
   success: boolean;
-  data?: components.OrganizationDetail | undefined;
+  data?: OrganizationDetail | undefined;
 };
+
+export type GetOrganizationResponse = Err | GetOrganizationResponseBody;
 
 /** @internal */
 export const GetOrganizationSecurity$inboundSchema: z.ZodType<
@@ -139,13 +152,13 @@ export const GetOrganizationResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.OrganizationDetail$inboundSchema.optional(),
+  data: OrganizationDetail$inboundSchema.optional(),
 });
 
 /** @internal */
 export type GetOrganizationResponseBody$Outbound = {
   success: boolean;
-  data?: components.OrganizationDetail$Outbound | undefined;
+  data?: OrganizationDetail$Outbound | undefined;
 };
 
 /** @internal */
@@ -155,7 +168,7 @@ export const GetOrganizationResponseBody$outboundSchema: z.ZodType<
   GetOrganizationResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.OrganizationDetail$outboundSchema.optional(),
+  data: OrganizationDetail$outboundSchema.optional(),
 });
 
 /**
@@ -188,5 +201,61 @@ export function getOrganizationResponseBodyFromJSON(
     jsonString,
     (x) => GetOrganizationResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetOrganizationResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetOrganizationResponse$inboundSchema: z.ZodType<
+  GetOrganizationResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => GetOrganizationResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type GetOrganizationResponse$Outbound =
+  | Err$Outbound
+  | GetOrganizationResponseBody$Outbound;
+
+/** @internal */
+export const GetOrganizationResponse$outboundSchema: z.ZodType<
+  GetOrganizationResponse$Outbound,
+  z.ZodTypeDef,
+  GetOrganizationResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => GetOrganizationResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetOrganizationResponse$ {
+  /** @deprecated use `GetOrganizationResponse$inboundSchema` instead. */
+  export const inboundSchema = GetOrganizationResponse$inboundSchema;
+  /** @deprecated use `GetOrganizationResponse$outboundSchema` instead. */
+  export const outboundSchema = GetOrganizationResponse$outboundSchema;
+  /** @deprecated use `GetOrganizationResponse$Outbound` instead. */
+  export type Outbound = GetOrganizationResponse$Outbound;
+}
+
+export function getOrganizationResponseToJSON(
+  getOrganizationResponse: GetOrganizationResponse,
+): string {
+  return JSON.stringify(
+    GetOrganizationResponse$outboundSchema.parse(getOrganizationResponse),
+  );
+}
+
+export function getOrganizationResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetOrganizationResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetOrganizationResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetOrganizationResponse' from JSON`,
   );
 }

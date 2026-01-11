@@ -5,7 +5,7 @@ Partial proposal model used in list responses and embedded contexts
 ## Example Usage
 
 ```typescript
-import { BaseProposal } from "@archdao/archdao-client/models/components";
+import { BaseProposal } from "@archdao/archdao-client/models/components/baseproposal.js";
 
 let value: BaseProposal = {};
 ```

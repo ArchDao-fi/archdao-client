@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Banner } from "@archdao/archdao-client/models/operations";
+import { Banner } from "@archdao/archdao-client/models/operations/createorganization.js";
 
 // No examples available for this model
 ```

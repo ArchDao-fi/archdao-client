@@ -9,7 +9,28 @@ import { organizationEditOrganization } from "../funcs/organizationEditOrganizat
 import { organizationGetOrganization } from "../funcs/organizationGetOrganization.js";
 import { organizationListOrganizations } from "../funcs/organizationListOrganizations.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as operations from "../models/operations/index.js";
+import { ActivateRaiseResponse } from "../models/operations/activateraise.js";
+import {
+  ChangeOrganizationStatusRequestBody,
+  ChangeOrganizationStatusResponse,
+} from "../models/operations/changeorganizationstatus.js";
+import {
+  CreateOrganizationRequestBody,
+  CreateOrganizationResponse,
+} from "../models/operations/createorganization.js";
+import {
+  EditOrganizationRequestBody,
+  EditOrganizationResponse,
+} from "../models/operations/editorganization.js";
+import {
+  GetOrganizationResponse,
+  GetOrganizationSecurity,
+} from "../models/operations/getorganization.js";
+import {
+  ListOrganizationsRequest,
+  ListOrganizationsResponseBody,
+  ListOrganizationsSecurity,
+} from "../models/operations/listorganizations.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Organization extends ClientSDK {
@@ -24,10 +45,10 @@ export class Organization extends ClientSDK {
    * **Default search field:** `name`
    */
   async listOrganizations(
-    request: operations.ListOrganizationsRequest,
-    security?: operations.ListOrganizationsSecurity | undefined,
+    request: ListOrganizationsRequest,
+    security?: ListOrganizationsSecurity | undefined,
     options?: RequestOptions,
-  ): Promise<operations.ListOrganizationsResponseBody> {
+  ): Promise<ListOrganizationsResponseBody> {
     return unwrapAsync(organizationListOrganizations(
       this,
       request,
@@ -45,9 +66,9 @@ export class Organization extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
    */
   async createOrganization(
-    request: operations.CreateOrganizationRequestBody,
+    request: CreateOrganizationRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.CreateOrganizationResponseBody> {
+  ): Promise<CreateOrganizationResponse> {
     return unwrapAsync(organizationCreateOrganization(
       this,
       request,
@@ -64,13 +85,13 @@ export class Organization extends ClientSDK {
    * **Error Codes:** `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`
    */
   async getOrganization(
-    request: operations.GetOrganizationRequest,
-    security?: operations.GetOrganizationSecurity | undefined,
+    slug: string,
+    security?: GetOrganizationSecurity | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetOrganizationResponseBody> {
+  ): Promise<GetOrganizationResponse> {
     return unwrapAsync(organizationGetOrganization(
       this,
-      request,
+      slug,
       security,
       options,
     ));
@@ -85,12 +106,14 @@ export class Organization extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async editOrganization(
-    request: operations.EditOrganizationRequest,
+    id: number,
+    requestBody?: EditOrganizationRequestBody | undefined,
     options?: RequestOptions,
-  ): Promise<operations.EditOrganizationResponseBody> {
+  ): Promise<EditOrganizationResponse> {
     return unwrapAsync(organizationEditOrganization(
       this,
-      request,
+      id,
+      requestBody,
       options,
     ));
   }
@@ -104,12 +127,14 @@ export class Organization extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async changeOrganizationStatus(
-    request: operations.ChangeOrganizationStatusRequest,
+    id: number,
+    requestBody: ChangeOrganizationStatusRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.ChangeOrganizationStatusResponseBody> {
+  ): Promise<ChangeOrganizationStatusResponse> {
     return unwrapAsync(organizationChangeOrganizationStatus(
       this,
-      request,
+      id,
+      requestBody,
       options,
     ));
   }
@@ -123,12 +148,12 @@ export class Organization extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `INVALID_STATUS_TRANSITION`, `ORGANIZATION_NOT_FOUND`, `RAISE_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async activateRaise(
-    request: operations.ActivateRaiseRequest,
+    id: number,
     options?: RequestOptions,
-  ): Promise<operations.ActivateRaiseResponseBody> {
+  ): Promise<ActivateRaiseResponse> {
     return unwrapAsync(organizationActivateRaise(
       this,
-      request,
+      id,
       options,
     ));
   }

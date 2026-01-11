@@ -6,11 +6,27 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Organization,
+  Organization$inboundSchema,
+  Organization$Outbound,
+  Organization$outboundSchema,
+} from "../components/organization.js";
+import {
+  OrganizationStatus,
+  OrganizationStatus$inboundSchema,
+  OrganizationStatus$outboundSchema,
+} from "../components/organizationstatus.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ChangeOrganizationStatusRequestBody = {
-  status: components.OrganizationStatus;
+  status: OrganizationStatus;
   /**
    * Optional reason for status change
    */
@@ -27,8 +43,12 @@ export type ChangeOrganizationStatusRequest = {
  */
 export type ChangeOrganizationStatusResponseBody = {
   success: boolean;
-  data?: components.Organization | undefined;
+  data?: Organization | undefined;
 };
+
+export type ChangeOrganizationStatusResponse =
+  | Err
+  | ChangeOrganizationStatusResponseBody;
 
 /** @internal */
 export const ChangeOrganizationStatusRequestBody$inboundSchema: z.ZodType<
@@ -36,7 +56,7 @@ export const ChangeOrganizationStatusRequestBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  status: components.OrganizationStatus$inboundSchema,
+  status: OrganizationStatus$inboundSchema,
   reason: z.string().optional(),
 });
 
@@ -52,7 +72,7 @@ export const ChangeOrganizationStatusRequestBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ChangeOrganizationStatusRequestBody
 > = z.object({
-  status: components.OrganizationStatus$outboundSchema,
+  status: OrganizationStatus$outboundSchema,
   reason: z.string().optional(),
 });
 
@@ -166,13 +186,13 @@ export const ChangeOrganizationStatusResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$inboundSchema.optional(),
+  data: Organization$inboundSchema.optional(),
 });
 
 /** @internal */
 export type ChangeOrganizationStatusResponseBody$Outbound = {
   success: boolean;
-  data?: components.Organization$Outbound | undefined;
+  data?: Organization$Outbound | undefined;
 };
 
 /** @internal */
@@ -182,7 +202,7 @@ export const ChangeOrganizationStatusResponseBody$outboundSchema: z.ZodType<
   ChangeOrganizationStatusResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$outboundSchema.optional(),
+  data: Organization$outboundSchema.optional(),
 });
 
 /**
@@ -218,5 +238,63 @@ export function changeOrganizationStatusResponseBodyFromJSON(
     (x) =>
       ChangeOrganizationStatusResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ChangeOrganizationStatusResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ChangeOrganizationStatusResponse$inboundSchema: z.ZodType<
+  ChangeOrganizationStatusResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ChangeOrganizationStatusResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ChangeOrganizationStatusResponse$Outbound =
+  | Err$Outbound
+  | ChangeOrganizationStatusResponseBody$Outbound;
+
+/** @internal */
+export const ChangeOrganizationStatusResponse$outboundSchema: z.ZodType<
+  ChangeOrganizationStatusResponse$Outbound,
+  z.ZodTypeDef,
+  ChangeOrganizationStatusResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ChangeOrganizationStatusResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChangeOrganizationStatusResponse$ {
+  /** @deprecated use `ChangeOrganizationStatusResponse$inboundSchema` instead. */
+  export const inboundSchema = ChangeOrganizationStatusResponse$inboundSchema;
+  /** @deprecated use `ChangeOrganizationStatusResponse$outboundSchema` instead. */
+  export const outboundSchema = ChangeOrganizationStatusResponse$outboundSchema;
+  /** @deprecated use `ChangeOrganizationStatusResponse$Outbound` instead. */
+  export type Outbound = ChangeOrganizationStatusResponse$Outbound;
+}
+
+export function changeOrganizationStatusResponseToJSON(
+  changeOrganizationStatusResponse: ChangeOrganizationStatusResponse,
+): string {
+  return JSON.stringify(
+    ChangeOrganizationStatusResponse$outboundSchema.parse(
+      changeOrganizationStatusResponse,
+    ),
+  );
+}
+
+export function changeOrganizationStatusResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ChangeOrganizationStatusResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChangeOrganizationStatusResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChangeOrganizationStatusResponse' from JSON`,
   );
 }

@@ -16,10 +16,12 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
-import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
+import {
+  GetSelfResponse,
+  GetSelfResponse$inboundSchema,
+} from "../models/operations/getself.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -36,8 +38,7 @@ export function authenticationGetSelf(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetSelfResponseBody,
-    | errors.Err
+    GetSelfResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -60,8 +61,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.GetSelfResponseBody,
-      | errors.Err
+      GetSelfResponse,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -115,7 +115,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["401", "4XX", "5XX"],
+    errorCodes: [],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -124,13 +124,8 @@ async function $do(
   }
   const response = doResult.value;
 
-  const responseFields = {
-    HttpMeta: { Response: response, Request: req },
-  };
-
   const [result] = await M.match<
-    operations.GetSelfResponseBody,
-    | errors.Err
+    GetSelfResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -140,11 +135,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetSelfResponseBody$inboundSchema),
-    M.jsonErr(401, errors.Err$inboundSchema),
-    M.fail("4XX"),
-    M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+    M.json(200, GetSelfResponse$inboundSchema),
+    M.json(401, GetSelfResponse$inboundSchema),
+  )(response, req);
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];
   }

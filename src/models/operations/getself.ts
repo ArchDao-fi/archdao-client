@@ -5,7 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  UserWithNonces,
+  UserWithNonces$inboundSchema,
+  UserWithNonces$Outbound,
+  UserWithNonces$outboundSchema,
+} from "../components/userwithnonces.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 /**
@@ -13,8 +24,10 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
  */
 export type GetSelfResponseBody = {
   success: boolean;
-  data?: components.UserWithNonces | undefined;
+  data?: UserWithNonces | undefined;
 };
+
+export type GetSelfResponse = Err | GetSelfResponseBody;
 
 /** @internal */
 export const GetSelfResponseBody$inboundSchema: z.ZodType<
@@ -23,13 +36,13 @@ export const GetSelfResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.UserWithNonces$inboundSchema.optional(),
+  data: UserWithNonces$inboundSchema.optional(),
 });
 
 /** @internal */
 export type GetSelfResponseBody$Outbound = {
   success: boolean;
-  data?: components.UserWithNonces$Outbound | undefined;
+  data?: UserWithNonces$Outbound | undefined;
 };
 
 /** @internal */
@@ -39,7 +52,7 @@ export const GetSelfResponseBody$outboundSchema: z.ZodType<
   GetSelfResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.UserWithNonces$outboundSchema.optional(),
+  data: UserWithNonces$outboundSchema.optional(),
 });
 
 /**
@@ -70,5 +83,59 @@ export function getSelfResponseBodyFromJSON(
     jsonString,
     (x) => GetSelfResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'GetSelfResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const GetSelfResponse$inboundSchema: z.ZodType<
+  GetSelfResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => GetSelfResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type GetSelfResponse$Outbound =
+  | Err$Outbound
+  | GetSelfResponseBody$Outbound;
+
+/** @internal */
+export const GetSelfResponse$outboundSchema: z.ZodType<
+  GetSelfResponse$Outbound,
+  z.ZodTypeDef,
+  GetSelfResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => GetSelfResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace GetSelfResponse$ {
+  /** @deprecated use `GetSelfResponse$inboundSchema` instead. */
+  export const inboundSchema = GetSelfResponse$inboundSchema;
+  /** @deprecated use `GetSelfResponse$outboundSchema` instead. */
+  export const outboundSchema = GetSelfResponse$outboundSchema;
+  /** @deprecated use `GetSelfResponse$Outbound` instead. */
+  export type Outbound = GetSelfResponse$Outbound;
+}
+
+export function getSelfResponseToJSON(
+  getSelfResponse: GetSelfResponse,
+): string {
+  return JSON.stringify(GetSelfResponse$outboundSchema.parse(getSelfResponse));
+}
+
+export function getSelfResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<GetSelfResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => GetSelfResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'GetSelfResponse' from JSON`,
   );
 }

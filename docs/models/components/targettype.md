@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TargetType } from "@archdao/archdao-client/models/components";
+import { TargetType } from "@archdao/archdao-client/models/components/targettype.js";
 
 let value: TargetType = "organization";
 ```

@@ -6,7 +6,18 @@ import { adminChangeUserRole } from "../funcs/adminChangeUserRole.js";
 import { adminListAuditLogs } from "../funcs/adminListAuditLogs.js";
 import { adminListUsers } from "../funcs/adminListUsers.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as operations from "../models/operations/index.js";
+import {
+  ChangeUserRoleRequestBody,
+  ChangeUserRoleResponse,
+} from "../models/operations/changeuserrole.js";
+import {
+  ListAuditLogsRequest,
+  ListAuditLogsResponse,
+} from "../models/operations/listauditlogs.js";
+import {
+  ListUsersRequest,
+  ListUsersResponse,
+} from "../models/operations/listusers.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Admin extends ClientSDK {
@@ -21,9 +32,9 @@ export class Admin extends ClientSDK {
    * **Default search field:** `address`
    */
   async listUsers(
-    request: operations.ListUsersRequest,
+    request: ListUsersRequest,
     options?: RequestOptions,
-  ): Promise<operations.ListUsersResponseBody> {
+  ): Promise<ListUsersResponse> {
     return unwrapAsync(adminListUsers(
       this,
       request,
@@ -40,12 +51,14 @@ export class Admin extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `USER_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async changeUserRole(
-    request: operations.ChangeUserRoleRequest,
+    id: number,
+    requestBody: ChangeUserRoleRequestBody,
     options?: RequestOptions,
-  ): Promise<operations.ChangeUserRoleResponseBody> {
+  ): Promise<ChangeUserRoleResponse> {
     return unwrapAsync(adminChangeUserRole(
       this,
-      request,
+      id,
+      requestBody,
       options,
     ));
   }
@@ -57,9 +70,9 @@ export class Admin extends ClientSDK {
    * Admin-only endpoint to view audit trail of admin actions.
    */
   async listAuditLogs(
-    request: operations.ListAuditLogsRequest,
+    request: ListAuditLogsRequest,
     options?: RequestOptions,
-  ): Promise<operations.ListAuditLogsResponseBody> {
+  ): Promise<ListAuditLogsResponse> {
     return unwrapAsync(adminListAuditLogs(
       this,
       request,

@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ChangeUserRoleResponseBody } from "@archdao/archdao-client/models/operations";
+import { ChangeUserRoleResponseBody } from "@archdao/archdao-client/models/operations/changeuserrole.js";
 
 let value: ChangeUserRoleResponseBody = {
   success: false,

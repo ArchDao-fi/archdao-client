@@ -5,7 +5,23 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  User,
+  User$inboundSchema,
+  User$Outbound,
+  User$outboundSchema,
+} from "../components/user.js";
+import {
+  UserRole,
+  UserRole$inboundSchema,
+  UserRole$outboundSchema,
+} from "../components/userrole.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListUsersRequest = {
@@ -28,7 +44,7 @@ export type ListUsersRequest = {
   /**
    * Filter by user role
    */
-  role?: components.UserRole | undefined;
+  role?: UserRole | undefined;
 };
 
 export type ListUsersPagination = {
@@ -43,8 +59,10 @@ export type ListUsersPagination = {
 export type ListUsersResponseBody = {
   success: boolean;
   pagination?: ListUsersPagination | undefined;
-  data?: Array<components.User> | undefined;
+  data?: Array<User> | undefined;
 };
+
+export type ListUsersResponse = Err | ListUsersResponseBody;
 
 /** @internal */
 export const ListUsersRequest$inboundSchema: z.ZodType<
@@ -56,7 +74,7 @@ export const ListUsersRequest$inboundSchema: z.ZodType<
   limit: z.number().int().default(20),
   search: z.string().optional(),
   fields: z.string().optional(),
-  role: components.UserRole$inboundSchema.optional(),
+  role: UserRole$inboundSchema.optional(),
 });
 
 /** @internal */
@@ -78,7 +96,7 @@ export const ListUsersRequest$outboundSchema: z.ZodType<
   limit: z.number().int().default(20),
   search: z.string().optional(),
   fields: z.string().optional(),
-  role: components.UserRole$outboundSchema.optional(),
+  role: UserRole$outboundSchema.optional(),
 });
 
 /**
@@ -180,14 +198,14 @@ export const ListUsersResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListUsersPagination$inboundSchema).optional(),
-  data: z.array(components.User$inboundSchema).optional(),
+  data: z.array(User$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListUsersResponseBody$Outbound = {
   success: boolean;
   pagination?: ListUsersPagination$Outbound | undefined;
-  data?: Array<components.User$Outbound> | undefined;
+  data?: Array<User$Outbound> | undefined;
 };
 
 /** @internal */
@@ -198,7 +216,7 @@ export const ListUsersResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListUsersPagination$outboundSchema).optional(),
-  data: z.array(components.User$outboundSchema).optional(),
+  data: z.array(User$outboundSchema).optional(),
 });
 
 /**
@@ -229,5 +247,61 @@ export function listUsersResponseBodyFromJSON(
     jsonString,
     (x) => ListUsersResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListUsersResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListUsersResponse$inboundSchema: z.ZodType<
+  ListUsersResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ListUsersResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ListUsersResponse$Outbound =
+  | Err$Outbound
+  | ListUsersResponseBody$Outbound;
+
+/** @internal */
+export const ListUsersResponse$outboundSchema: z.ZodType<
+  ListUsersResponse$Outbound,
+  z.ZodTypeDef,
+  ListUsersResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ListUsersResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListUsersResponse$ {
+  /** @deprecated use `ListUsersResponse$inboundSchema` instead. */
+  export const inboundSchema = ListUsersResponse$inboundSchema;
+  /** @deprecated use `ListUsersResponse$outboundSchema` instead. */
+  export const outboundSchema = ListUsersResponse$outboundSchema;
+  /** @deprecated use `ListUsersResponse$Outbound` instead. */
+  export type Outbound = ListUsersResponse$Outbound;
+}
+
+export function listUsersResponseToJSON(
+  listUsersResponse: ListUsersResponse,
+): string {
+  return JSON.stringify(
+    ListUsersResponse$outboundSchema.parse(listUsersResponse),
+  );
+}
+
+export function listUsersResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListUsersResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListUsersResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListUsersResponse' from JSON`,
   );
 }

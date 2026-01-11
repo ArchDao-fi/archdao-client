@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ProposalAction } from "@archdao/archdao-client/models/components";
+import { ProposalAction } from "@archdao/archdao-client/models/components/proposalaction.js";
 
 let value: ProposalAction = {};
 ```

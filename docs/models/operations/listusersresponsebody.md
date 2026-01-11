@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations";
+import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations/listusers.js";
 
 let value: ListUsersResponseBody = {
   success: false,

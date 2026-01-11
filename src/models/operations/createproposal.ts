@@ -5,7 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Proposal,
+  Proposal$inboundSchema,
+  Proposal$Outbound,
+  Proposal$outboundSchema,
+} from "../components/proposal.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 /**
@@ -13,8 +24,10 @@ import { SDKValidationError } from "../errors/sdkvalidationerror.js";
  */
 export type CreateProposalResponseBody = {
   success: boolean;
-  data?: components.Proposal | undefined;
+  data?: Proposal | undefined;
 };
+
+export type CreateProposalResponse = Err | CreateProposalResponseBody;
 
 /** @internal */
 export const CreateProposalResponseBody$inboundSchema: z.ZodType<
@@ -23,13 +36,13 @@ export const CreateProposalResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.Proposal$inboundSchema.optional(),
+  data: Proposal$inboundSchema.optional(),
 });
 
 /** @internal */
 export type CreateProposalResponseBody$Outbound = {
   success: boolean;
-  data?: components.Proposal$Outbound | undefined;
+  data?: Proposal$Outbound | undefined;
 };
 
 /** @internal */
@@ -39,7 +52,7 @@ export const CreateProposalResponseBody$outboundSchema: z.ZodType<
   CreateProposalResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.Proposal$outboundSchema.optional(),
+  data: Proposal$outboundSchema.optional(),
 });
 
 /**
@@ -70,5 +83,61 @@ export function createProposalResponseBodyFromJSON(
     jsonString,
     (x) => CreateProposalResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateProposalResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateProposalResponse$inboundSchema: z.ZodType<
+  CreateProposalResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => CreateProposalResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type CreateProposalResponse$Outbound =
+  | Err$Outbound
+  | CreateProposalResponseBody$Outbound;
+
+/** @internal */
+export const CreateProposalResponse$outboundSchema: z.ZodType<
+  CreateProposalResponse$Outbound,
+  z.ZodTypeDef,
+  CreateProposalResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => CreateProposalResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateProposalResponse$ {
+  /** @deprecated use `CreateProposalResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateProposalResponse$inboundSchema;
+  /** @deprecated use `CreateProposalResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateProposalResponse$outboundSchema;
+  /** @deprecated use `CreateProposalResponse$Outbound` instead. */
+  export type Outbound = CreateProposalResponse$Outbound;
+}
+
+export function createProposalResponseToJSON(
+  createProposalResponse: CreateProposalResponse,
+): string {
+  return JSON.stringify(
+    CreateProposalResponse$outboundSchema.parse(createProposalResponse),
+  );
+}
+
+export function createProposalResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateProposalResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateProposalResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateProposalResponse' from JSON`,
   );
 }

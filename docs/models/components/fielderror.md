@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { FieldError } from "@archdao/archdao-client/models/components";
+import { FieldError } from "@archdao/archdao-client/models/components/fielderror.js";
 
 let value: FieldError = {
   field: "name",

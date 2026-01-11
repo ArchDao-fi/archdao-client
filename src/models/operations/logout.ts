@@ -5,6 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Ok,
+  Ok$inboundSchema,
+  Ok$Outbound,
+  Ok$outboundSchema,
+} from "../components/ok.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type LogoutRequestBody = {
@@ -13,6 +25,8 @@ export type LogoutRequestBody = {
    */
   deactivateAllNonces?: boolean | undefined;
 };
+
+export type LogoutResponse = Err | Ok;
 
 /** @internal */
 export const LogoutRequestBody$inboundSchema: z.ZodType<
@@ -65,5 +79,49 @@ export function logoutRequestBodyFromJSON(
     jsonString,
     (x) => LogoutRequestBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'LogoutRequestBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const LogoutResponse$inboundSchema: z.ZodType<
+  LogoutResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([Err$inboundSchema, Ok$inboundSchema]);
+
+/** @internal */
+export type LogoutResponse$Outbound = Err$Outbound | Ok$Outbound;
+
+/** @internal */
+export const LogoutResponse$outboundSchema: z.ZodType<
+  LogoutResponse$Outbound,
+  z.ZodTypeDef,
+  LogoutResponse
+> = z.union([Err$outboundSchema, Ok$outboundSchema]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace LogoutResponse$ {
+  /** @deprecated use `LogoutResponse$inboundSchema` instead. */
+  export const inboundSchema = LogoutResponse$inboundSchema;
+  /** @deprecated use `LogoutResponse$outboundSchema` instead. */
+  export const outboundSchema = LogoutResponse$outboundSchema;
+  /** @deprecated use `LogoutResponse$Outbound` instead. */
+  export type Outbound = LogoutResponse$Outbound;
+}
+
+export function logoutResponseToJSON(logoutResponse: LogoutResponse): string {
+  return JSON.stringify(LogoutResponse$outboundSchema.parse(logoutResponse));
+}
+
+export function logoutResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<LogoutResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => LogoutResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'LogoutResponse' from JSON`,
   );
 }

@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { InitializeProposalResponseBody } from "@archdao/archdao-client/models/operations";
+import { InitializeProposalResponseBody } from "@archdao/archdao-client/models/operations/initializeproposal.js";
 
 let value: InitializeProposalResponseBody = {
   success: true,

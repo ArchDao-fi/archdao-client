@@ -5,7 +5,28 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  AuditAction,
+  AuditAction$inboundSchema,
+  AuditAction$outboundSchema,
+} from "../components/auditaction.js";
+import {
+  AuditLog,
+  AuditLog$inboundSchema,
+  AuditLog$Outbound,
+  AuditLog$outboundSchema,
+} from "../components/auditlog.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  TargetType,
+  TargetType$inboundSchema,
+  TargetType$outboundSchema,
+} from "../components/targettype.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListAuditLogsRequest = {
@@ -17,8 +38,8 @@ export type ListAuditLogsRequest = {
    * Items per page
    */
   limit?: number | undefined;
-  action?: components.AuditAction | undefined;
-  targetType?: components.TargetType | undefined;
+  action?: AuditAction | undefined;
+  targetType?: TargetType | undefined;
   /**
    * Filter by admin who performed the action
    */
@@ -37,8 +58,10 @@ export type ListAuditLogsPagination = {
 export type ListAuditLogsResponseBody = {
   success: boolean;
   pagination?: ListAuditLogsPagination | undefined;
-  data?: Array<components.AuditLog> | undefined;
+  data?: Array<AuditLog> | undefined;
 };
+
+export type ListAuditLogsResponse = Err | ListAuditLogsResponseBody;
 
 /** @internal */
 export const ListAuditLogsRequest$inboundSchema: z.ZodType<
@@ -48,8 +71,8 @@ export const ListAuditLogsRequest$inboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  action: components.AuditAction$inboundSchema.optional(),
-  targetType: components.TargetType$inboundSchema.optional(),
+  action: AuditAction$inboundSchema.optional(),
+  targetType: TargetType$inboundSchema.optional(),
   userId: z.number().int().optional(),
 });
 
@@ -70,8 +93,8 @@ export const ListAuditLogsRequest$outboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  action: components.AuditAction$outboundSchema.optional(),
-  targetType: components.TargetType$outboundSchema.optional(),
+  action: AuditAction$outboundSchema.optional(),
+  targetType: TargetType$outboundSchema.optional(),
   userId: z.number().int().optional(),
 });
 
@@ -174,14 +197,14 @@ export const ListAuditLogsResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListAuditLogsPagination$inboundSchema).optional(),
-  data: z.array(components.AuditLog$inboundSchema).optional(),
+  data: z.array(AuditLog$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListAuditLogsResponseBody$Outbound = {
   success: boolean;
   pagination?: ListAuditLogsPagination$Outbound | undefined;
-  data?: Array<components.AuditLog$Outbound> | undefined;
+  data?: Array<AuditLog$Outbound> | undefined;
 };
 
 /** @internal */
@@ -192,7 +215,7 @@ export const ListAuditLogsResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListAuditLogsPagination$outboundSchema).optional(),
-  data: z.array(components.AuditLog$outboundSchema).optional(),
+  data: z.array(AuditLog$outboundSchema).optional(),
 });
 
 /**
@@ -223,5 +246,61 @@ export function listAuditLogsResponseBodyFromJSON(
     jsonString,
     (x) => ListAuditLogsResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListAuditLogsResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListAuditLogsResponse$inboundSchema: z.ZodType<
+  ListAuditLogsResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ListAuditLogsResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ListAuditLogsResponse$Outbound =
+  | Err$Outbound
+  | ListAuditLogsResponseBody$Outbound;
+
+/** @internal */
+export const ListAuditLogsResponse$outboundSchema: z.ZodType<
+  ListAuditLogsResponse$Outbound,
+  z.ZodTypeDef,
+  ListAuditLogsResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ListAuditLogsResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListAuditLogsResponse$ {
+  /** @deprecated use `ListAuditLogsResponse$inboundSchema` instead. */
+  export const inboundSchema = ListAuditLogsResponse$inboundSchema;
+  /** @deprecated use `ListAuditLogsResponse$outboundSchema` instead. */
+  export const outboundSchema = ListAuditLogsResponse$outboundSchema;
+  /** @deprecated use `ListAuditLogsResponse$Outbound` instead. */
+  export type Outbound = ListAuditLogsResponse$Outbound;
+}
+
+export function listAuditLogsResponseToJSON(
+  listAuditLogsResponse: ListAuditLogsResponse,
+): string {
+  return JSON.stringify(
+    ListAuditLogsResponse$outboundSchema.parse(listAuditLogsResponse),
+  );
+}
+
+export function listAuditLogsResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListAuditLogsResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListAuditLogsResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListAuditLogsResponse' from JSON`,
   );
 }

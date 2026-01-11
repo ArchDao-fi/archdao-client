@@ -5,6 +5,12 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type CancelProposalRequest = {
@@ -23,6 +29,8 @@ export type CancelProposalResponseBody = {
   success: boolean;
   data?: CancelProposalData | undefined;
 };
+
+export type CancelProposalResponse = Err | CancelProposalResponseBody;
 
 /** @internal */
 export const CancelProposalRequest$inboundSchema: z.ZodType<
@@ -189,5 +197,61 @@ export function cancelProposalResponseBodyFromJSON(
     jsonString,
     (x) => CancelProposalResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CancelProposalResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CancelProposalResponse$inboundSchema: z.ZodType<
+  CancelProposalResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => CancelProposalResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type CancelProposalResponse$Outbound =
+  | Err$Outbound
+  | CancelProposalResponseBody$Outbound;
+
+/** @internal */
+export const CancelProposalResponse$outboundSchema: z.ZodType<
+  CancelProposalResponse$Outbound,
+  z.ZodTypeDef,
+  CancelProposalResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => CancelProposalResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CancelProposalResponse$ {
+  /** @deprecated use `CancelProposalResponse$inboundSchema` instead. */
+  export const inboundSchema = CancelProposalResponse$inboundSchema;
+  /** @deprecated use `CancelProposalResponse$outboundSchema` instead. */
+  export const outboundSchema = CancelProposalResponse$outboundSchema;
+  /** @deprecated use `CancelProposalResponse$Outbound` instead. */
+  export type Outbound = CancelProposalResponse$Outbound;
+}
+
+export function cancelProposalResponseToJSON(
+  cancelProposalResponse: CancelProposalResponse,
+): string {
+  return JSON.stringify(
+    CancelProposalResponse$outboundSchema.parse(cancelProposalResponse),
+  );
+}
+
+export function cancelProposalResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CancelProposalResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CancelProposalResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CancelProposalResponse' from JSON`,
   );
 }

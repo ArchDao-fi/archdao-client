@@ -5,7 +5,18 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  OrganizationWithRaise,
+  OrganizationWithRaise$inboundSchema,
+  OrganizationWithRaise$Outbound,
+  OrganizationWithRaise$outboundSchema,
+} from "../components/organizationwithraise.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ActivateRaiseRequest = {
@@ -17,8 +28,10 @@ export type ActivateRaiseRequest = {
  */
 export type ActivateRaiseResponseBody = {
   success: boolean;
-  data?: components.OrganizationWithRaise | undefined;
+  data?: OrganizationWithRaise | undefined;
 };
+
+export type ActivateRaiseResponse = Err | ActivateRaiseResponseBody;
 
 /** @internal */
 export const ActivateRaiseRequest$inboundSchema: z.ZodType<
@@ -81,13 +94,13 @@ export const ActivateRaiseResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.OrganizationWithRaise$inboundSchema.optional(),
+  data: OrganizationWithRaise$inboundSchema.optional(),
 });
 
 /** @internal */
 export type ActivateRaiseResponseBody$Outbound = {
   success: boolean;
-  data?: components.OrganizationWithRaise$Outbound | undefined;
+  data?: OrganizationWithRaise$Outbound | undefined;
 };
 
 /** @internal */
@@ -97,7 +110,7 @@ export const ActivateRaiseResponseBody$outboundSchema: z.ZodType<
   ActivateRaiseResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.OrganizationWithRaise$outboundSchema.optional(),
+  data: OrganizationWithRaise$outboundSchema.optional(),
 });
 
 /**
@@ -128,5 +141,61 @@ export function activateRaiseResponseBodyFromJSON(
     jsonString,
     (x) => ActivateRaiseResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ActivateRaiseResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ActivateRaiseResponse$inboundSchema: z.ZodType<
+  ActivateRaiseResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ActivateRaiseResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ActivateRaiseResponse$Outbound =
+  | Err$Outbound
+  | ActivateRaiseResponseBody$Outbound;
+
+/** @internal */
+export const ActivateRaiseResponse$outboundSchema: z.ZodType<
+  ActivateRaiseResponse$Outbound,
+  z.ZodTypeDef,
+  ActivateRaiseResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ActivateRaiseResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ActivateRaiseResponse$ {
+  /** @deprecated use `ActivateRaiseResponse$inboundSchema` instead. */
+  export const inboundSchema = ActivateRaiseResponse$inboundSchema;
+  /** @deprecated use `ActivateRaiseResponse$outboundSchema` instead. */
+  export const outboundSchema = ActivateRaiseResponse$outboundSchema;
+  /** @deprecated use `ActivateRaiseResponse$Outbound` instead. */
+  export type Outbound = ActivateRaiseResponse$Outbound;
+}
+
+export function activateRaiseResponseToJSON(
+  activateRaiseResponse: ActivateRaiseResponse,
+): string {
+  return JSON.stringify(
+    ActivateRaiseResponse$outboundSchema.parse(activateRaiseResponse),
+  );
+}
+
+export function activateRaiseResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ActivateRaiseResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ActivateRaiseResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ActivateRaiseResponse' from JSON`,
   );
 }

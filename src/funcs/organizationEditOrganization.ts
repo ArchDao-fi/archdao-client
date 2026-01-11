@@ -22,10 +22,15 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
-import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
+import {
+  EditOrganizationRequest,
+  EditOrganizationRequest$outboundSchema,
+  EditOrganizationRequestBody,
+  EditOrganizationResponse,
+  EditOrganizationResponse$inboundSchema,
+} from "../models/operations/editorganization.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { isBlobLike } from "../types/blobs.js";
 import { Result } from "../types/fp.js";
@@ -41,12 +46,12 @@ import { isReadableStream } from "../types/streams.js";
  */
 export function organizationEditOrganization(
   client: ArchDAOCore,
-  request: operations.EditOrganizationRequest,
+  id: number,
+  requestBody?: EditOrganizationRequestBody | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.EditOrganizationResponseBody,
-    | errors.Err
+    EditOrganizationResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -59,20 +64,21 @@ export function organizationEditOrganization(
 > {
   return new APIPromise($do(
     client,
-    request,
+    id,
+    requestBody,
     options,
   ));
 }
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.EditOrganizationRequest,
+  id: number,
+  requestBody?: EditOrganizationRequestBody | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.EditOrganizationResponseBody,
-      | errors.Err
+      EditOrganizationResponse,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -85,9 +91,14 @@ async function $do(
     APICall,
   ]
 > {
+  const input: EditOrganizationRequest = {
+    id: id,
+    requestBody: requestBody,
+  };
+
   const parsed = safeParse(
-    request,
-    (value) => operations.EditOrganizationRequest$outboundSchema.parse(value),
+    input,
+    (value) => EditOrganizationRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -204,7 +215,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["401", "403", "404", "4XX", "5XX"],
+    errorCodes: [],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -213,13 +224,8 @@ async function $do(
   }
   const response = doResult.value;
 
-  const responseFields = {
-    HttpMeta: { Response: response, Request: req },
-  };
-
   const [result] = await M.match<
-    operations.EditOrganizationResponseBody,
-    | errors.Err
+    EditOrganizationResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -229,11 +235,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.EditOrganizationResponseBody$inboundSchema),
-    M.jsonErr([401, 403, 404], errors.Err$inboundSchema),
-    M.fail("4XX"),
-    M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+    M.json(200, EditOrganizationResponse$inboundSchema),
+    M.json([401, 403, 404], EditOrganizationResponse$inboundSchema),
+  )(response, req);
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];
   }

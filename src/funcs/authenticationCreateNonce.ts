@@ -18,10 +18,14 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
-import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
+import {
+  CreateNonceRequestBody,
+  CreateNonceRequestBody$outboundSchema,
+  CreateNonceResponse,
+  CreateNonceResponse$inboundSchema,
+} from "../models/operations/createnonce.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -35,12 +39,11 @@ import { Result } from "../types/fp.js";
  */
 export function authenticationCreateNonce(
   client: ArchDAOCore,
-  request: operations.CreateNonceRequestBody,
+  request: CreateNonceRequestBody,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.CreateNonceResponseBody,
-    | errors.Err
+    CreateNonceResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -60,13 +63,12 @@ export function authenticationCreateNonce(
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.CreateNonceRequestBody,
+  request: CreateNonceRequestBody,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.CreateNonceResponseBody,
-      | errors.Err
+      CreateNonceResponse,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -81,7 +83,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => operations.CreateNonceRequestBody$outboundSchema.parse(value),
+    (value) => CreateNonceRequestBody$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -133,7 +135,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "4XX", "5XX"],
+    errorCodes: [],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -142,13 +144,8 @@ async function $do(
   }
   const response = doResult.value;
 
-  const responseFields = {
-    HttpMeta: { Response: response, Request: req },
-  };
-
   const [result] = await M.match<
-    operations.CreateNonceResponseBody,
-    | errors.Err
+    CreateNonceResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -158,11 +155,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.CreateNonceResponseBody$inboundSchema),
-    M.jsonErr(400, errors.Err$inboundSchema),
-    M.fail("4XX"),
-    M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+    M.json(200, CreateNonceResponse$inboundSchema),
+    M.json(400, CreateNonceResponse$inboundSchema),
+  )(response, req);
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];
   }

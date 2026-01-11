@@ -5,7 +5,12 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Organization,
+  Organization$inboundSchema,
+  Organization$Outbound,
+  Organization$outboundSchema,
+} from "../components/organization.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListOrganizationsSecurity = {
@@ -47,7 +52,7 @@ export type Pagination = {
 export type ListOrganizationsResponseBody = {
   success: boolean;
   pagination?: Pagination | undefined;
-  data?: Array<components.Organization> | undefined;
+  data?: Array<Organization> | undefined;
 };
 
 /** @internal */
@@ -234,14 +239,14 @@ export const ListOrganizationsResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => Pagination$inboundSchema).optional(),
-  data: z.array(components.Organization$inboundSchema).optional(),
+  data: z.array(Organization$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListOrganizationsResponseBody$Outbound = {
   success: boolean;
   pagination?: Pagination$Outbound | undefined;
-  data?: Array<components.Organization$Outbound> | undefined;
+  data?: Array<Organization$Outbound> | undefined;
 };
 
 /** @internal */
@@ -252,7 +257,7 @@ export const ListOrganizationsResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => Pagination$outboundSchema).optional(),
-  data: z.array(components.Organization$outboundSchema).optional(),
+  data: z.array(Organization$outboundSchema).optional(),
 });
 
 /**

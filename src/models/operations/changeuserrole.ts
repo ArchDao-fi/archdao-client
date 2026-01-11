@@ -6,11 +6,27 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  User,
+  User$inboundSchema,
+  User$Outbound,
+  User$outboundSchema,
+} from "../components/user.js";
+import {
+  UserRole,
+  UserRole$inboundSchema,
+  UserRole$outboundSchema,
+} from "../components/userrole.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ChangeUserRoleRequestBody = {
-  role: components.UserRole;
+  role: UserRole;
 };
 
 export type ChangeUserRoleRequest = {
@@ -23,8 +39,10 @@ export type ChangeUserRoleRequest = {
  */
 export type ChangeUserRoleResponseBody = {
   success: boolean;
-  data?: components.User | undefined;
+  data?: User | undefined;
 };
+
+export type ChangeUserRoleResponse = Err | ChangeUserRoleResponseBody;
 
 /** @internal */
 export const ChangeUserRoleRequestBody$inboundSchema: z.ZodType<
@@ -32,7 +50,7 @@ export const ChangeUserRoleRequestBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  role: components.UserRole$inboundSchema,
+  role: UserRole$inboundSchema,
 });
 
 /** @internal */
@@ -46,7 +64,7 @@ export const ChangeUserRoleRequestBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ChangeUserRoleRequestBody
 > = z.object({
-  role: components.UserRole$outboundSchema,
+  role: UserRole$outboundSchema,
 });
 
 /**
@@ -152,13 +170,13 @@ export const ChangeUserRoleResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.User$inboundSchema.optional(),
+  data: User$inboundSchema.optional(),
 });
 
 /** @internal */
 export type ChangeUserRoleResponseBody$Outbound = {
   success: boolean;
-  data?: components.User$Outbound | undefined;
+  data?: User$Outbound | undefined;
 };
 
 /** @internal */
@@ -168,7 +186,7 @@ export const ChangeUserRoleResponseBody$outboundSchema: z.ZodType<
   ChangeUserRoleResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.User$outboundSchema.optional(),
+  data: User$outboundSchema.optional(),
 });
 
 /**
@@ -199,5 +217,61 @@ export function changeUserRoleResponseBodyFromJSON(
     jsonString,
     (x) => ChangeUserRoleResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ChangeUserRoleResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ChangeUserRoleResponse$inboundSchema: z.ZodType<
+  ChangeUserRoleResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ChangeUserRoleResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ChangeUserRoleResponse$Outbound =
+  | Err$Outbound
+  | ChangeUserRoleResponseBody$Outbound;
+
+/** @internal */
+export const ChangeUserRoleResponse$outboundSchema: z.ZodType<
+  ChangeUserRoleResponse$Outbound,
+  z.ZodTypeDef,
+  ChangeUserRoleResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ChangeUserRoleResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChangeUserRoleResponse$ {
+  /** @deprecated use `ChangeUserRoleResponse$inboundSchema` instead. */
+  export const inboundSchema = ChangeUserRoleResponse$inboundSchema;
+  /** @deprecated use `ChangeUserRoleResponse$outboundSchema` instead. */
+  export const outboundSchema = ChangeUserRoleResponse$outboundSchema;
+  /** @deprecated use `ChangeUserRoleResponse$Outbound` instead. */
+  export type Outbound = ChangeUserRoleResponse$Outbound;
+}
+
+export function changeUserRoleResponseToJSON(
+  changeUserRoleResponse: ChangeUserRoleResponse,
+): string {
+  return JSON.stringify(
+    ChangeUserRoleResponse$outboundSchema.parse(changeUserRoleResponse),
+  );
+}
+
+export function changeUserRoleResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ChangeUserRoleResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChangeUserRoleResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChangeUserRoleResponse' from JSON`,
   );
 }

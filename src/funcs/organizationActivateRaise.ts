@@ -18,10 +18,14 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
-import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
+import {
+  ActivateRaiseRequest,
+  ActivateRaiseRequest$outboundSchema,
+  ActivateRaiseResponse,
+  ActivateRaiseResponse$inboundSchema,
+} from "../models/operations/activateraise.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -35,12 +39,11 @@ import { Result } from "../types/fp.js";
  */
 export function organizationActivateRaise(
   client: ArchDAOCore,
-  request: operations.ActivateRaiseRequest,
+  id: number,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.ActivateRaiseResponseBody,
-    | errors.Err
+    ActivateRaiseResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -53,20 +56,19 @@ export function organizationActivateRaise(
 > {
   return new APIPromise($do(
     client,
-    request,
+    id,
     options,
   ));
 }
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.ActivateRaiseRequest,
+  id: number,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.ActivateRaiseResponseBody,
-      | errors.Err
+      ActivateRaiseResponse,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -79,9 +81,13 @@ async function $do(
     APICall,
   ]
 > {
+  const input: ActivateRaiseRequest = {
+    id: id,
+  };
+
   const parsed = safeParse(
-    request,
-    (value) => operations.ActivateRaiseRequest$outboundSchema.parse(value),
+    input,
+    (value) => ActivateRaiseRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -139,7 +145,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["400", "401", "403", "404", "4XX", "5XX"],
+    errorCodes: [],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -148,13 +154,8 @@ async function $do(
   }
   const response = doResult.value;
 
-  const responseFields = {
-    HttpMeta: { Response: response, Request: req },
-  };
-
   const [result] = await M.match<
-    operations.ActivateRaiseResponseBody,
-    | errors.Err
+    ActivateRaiseResponse,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -164,11 +165,9 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.ActivateRaiseResponseBody$inboundSchema),
-    M.jsonErr([400, 401, 403, 404], errors.Err$inboundSchema),
-    M.fail("4XX"),
-    M.fail("5XX"),
-  )(response, req, { extraFields: responseFields });
+    M.json(200, ActivateRaiseResponse$inboundSchema),
+    M.json([400, 401, 403, 404], ActivateRaiseResponse$inboundSchema),
+  )(response, req);
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];
   }

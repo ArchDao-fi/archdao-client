@@ -6,7 +6,18 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { blobLikeSchema } from "../../types/blobs.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Organization,
+  Organization$inboundSchema,
+  Organization$Outbound,
+  Organization$outboundSchema,
+} from "../components/organization.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Image = {
@@ -59,8 +70,10 @@ export type CreateOrganizationRequestBody = {
  */
 export type CreateOrganizationResponseBody = {
   success: boolean;
-  data?: components.Organization | undefined;
+  data?: Organization | undefined;
 };
+
+export type CreateOrganizationResponse = Err | CreateOrganizationResponseBody;
 
 /** @internal */
 export const Image$inboundSchema: z.ZodType<Image, z.ZodTypeDef, unknown> = z
@@ -266,13 +279,13 @@ export const CreateOrganizationResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$inboundSchema.optional(),
+  data: Organization$inboundSchema.optional(),
 });
 
 /** @internal */
 export type CreateOrganizationResponseBody$Outbound = {
   success: boolean;
-  data?: components.Organization$Outbound | undefined;
+  data?: Organization$Outbound | undefined;
 };
 
 /** @internal */
@@ -282,7 +295,7 @@ export const CreateOrganizationResponseBody$outboundSchema: z.ZodType<
   CreateOrganizationResponseBody
 > = z.object({
   success: z.boolean(),
-  data: components.Organization$outboundSchema.optional(),
+  data: Organization$outboundSchema.optional(),
 });
 
 /**
@@ -315,5 +328,61 @@ export function createOrganizationResponseBodyFromJSON(
     jsonString,
     (x) => CreateOrganizationResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'CreateOrganizationResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const CreateOrganizationResponse$inboundSchema: z.ZodType<
+  CreateOrganizationResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => CreateOrganizationResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type CreateOrganizationResponse$Outbound =
+  | Err$Outbound
+  | CreateOrganizationResponseBody$Outbound;
+
+/** @internal */
+export const CreateOrganizationResponse$outboundSchema: z.ZodType<
+  CreateOrganizationResponse$Outbound,
+  z.ZodTypeDef,
+  CreateOrganizationResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => CreateOrganizationResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace CreateOrganizationResponse$ {
+  /** @deprecated use `CreateOrganizationResponse$inboundSchema` instead. */
+  export const inboundSchema = CreateOrganizationResponse$inboundSchema;
+  /** @deprecated use `CreateOrganizationResponse$outboundSchema` instead. */
+  export const outboundSchema = CreateOrganizationResponse$outboundSchema;
+  /** @deprecated use `CreateOrganizationResponse$Outbound` instead. */
+  export type Outbound = CreateOrganizationResponse$Outbound;
+}
+
+export function createOrganizationResponseToJSON(
+  createOrganizationResponse: CreateOrganizationResponse,
+): string {
+  return JSON.stringify(
+    CreateOrganizationResponse$outboundSchema.parse(createOrganizationResponse),
+  );
+}
+
+export function createOrganizationResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<CreateOrganizationResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => CreateOrganizationResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'CreateOrganizationResponse' from JSON`,
   );
 }

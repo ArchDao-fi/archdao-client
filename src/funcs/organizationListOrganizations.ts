@@ -20,7 +20,13 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import * as operations from "../models/operations/index.js";
+import {
+  ListOrganizationsRequest,
+  ListOrganizationsRequest$outboundSchema,
+  ListOrganizationsResponseBody,
+  ListOrganizationsResponseBody$inboundSchema,
+  ListOrganizationsSecurity,
+} from "../models/operations/listorganizations.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -36,12 +42,12 @@ import { Result } from "../types/fp.js";
  */
 export function organizationListOrganizations(
   client: ArchDAOCore,
-  request: operations.ListOrganizationsRequest,
-  security?: operations.ListOrganizationsSecurity | undefined,
+  request: ListOrganizationsRequest,
+  security?: ListOrganizationsSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.ListOrganizationsResponseBody,
+    ListOrganizationsResponseBody,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -62,13 +68,13 @@ export function organizationListOrganizations(
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.ListOrganizationsRequest,
-  security?: operations.ListOrganizationsSecurity | undefined,
+  request: ListOrganizationsRequest,
+  security?: ListOrganizationsSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.ListOrganizationsResponseBody,
+      ListOrganizationsResponseBody,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -83,7 +89,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => operations.ListOrganizationsRequest$outboundSchema.parse(value),
+    (value) => ListOrganizationsRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -149,7 +155,7 @@ async function $do(
 
   const doResult = await client._do(req, {
     context,
-    errorCodes: ["4XX", "5XX"],
+    errorCodes: [],
     retryConfig: context.retryConfig,
     retryCodes: context.retryCodes,
   });
@@ -159,7 +165,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    operations.ListOrganizationsResponseBody,
+    ListOrganizationsResponseBody,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -169,9 +175,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.ListOrganizationsResponseBody$inboundSchema),
-    M.fail("4XX"),
-    M.fail("5XX"),
+    M.json(200, ListOrganizationsResponseBody$inboundSchema),
   )(response, req);
   if (!result.ok) {
     return [result, { status: "complete", request: req, response }];

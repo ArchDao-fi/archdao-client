@@ -6,7 +6,18 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import * as components from "../components/index.js";
+import {
+  Err,
+  Err$inboundSchema,
+  Err$Outbound,
+  Err$outboundSchema,
+} from "../components/err.js";
+import {
+  Trade,
+  Trade$inboundSchema,
+  Trade$Outbound,
+  Trade$outboundSchema,
+} from "../components/trade.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 /**
@@ -49,8 +60,10 @@ export type ListProposalTradesPagination = {
 export type ListProposalTradesResponseBody = {
   success: boolean;
   pagination?: ListProposalTradesPagination | undefined;
-  data?: Array<components.Trade> | undefined;
+  data?: Array<Trade> | undefined;
 };
+
+export type ListProposalTradesResponse = Err | ListProposalTradesResponseBody;
 
 /** @internal */
 export const Side$inboundSchema: z.ZodNativeEnum<typeof Side> = z.nativeEnum(
@@ -206,14 +219,14 @@ export const ListProposalTradesResponseBody$inboundSchema: z.ZodType<
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalTradesPagination$inboundSchema)
     .optional(),
-  data: z.array(components.Trade$inboundSchema).optional(),
+  data: z.array(Trade$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListProposalTradesResponseBody$Outbound = {
   success: boolean;
   pagination?: ListProposalTradesPagination$Outbound | undefined;
-  data?: Array<components.Trade$Outbound> | undefined;
+  data?: Array<Trade$Outbound> | undefined;
 };
 
 /** @internal */
@@ -225,7 +238,7 @@ export const ListProposalTradesResponseBody$outboundSchema: z.ZodType<
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalTradesPagination$outboundSchema)
     .optional(),
-  data: z.array(components.Trade$outboundSchema).optional(),
+  data: z.array(Trade$outboundSchema).optional(),
 });
 
 /**
@@ -258,5 +271,61 @@ export function listProposalTradesResponseBodyFromJSON(
     jsonString,
     (x) => ListProposalTradesResponseBody$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'ListProposalTradesResponseBody' from JSON`,
+  );
+}
+
+/** @internal */
+export const ListProposalTradesResponse$inboundSchema: z.ZodType<
+  ListProposalTradesResponse,
+  z.ZodTypeDef,
+  unknown
+> = z.union([
+  Err$inboundSchema,
+  z.lazy(() => ListProposalTradesResponseBody$inboundSchema),
+]);
+
+/** @internal */
+export type ListProposalTradesResponse$Outbound =
+  | Err$Outbound
+  | ListProposalTradesResponseBody$Outbound;
+
+/** @internal */
+export const ListProposalTradesResponse$outboundSchema: z.ZodType<
+  ListProposalTradesResponse$Outbound,
+  z.ZodTypeDef,
+  ListProposalTradesResponse
+> = z.union([
+  Err$outboundSchema,
+  z.lazy(() => ListProposalTradesResponseBody$outboundSchema),
+]);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListProposalTradesResponse$ {
+  /** @deprecated use `ListProposalTradesResponse$inboundSchema` instead. */
+  export const inboundSchema = ListProposalTradesResponse$inboundSchema;
+  /** @deprecated use `ListProposalTradesResponse$outboundSchema` instead. */
+  export const outboundSchema = ListProposalTradesResponse$outboundSchema;
+  /** @deprecated use `ListProposalTradesResponse$Outbound` instead. */
+  export type Outbound = ListProposalTradesResponse$Outbound;
+}
+
+export function listProposalTradesResponseToJSON(
+  listProposalTradesResponse: ListProposalTradesResponse,
+): string {
+  return JSON.stringify(
+    ListProposalTradesResponse$outboundSchema.parse(listProposalTradesResponse),
+  );
+}
+
+export function listProposalTradesResponseFromJSON(
+  jsonString: string,
+): SafeParseResult<ListProposalTradesResponse, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListProposalTradesResponse$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListProposalTradesResponse' from JSON`,
   );
 }
