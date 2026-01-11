@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ActionType } from "@draft/archdao-api-typescript/models/components";
+import { ActionType } from "@archdao/archdao-client/models/components";
 
 let value: ActionType = "burn_tokens";
 ```

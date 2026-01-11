@@ -39,9 +39,8 @@ export type ListProposalTradesRequest = {
 
 export type ListProposalTradesPagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -143,17 +142,15 @@ export const ListProposalTradesPagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type ListProposalTradesPagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -163,9 +160,8 @@ export const ListProposalTradesPagination$outboundSchema: z.ZodType<
   ListProposalTradesPagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

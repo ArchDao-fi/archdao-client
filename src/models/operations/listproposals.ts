@@ -8,6 +8,10 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
+export type ListProposalsSecurity = {
+  bearerAuth?: string | undefined;
+};
+
 export type ListProposalsRequest = {
   /**
    * Page number (1-indexed)
@@ -17,15 +21,28 @@ export type ListProposalsRequest = {
    * Items per page
    */
   limit?: number | undefined;
-  status?: components.ProposalStatus | undefined;
-  organizationId?: number | undefined;
+  /**
+   * Text to search for across searchable fields
+   */
+  search?: string | undefined;
+  /**
+   * Comma-separated list of fields to search. Must be valid searchable fields. If omitted, uses default search fields.
+   */
+  fields?: string | undefined;
+  /**
+   * Filter by proposal status. Accepts multiple comma-separated values. Visibility rules apply: drafts only visible to owner, staking+ visible to all.
+   */
+  status?: string | undefined;
+  /**
+   * Filter by organization ID. Accepts multiple comma-separated values.
+   */
+  organizationId?: string | undefined;
 };
 
 export type ListProposalsPagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -38,6 +55,60 @@ export type ListProposalsResponseBody = {
 };
 
 /** @internal */
+export const ListProposalsSecurity$inboundSchema: z.ZodType<
+  ListProposalsSecurity,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  bearerAuth: z.string().optional(),
+});
+
+/** @internal */
+export type ListProposalsSecurity$Outbound = {
+  bearerAuth?: string | undefined;
+};
+
+/** @internal */
+export const ListProposalsSecurity$outboundSchema: z.ZodType<
+  ListProposalsSecurity$Outbound,
+  z.ZodTypeDef,
+  ListProposalsSecurity
+> = z.object({
+  bearerAuth: z.string().optional(),
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ListProposalsSecurity$ {
+  /** @deprecated use `ListProposalsSecurity$inboundSchema` instead. */
+  export const inboundSchema = ListProposalsSecurity$inboundSchema;
+  /** @deprecated use `ListProposalsSecurity$outboundSchema` instead. */
+  export const outboundSchema = ListProposalsSecurity$outboundSchema;
+  /** @deprecated use `ListProposalsSecurity$Outbound` instead. */
+  export type Outbound = ListProposalsSecurity$Outbound;
+}
+
+export function listProposalsSecurityToJSON(
+  listProposalsSecurity: ListProposalsSecurity,
+): string {
+  return JSON.stringify(
+    ListProposalsSecurity$outboundSchema.parse(listProposalsSecurity),
+  );
+}
+
+export function listProposalsSecurityFromJSON(
+  jsonString: string,
+): SafeParseResult<ListProposalsSecurity, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ListProposalsSecurity$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ListProposalsSecurity' from JSON`,
+  );
+}
+
+/** @internal */
 export const ListProposalsRequest$inboundSchema: z.ZodType<
   ListProposalsRequest,
   z.ZodTypeDef,
@@ -45,16 +116,20 @@ export const ListProposalsRequest$inboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  status: components.ProposalStatus$inboundSchema.optional(),
-  organizationId: z.number().int().optional(),
+  search: z.string().optional(),
+  fields: z.string().optional(),
+  status: z.string().optional(),
+  organizationId: z.string().optional(),
 });
 
 /** @internal */
 export type ListProposalsRequest$Outbound = {
   page: number;
   limit: number;
+  search?: string | undefined;
+  fields?: string | undefined;
   status?: string | undefined;
-  organizationId?: number | undefined;
+  organizationId?: string | undefined;
 };
 
 /** @internal */
@@ -65,8 +140,10 @@ export const ListProposalsRequest$outboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  status: components.ProposalStatus$outboundSchema.optional(),
-  organizationId: z.number().int().optional(),
+  search: z.string().optional(),
+  fields: z.string().optional(),
+  status: z.string().optional(),
+  organizationId: z.string().optional(),
 });
 
 /**
@@ -107,17 +184,15 @@ export const ListProposalsPagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type ListProposalsPagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -127,9 +202,8 @@ export const ListProposalsPagination$outboundSchema: z.ZodType<
   ListProposalsPagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

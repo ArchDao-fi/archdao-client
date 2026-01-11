@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TreasuryStatus } from "@draft/archdao-api-typescript/models/components";
+import { TreasuryStatus } from "@archdao/archdao-client/models/components";
 
 let value: TreasuryStatus = "pending";
 ```
@@ -11,5 +11,5 @@ let value: TreasuryStatus = "pending";
 ## Values
 
 ```typescript
-"pending" | "active"
+"pending" | "inactive" | "active" | "approved"
 ```

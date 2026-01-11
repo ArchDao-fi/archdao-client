@@ -27,9 +27,8 @@ export type ListAuditLogsRequest = {
 
 export type ListAuditLogsPagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -114,17 +113,15 @@ export const ListAuditLogsPagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type ListAuditLogsPagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -134,9 +131,8 @@ export const ListAuditLogsPagination$outboundSchema: z.ZodType<
   ListAuditLogsPagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

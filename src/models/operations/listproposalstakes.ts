@@ -22,9 +22,8 @@ export type ListProposalStakesRequest = {
 
 export type ListProposalStakesPagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -103,17 +102,15 @@ export const ListProposalStakesPagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type ListProposalStakesPagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -123,9 +120,8 @@ export const ListProposalStakesPagination$outboundSchema: z.ZodType<
   ListProposalStakesPagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

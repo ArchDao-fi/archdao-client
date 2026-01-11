@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CreateProposalRequest } from "@draft/archdao-api-typescript/models/components";
+import { CreateProposalRequest } from "@archdao/archdao-client/models/components";
 
 let value: CreateProposalRequest = {
   organizationId: 204930,
@@ -22,5 +22,3 @@ let value: CreateProposalRequest = {
 | `title`                                                    | *string*                                                   | :heavy_check_mark:                                         | N/A                                                        |
 | `description`                                              | *string*                                                   | :heavy_check_mark:                                         | N/A                                                        |
 | `actions`                                                  | [components.Actions](../../models/components/actions.md)[] | :heavy_check_mark:                                         | N/A                                                        |
-| `lpAllocation`                                             | *number*                                                   | :heavy_minus_sign:                                         | N/A                                                        |
-| `passThresholdBps`                                         | *number*                                                   | :heavy_minus_sign:                                         | N/A                                                        |

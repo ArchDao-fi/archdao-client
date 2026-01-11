@@ -5,7 +5,7 @@ Bad Request - Invalid input data
 ## Example Usage
 
 ```typescript
-import { ErrorResponse } from "@draft/archdao-api-typescript/models/errors";
+import { ErrorResponse } from "@archdao/archdao-client/models/errors";
 
 // No examples available for this model
 ```

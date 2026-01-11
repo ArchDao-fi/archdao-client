@@ -16,18 +16,24 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class Proposal extends ClientSDK {
   /**
-   * List user's proposals
+   * List proposals
    *
    * @remarks
-   * Returns proposals created by the authenticated user.
+   * Returns proposals with visibility rules. Unauthenticated users see public proposals (staking, active, resolved, executed). Authenticated users also see their own drafts. Admins see all.
+   *
+   * **Searchable fields:** `title`
+   *
+   * **Default search field:** `title`
    */
   async listProposals(
     request: operations.ListProposalsRequest,
+    security?: operations.ListProposalsSecurity | undefined,
     options?: RequestOptions,
   ): Promise<operations.ListProposalsResponseBody> {
     return unwrapAsync(proposalListProposals(
       this,
       request,
+      security,
       options,
     ));
   }

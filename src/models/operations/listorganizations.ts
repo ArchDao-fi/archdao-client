@@ -21,18 +21,24 @@ export type ListOrganizationsRequest = {
    * Items per page
    */
   limit?: number | undefined;
-  status?: components.OrganizationStatus | undefined;
   /**
-   * Search by name or description
+   * Text to search for across searchable fields
    */
   search?: string | undefined;
+  /**
+   * Comma-separated list of fields to search. Must be valid searchable fields. If omitted, uses default search fields.
+   */
+  fields?: string | undefined;
+  /**
+   * Filter by organization status. Accepts multiple comma-separated values.
+   */
+  status?: string | undefined;
 };
 
 export type Pagination = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /**
@@ -106,16 +112,18 @@ export const ListOrganizationsRequest$inboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  status: components.OrganizationStatus$inboundSchema.optional(),
   search: z.string().optional(),
+  fields: z.string().optional(),
+  status: z.string().optional(),
 });
 
 /** @internal */
 export type ListOrganizationsRequest$Outbound = {
   page: number;
   limit: number;
-  status?: string | undefined;
   search?: string | undefined;
+  fields?: string | undefined;
+  status?: string | undefined;
 };
 
 /** @internal */
@@ -126,8 +134,9 @@ export const ListOrganizationsRequest$outboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  status: components.OrganizationStatus$outboundSchema.optional(),
   search: z.string().optional(),
+  fields: z.string().optional(),
+  status: z.string().optional(),
 });
 
 /**
@@ -168,17 +177,15 @@ export const Pagination$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /** @internal */
 export type Pagination$Outbound = {
   page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  limit: number;
+  total: number;
 };
 
 /** @internal */
@@ -188,9 +195,8 @@ export const Pagination$outboundSchema: z.ZodType<
   Pagination
 > = z.object({
   page: z.number().int(),
-  pageSize: z.number().int(),
-  totalItems: z.number().int(),
-  totalPages: z.number().int(),
+  limit: z.number().int(),
+  total: z.number().int(),
 });
 
 /**

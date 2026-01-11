@@ -15,6 +15,10 @@ export class Admin extends ClientSDK {
    *
    * @remarks
    * Admin-only endpoint to list all users with optional filters.
+   *
+   * **Searchable fields:** `address`, `name`
+   *
+   * **Default search field:** `address`
    */
   async listUsers(
     request: operations.ListUsersRequest,

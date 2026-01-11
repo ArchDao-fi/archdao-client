@@ -7,26 +7,26 @@ Wallet-based authentication endpoints
 
 ### Available Operations
 
-* [getNonce](#getnonce) - Get a new nonce for wallet signing
-* [login](#login) - Login with wallet signature
-* [logout](#logout) - Logout user
-* [getMe](#getme) - Get current user info
+* [createNonce](#createnonce) - Create Nonce
+* [login](#login) - Login
+* [logout](#logout) - Logout
+* [getSelf](#getself) - Get Self
 
-## getNonce
+## createNonce
 
 Returns a nonce that the user must sign with their wallet. Creates the user if they do not exist.
 
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getNonce({
+  const result = await archdao.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -41,24 +41,24 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { authenticationGetNonce } from "@draft/archdao-api-typescript/funcs/authenticationGetNonce.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { authenticationCreateNonce } from "@archdao/archdao-client/funcs/authenticationCreateNonce.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationGetNonce(archdaoApiTypescript, {
+  const res = await authenticationCreateNonce(archdao, {
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("authenticationGetNonce failed:", res.error);
+    console.log("authenticationCreateNonce failed:", res.error);
   }
 }
 
@@ -69,14 +69,14 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetNonceRequestBody](../../models/operations/getnoncerequestbody.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateNonceRequestBody](../../models/operations/createnoncerequestbody.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.GetNonceResponseBody](../../models/operations/getnonceresponsebody.md)\>**
+**Promise\<[operations.CreateNonceResponseBody](../../models/operations/createnonceresponsebody.md)\>**
 
 ### Errors
 
@@ -92,14 +92,14 @@ Verifies the wallet signature and returns a JWT token valid for 30 days.
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.login({
+  const result = await archdao.authentication.login({
     address: "0x1234567890abcdef1234567890abcdef12345678",
     nonce: "1704067200000",
     signature: "0xabcd...",
@@ -116,17 +116,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { authenticationLogin } from "@draft/archdao-api-typescript/funcs/authenticationLogin.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { authenticationLogin } from "@archdao/archdao-client/funcs/authenticationLogin.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationLogin(archdaoApiTypescript, {
+  const res = await authenticationLogin(archdao, {
     address: "0x1234567890abcdef1234567890abcdef12345678",
     nonce: "1704067200000",
     signature: "0xabcd...",
@@ -169,14 +169,14 @@ Deactivates the current nonce. Optionally deactivate all nonces to logout from a
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.logout();
+  const result = await archdao.authentication.logout();
 
   console.log(result);
 }
@@ -189,17 +189,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { authenticationLogout } from "@draft/archdao-api-typescript/funcs/authenticationLogout.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { authenticationLogout } from "@archdao/archdao-client/funcs/authenticationLogout.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationLogout(archdaoApiTypescript);
+  const res = await authenticationLogout(archdao);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -231,21 +231,21 @@ run();
 | errors.ErrorResponse | 401                  | application/json     |
 | errors.APIError      | 4XX, 5XX             | \*/\*                |
 
-## getMe
+## getSelf
 
 Returns the authenticated user's information including active sessions.
 
 ### Example Usage
 
 ```typescript
-import { ArchdaoApiTypescript } from "@draft/archdao-api-typescript";
+import { Archdao } from "@archdao/archdao-client";
 
-const archdaoApiTypescript = new ArchdaoApiTypescript({
+const archdao = new Archdao({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdaoApiTypescript.authentication.getMe();
+  const result = await archdao.authentication.getSelf();
 
   console.log(result);
 }
@@ -258,22 +258,22 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoApiTypescriptCore } from "@draft/archdao-api-typescript/core.js";
-import { authenticationGetMe } from "@draft/archdao-api-typescript/funcs/authenticationGetMe.js";
+import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { authenticationGetSelf } from "@archdao/archdao-client/funcs/authenticationGetSelf.js";
 
-// Use `ArchdaoApiTypescriptCore` for best tree-shaking performance.
+// Use `ArchdaoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdaoApiTypescript = new ArchdaoApiTypescriptCore({
+const archdao = new ArchdaoCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationGetMe(archdaoApiTypescript);
+  const res = await authenticationGetSelf(archdao);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("authenticationGetMe failed:", res.error);
+    console.log("authenticationGetSelf failed:", res.error);
   }
 }
 
@@ -290,7 +290,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetMeResponseBody](../../models/operations/getmeresponsebody.md)\>**
+**Promise\<[operations.GetSelfResponseBody](../../models/operations/getselfresponsebody.md)\>**
 
 ### Errors
 

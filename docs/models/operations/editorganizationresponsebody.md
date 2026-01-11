@@ -5,7 +5,7 @@ Organization updated
 ## Example Usage
 
 ```typescript
-import { EditOrganizationResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { EditOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: EditOrganizationResponseBody = {
   success: true,

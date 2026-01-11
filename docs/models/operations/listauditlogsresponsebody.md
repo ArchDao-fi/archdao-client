@@ -5,15 +5,14 @@ Audit logs retrieved
 ## Example Usage
 
 ```typescript
-import { ListAuditLogsResponseBody } from "@draft/archdao-api-typescript/models/operations";
+import { ListAuditLogsResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: ListAuditLogsResponseBody = {
   success: true,
   pagination: {
     page: 1,
-    pageSize: 20,
-    totalItems: 100,
-    totalPages: 5,
+    limit: 20,
+    total: 100,
   },
   data: [
     {
