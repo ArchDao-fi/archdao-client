@@ -7,6 +7,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  DecisionMarket,
+  DecisionMarket$inboundSchema,
+  DecisionMarket$Outbound,
+  DecisionMarket$outboundSchema,
+} from "./decisionmarket.js";
+import {
   ProposalAction,
   ProposalAction$inboundSchema,
   ProposalAction$Outbound,
@@ -42,6 +48,10 @@ export type Proposal = {
   resolvedAt?: Date | undefined;
   executedAt?: Date | undefined;
   actions?: Array<ProposalAction> | undefined;
+  /**
+   * Decision markets for this proposal. Null during draft/staking phases, populated once active.
+   */
+  decisionMarkets?: Array<DecisionMarket> | null | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
 };
@@ -76,6 +86,7 @@ export const Proposal$inboundSchema: z.ZodType<
   executedAt: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
   actions: z.array(ProposalAction$inboundSchema).optional(),
+  decisionMarkets: z.nullable(z.array(DecisionMarket$inboundSchema)).optional(),
   created: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
   updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
@@ -102,6 +113,7 @@ export type Proposal$Outbound = {
   resolvedAt?: string | undefined;
   executedAt?: string | undefined;
   actions?: Array<ProposalAction$Outbound> | undefined;
+  decisionMarkets?: Array<DecisionMarket$Outbound> | null | undefined;
   created?: string | undefined;
   updated?: string | undefined;
 };
@@ -130,6 +142,8 @@ export const Proposal$outboundSchema: z.ZodType<
   resolvedAt: z.date().transform(v => v.toISOString()).optional(),
   executedAt: z.date().transform(v => v.toISOString()).optional(),
   actions: z.array(ProposalAction$outboundSchema).optional(),
+  decisionMarkets: z.nullable(z.array(DecisionMarket$outboundSchema))
+    .optional(),
   created: z.date().transform(v => v.toISOString()).optional(),
   updated: z.date().transform(v => v.toISOString()).optional(),
 });

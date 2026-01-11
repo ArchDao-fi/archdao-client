@@ -7,6 +7,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  ContactInformation,
+  ContactInformation$inboundSchema,
+  ContactInformation$Outbound,
+  ContactInformation$outboundSchema,
+} from "./contactinformation.js";
+import {
   Link,
   Link$inboundSchema,
   Link$Outbound,
@@ -57,6 +63,7 @@ export type OrganizationWithRaise = {
   type?: OrganizationType | undefined;
   status?: OrganizationStatus | undefined;
   links?: Array<Link> | undefined;
+  contactInformation?: Array<ContactInformation> | undefined;
   token?: Token | undefined;
   treasury?: Treasury | undefined;
   user?: User | undefined;
@@ -80,6 +87,7 @@ export const OrganizationWithRaise$inboundSchema: z.ZodType<
   type: OrganizationType$inboundSchema.optional(),
   status: OrganizationStatus$inboundSchema.optional(),
   links: z.array(Link$inboundSchema).optional(),
+  contactInformation: z.array(ContactInformation$inboundSchema).optional(),
   token: Token$inboundSchema.optional(),
   treasury: Treasury$inboundSchema.optional(),
   user: User$inboundSchema.optional(),
@@ -101,6 +109,7 @@ export type OrganizationWithRaise$Outbound = {
   type?: string | undefined;
   status?: string | undefined;
   links?: Array<Link$Outbound> | undefined;
+  contactInformation?: Array<ContactInformation$Outbound> | undefined;
   token?: Token$Outbound | undefined;
   treasury?: Treasury$Outbound | undefined;
   user?: User$Outbound | undefined;
@@ -124,6 +133,7 @@ export const OrganizationWithRaise$outboundSchema: z.ZodType<
   type: OrganizationType$outboundSchema.optional(),
   status: OrganizationStatus$outboundSchema.optional(),
   links: z.array(Link$outboundSchema).optional(),
+  contactInformation: z.array(ContactInformation$outboundSchema).optional(),
   token: Token$outboundSchema.optional(),
   treasury: Treasury$outboundSchema.optional(),
   user: User$outboundSchema.optional(),

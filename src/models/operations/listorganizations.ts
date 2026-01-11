@@ -47,7 +47,7 @@ export type Pagination = {
 export type ListOrganizationsResponseBody = {
   success: boolean;
   pagination?: Pagination | undefined;
-  data?: Array<components.OrganizationSummary> | undefined;
+  data?: Array<components.Organization> | undefined;
 };
 
 /** @internal */
@@ -234,14 +234,14 @@ export const ListOrganizationsResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => Pagination$inboundSchema).optional(),
-  data: z.array(components.OrganizationSummary$inboundSchema).optional(),
+  data: z.array(components.Organization$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListOrganizationsResponseBody$Outbound = {
   success: boolean;
   pagination?: Pagination$Outbound | undefined;
-  data?: Array<components.OrganizationSummary$Outbound> | undefined;
+  data?: Array<components.Organization$Outbound> | undefined;
 };
 
 /** @internal */
@@ -252,7 +252,7 @@ export const ListOrganizationsResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => Pagination$outboundSchema).optional(),
-  data: z.array(components.OrganizationSummary$outboundSchema).optional(),
+  data: z.array(components.Organization$outboundSchema).optional(),
 });
 
 /**

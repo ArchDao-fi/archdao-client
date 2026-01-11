@@ -7,6 +7,12 @@ import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
+  RaiseAllocation,
+  RaiseAllocation$inboundSchema,
+  RaiseAllocation$Outbound,
+  RaiseAllocation$outboundSchema,
+} from "./raiseallocation.js";
+import {
   RaiseStatus,
   RaiseStatus$inboundSchema,
   RaiseStatus$outboundSchema,
@@ -14,37 +20,48 @@ import {
 
 export type Raise = {
   id?: number | undefined;
+  /**
+   * EVM address of the raise contract
+   */
+  address?: string | null | undefined;
   softCap?: number | undefined;
   acceptedAmount?: number | undefined;
   balance?: number | undefined;
-  startDate?: Date | undefined;
-  endDate?: Date | undefined;
+  startDate?: Date | null | undefined;
+  endDate?: Date | null | undefined;
   status?: RaiseStatus | undefined;
+  allocations?: Array<RaiseAllocation> | undefined;
 };
 
 /** @internal */
 export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
   .object({
     id: z.number().int().optional(),
+    address: z.nullable(z.string()).optional(),
     softCap: z.number().optional(),
     acceptedAmount: z.number().optional(),
     balance: z.number().optional(),
-    startDate: z.string().datetime({ offset: true }).transform(v => new Date(v))
-      .optional(),
-    endDate: z.string().datetime({ offset: true }).transform(v => new Date(v))
-      .optional(),
+    startDate: z.nullable(
+      z.string().datetime({ offset: true }).transform(v => new Date(v)),
+    ).optional(),
+    endDate: z.nullable(
+      z.string().datetime({ offset: true }).transform(v => new Date(v)),
+    ).optional(),
     status: RaiseStatus$inboundSchema.optional(),
+    allocations: z.array(RaiseAllocation$inboundSchema).optional(),
   });
 
 /** @internal */
 export type Raise$Outbound = {
   id?: number | undefined;
+  address?: string | null | undefined;
   softCap?: number | undefined;
   acceptedAmount?: number | undefined;
   balance?: number | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
+  startDate?: string | null | undefined;
+  endDate?: string | null | undefined;
   status?: string | undefined;
+  allocations?: Array<RaiseAllocation$Outbound> | undefined;
 };
 
 /** @internal */
@@ -54,12 +71,14 @@ export const Raise$outboundSchema: z.ZodType<
   Raise
 > = z.object({
   id: z.number().int().optional(),
+  address: z.nullable(z.string()).optional(),
   softCap: z.number().optional(),
   acceptedAmount: z.number().optional(),
   balance: z.number().optional(),
-  startDate: z.date().transform(v => v.toISOString()).optional(),
-  endDate: z.date().transform(v => v.toISOString()).optional(),
+  startDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
+  endDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
   status: RaiseStatus$outboundSchema.optional(),
+  allocations: z.array(RaiseAllocation$outboundSchema).optional(),
 });
 
 /**

@@ -51,7 +51,7 @@ export type ListProposalsPagination = {
 export type ListProposalsResponseBody = {
   success: boolean;
   pagination?: ListProposalsPagination | undefined;
-  data?: Array<components.ProposalSummary> | undefined;
+  data?: Array<components.BaseProposal> | undefined;
 };
 
 /** @internal */
@@ -245,14 +245,14 @@ export const ListProposalsResponseBody$inboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalsPagination$inboundSchema).optional(),
-  data: z.array(components.ProposalSummary$inboundSchema).optional(),
+  data: z.array(components.BaseProposal$inboundSchema).optional(),
 });
 
 /** @internal */
 export type ListProposalsResponseBody$Outbound = {
   success: boolean;
   pagination?: ListProposalsPagination$Outbound | undefined;
-  data?: Array<components.ProposalSummary$Outbound> | undefined;
+  data?: Array<components.BaseProposal$Outbound> | undefined;
 };
 
 /** @internal */
@@ -263,7 +263,7 @@ export const ListProposalsResponseBody$outboundSchema: z.ZodType<
 > = z.object({
   success: z.boolean(),
   pagination: z.lazy(() => ListProposalsPagination$outboundSchema).optional(),
-  data: z.array(components.ProposalSummary$outboundSchema).optional(),
+  data: z.array(components.BaseProposal$outboundSchema).optional(),
 });
 
 /**
