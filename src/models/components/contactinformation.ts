@@ -4,21 +4,45 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  ContactType,
-  ContactType$inboundSchema,
-  ContactType$outboundSchema,
-} from "./contacttype.js";
+
+export const ContactInformationType = {
+  Email: "email",
+  Telegram: "telegram",
+  Discord: "discord",
+} as const;
+export type ContactInformationType = ClosedEnum<typeof ContactInformationType>;
 
 export type ContactInformation = {
   id?: number | undefined;
-  type: ContactType;
+  type: ContactInformationType;
   value: string;
   created?: Date | undefined;
   updated?: Date | undefined;
 };
+
+/** @internal */
+export const ContactInformationType$inboundSchema: z.ZodNativeEnum<
+  typeof ContactInformationType
+> = z.nativeEnum(ContactInformationType);
+
+/** @internal */
+export const ContactInformationType$outboundSchema: z.ZodNativeEnum<
+  typeof ContactInformationType
+> = ContactInformationType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ContactInformationType$ {
+  /** @deprecated use `ContactInformationType$inboundSchema` instead. */
+  export const inboundSchema = ContactInformationType$inboundSchema;
+  /** @deprecated use `ContactInformationType$outboundSchema` instead. */
+  export const outboundSchema = ContactInformationType$outboundSchema;
+}
 
 /** @internal */
 export const ContactInformation$inboundSchema: z.ZodType<
@@ -27,7 +51,7 @@ export const ContactInformation$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.number().int().optional(),
-  type: ContactType$inboundSchema,
+  type: ContactInformationType$inboundSchema,
   value: z.string(),
   created: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
@@ -51,7 +75,7 @@ export const ContactInformation$outboundSchema: z.ZodType<
   ContactInformation
 > = z.object({
   id: z.number().int().optional(),
-  type: ContactType$outboundSchema,
+  type: ContactInformationType$outboundSchema,
   value: z.string(),
   created: z.date().transform(v => v.toISOString()).optional(),
   updated: z.date().transform(v => v.toISOString()).optional(),

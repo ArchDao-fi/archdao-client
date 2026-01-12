@@ -4,19 +4,43 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  LinkType,
-  LinkType$inboundSchema,
-  LinkType$outboundSchema,
-} from "./linktype.js";
+
+export const LinkType = {
+  Website: "website",
+  Twitter: "twitter",
+  Discord: "discord",
+  Telegram: "telegram",
+  Other: "other",
+} as const;
+export type LinkType = ClosedEnum<typeof LinkType>;
 
 export type Link = {
   id?: number | undefined;
   type: LinkType;
   url: string;
 };
+
+/** @internal */
+export const LinkType$inboundSchema: z.ZodNativeEnum<typeof LinkType> = z
+  .nativeEnum(LinkType);
+
+/** @internal */
+export const LinkType$outboundSchema: z.ZodNativeEnum<typeof LinkType> =
+  LinkType$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace LinkType$ {
+  /** @deprecated use `LinkType$inboundSchema` instead. */
+  export const inboundSchema = LinkType$inboundSchema;
+  /** @deprecated use `LinkType$outboundSchema` instead. */
+  export const outboundSchema = LinkType$outboundSchema;
+}
 
 /** @internal */
 export const Link$inboundSchema: z.ZodType<Link, z.ZodTypeDef, unknown> = z

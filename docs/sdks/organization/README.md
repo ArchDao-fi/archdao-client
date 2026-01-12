@@ -8,7 +8,6 @@ Organization management endpoints
 ### Available Operations
 
 * [listOrganizations](#listorganizations) - List organizations
-* [createOrganization](#createorganization) - Create organization
 * [getOrganization](#getorganization) - Get organization by slug
 * [editOrganization](#editorganization) - Edit organization
 * [changeOrganizationStatus](#changeorganizationstatus) - Change organization status
@@ -85,115 +84,6 @@ run();
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.ArchError | 4XX, 5XX         | \*/\*            |
-
-## createOrganization
-
-Creates a new organization (external or ICO type). Uses multipart/form-data for image uploads.
-
-**Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
-
-### Example Usage
-
-```typescript
-import { ArchDAO } from "@archdao/archdao-client";
-import { openAsBlob } from "node:fs";
-
-const archDAO = new ArchDAO({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const result = await archDAO.organization.createOrganization({
-    name: "<value>",
-    description: "fooey lawful fervently besides surprisingly developmental blushing attraction geez considering",
-    contactInformation: [
-      {
-        type: "email",
-        value: "<value>",
-      },
-    ],
-    type: "external",
-    token: {
-      address: "74104 Christina Union",
-    },
-    treasury: {
-      tokenSupply: 8187.33,
-      usdcSupply: 2350.29,
-    },
-    image: await openAsBlob("example.file"),
-  });
-
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { ArchDAOCore } from "@archdao/archdao-client/core.js";
-import { organizationCreateOrganization } from "@archdao/archdao-client/funcs/organizationCreateOrganization.js";
-import { openAsBlob } from "node:fs";
-
-// Use `ArchDAOCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const archDAO = new ArchDAOCore({
-  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
-});
-
-async function run() {
-  const res = await organizationCreateOrganization(archDAO, {
-    name: "<value>",
-    description: "fooey lawful fervently besides surprisingly developmental blushing attraction geez considering",
-    contactInformation: [
-      {
-        type: "email",
-        value: "<value>",
-      },
-    ],
-    type: "external",
-    token: {
-      address: "74104 Christina Union",
-    },
-    treasury: {
-      tokenSupply: 8187.33,
-      usdcSupply: 2350.29,
-    },
-    image: await openAsBlob("example.file"),
-  });
-  if (res.ok) {
-    const { value: result } = res;
-    console.log(result);
-  } else {
-    console.log("organizationCreateOrganization failed:", res.error);
-  }
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.CreateOrganizationRequestBody](../../models/operations/createorganizationrequestbody.md)                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[components.OrganizationResponse](../../models/components/organizationresponse.md)\>**
-
-### Errors
-
-| Error Type       | Status Code      | Content Type     |
-| ---------------- | ---------------- | ---------------- |
-| errors.Err       | 400, 401         | application/json |
 | errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## getOrganization

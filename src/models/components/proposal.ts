@@ -4,6 +4,7 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -18,16 +19,22 @@ import {
   ProposalAction$Outbound,
   ProposalAction$outboundSchema,
 } from "./proposalaction.js";
-import {
-  ProposalOutcome,
-  ProposalOutcome$inboundSchema,
-  ProposalOutcome$outboundSchema,
-} from "./proposaloutcome.js";
-import {
-  ProposalStatus,
-  ProposalStatus$inboundSchema,
-  ProposalStatus$outboundSchema,
-} from "./proposalstatus.js";
+
+export const ProposalStatus = {
+  Draft: "draft",
+  Staking: "staking",
+  Active: "active",
+  Resolved: "resolved",
+  Executed: "executed",
+  Cancelled: "cancelled",
+} as const;
+export type ProposalStatus = ClosedEnum<typeof ProposalStatus>;
+
+export const Outcome = {
+  Pass: "pass",
+  Fail: "fail",
+} as const;
+export type Outcome = ClosedEnum<typeof Outcome>;
 
 export type Proposal = {
   id?: number | undefined;
@@ -36,7 +43,7 @@ export type Proposal = {
   title: string;
   description: string;
   status?: ProposalStatus | undefined;
-  outcome?: ProposalOutcome | undefined;
+  outcome?: Outcome | undefined;
   lpAllocation?: number | undefined;
   tokensForLp?: number | undefined;
   usdcForLp?: number | undefined;
@@ -57,6 +64,46 @@ export type Proposal = {
 };
 
 /** @internal */
+export const ProposalStatus$inboundSchema: z.ZodNativeEnum<
+  typeof ProposalStatus
+> = z.nativeEnum(ProposalStatus);
+
+/** @internal */
+export const ProposalStatus$outboundSchema: z.ZodNativeEnum<
+  typeof ProposalStatus
+> = ProposalStatus$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ProposalStatus$ {
+  /** @deprecated use `ProposalStatus$inboundSchema` instead. */
+  export const inboundSchema = ProposalStatus$inboundSchema;
+  /** @deprecated use `ProposalStatus$outboundSchema` instead. */
+  export const outboundSchema = ProposalStatus$outboundSchema;
+}
+
+/** @internal */
+export const Outcome$inboundSchema: z.ZodNativeEnum<typeof Outcome> = z
+  .nativeEnum(Outcome);
+
+/** @internal */
+export const Outcome$outboundSchema: z.ZodNativeEnum<typeof Outcome> =
+  Outcome$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Outcome$ {
+  /** @deprecated use `Outcome$inboundSchema` instead. */
+  export const inboundSchema = Outcome$inboundSchema;
+  /** @deprecated use `Outcome$outboundSchema` instead. */
+  export const outboundSchema = Outcome$outboundSchema;
+}
+
+/** @internal */
 export const Proposal$inboundSchema: z.ZodType<
   Proposal,
   z.ZodTypeDef,
@@ -68,7 +115,7 @@ export const Proposal$inboundSchema: z.ZodType<
   title: z.string(),
   description: z.string(),
   status: ProposalStatus$inboundSchema.optional(),
-  outcome: ProposalOutcome$inboundSchema.optional(),
+  outcome: Outcome$inboundSchema.optional(),
   lpAllocation: z.number().int().optional(),
   tokensForLp: z.number().optional(),
   usdcForLp: z.number().optional(),
@@ -130,7 +177,7 @@ export const Proposal$outboundSchema: z.ZodType<
   title: z.string(),
   description: z.string(),
   status: ProposalStatus$outboundSchema.optional(),
-  outcome: ProposalOutcome$outboundSchema.optional(),
+  outcome: Outcome$outboundSchema.optional(),
   lpAllocation: z.number().int().optional(),
   tokensForLp: z.number().optional(),
   usdcForLp: z.number().optional(),

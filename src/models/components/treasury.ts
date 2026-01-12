@@ -4,13 +4,17 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
-import {
-  TreasuryStatus,
-  TreasuryStatus$inboundSchema,
-  TreasuryStatus$outboundSchema,
-} from "./treasurystatus.js";
+
+export const Status = {
+  Pending: "pending",
+  Inactive: "inactive",
+  Active: "active",
+  Approved: "approved",
+} as const;
+export type Status = ClosedEnum<typeof Status>;
 
 export type Treasury = {
   id?: number | undefined;
@@ -38,8 +42,27 @@ export type Treasury = {
    * Amount of USDC Tokens in the treasury reserve
    */
   usdcReserve?: number | undefined;
-  status?: TreasuryStatus | undefined;
+  status?: Status | undefined;
 };
+
+/** @internal */
+export const Status$inboundSchema: z.ZodNativeEnum<typeof Status> = z
+  .nativeEnum(Status);
+
+/** @internal */
+export const Status$outboundSchema: z.ZodNativeEnum<typeof Status> =
+  Status$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Status$ {
+  /** @deprecated use `Status$inboundSchema` instead. */
+  export const inboundSchema = Status$inboundSchema;
+  /** @deprecated use `Status$outboundSchema` instead. */
+  export const outboundSchema = Status$outboundSchema;
+}
 
 /** @internal */
 export const Treasury$inboundSchema: z.ZodType<
@@ -54,7 +77,7 @@ export const Treasury$inboundSchema: z.ZodType<
   usdcSupplyLp: z.number().optional(),
   tokenReserve: z.number().optional(),
   usdcReserve: z.number().optional(),
-  status: TreasuryStatus$inboundSchema.optional(),
+  status: Status$inboundSchema.optional(),
 });
 
 /** @internal */
@@ -82,7 +105,7 @@ export const Treasury$outboundSchema: z.ZodType<
   usdcSupplyLp: z.number().optional(),
   tokenReserve: z.number().optional(),
   usdcReserve: z.number().optional(),
-  status: TreasuryStatus$outboundSchema.optional(),
+  status: Status$outboundSchema.optional(),
 });
 
 /**

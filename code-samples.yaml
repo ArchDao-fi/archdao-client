@@ -51,12 +51,6 @@ actions:
         - "lang": "typescript"
           "label": "listOrganizations"
           "source": "import { ArchDAO } from \"@archdao/archdao-client\";\n\nconst archDAO = new ArchDAO();\n\nasync function run() {\n  const result = await archDAO.organization.listOrganizations({\n    status: \"approved,active\",\n  });\n\n  console.log(result);\n}\n\nrun();"
-  - target: $["paths"]["/organization"]["post"]
-    update:
-      "x-codeSamples":
-        - "lang": "typescript"
-          "label": "createOrganization"
-          "source": "import { ArchDAO } from \"@archdao/archdao-client\";\nimport { openAsBlob } from \"node:fs\";\n\nconst archDAO = new ArchDAO({\n  bearerAuth: \"<YOUR_BEARER_TOKEN_HERE>\",\n});\n\nasync function run() {\n  const result = await archDAO.organization.createOrganization({\n    name: \"<value>\",\n    description: \"fooey lawful fervently besides surprisingly developmental blushing attraction geez considering\",\n    contactInformation: [\n      {\n        type: \"email\",\n        value: \"<value>\",\n      },\n    ],\n    type: \"external\",\n    token: {\n      address: \"74104 Christina Union\",\n    },\n    treasury: {\n      tokenSupply: 8187.33,\n      usdcSupply: 2350.29,\n    },\n    image: await openAsBlob(\"example.file\"),\n  });\n\n  console.log(result);\n}\n\nrun();"
   - target: $["paths"]["/organization/slug/{slug}"]["get"]
     update:
       "x-codeSamples":

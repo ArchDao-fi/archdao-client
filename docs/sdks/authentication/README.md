@@ -80,7 +80,7 @@ run();
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.Err       | 400              | application/json |
+| errors.Err       | 400, 422         | application/json |
 | errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## login

@@ -12,23 +12,11 @@ import {
   ProposalActionRequest$Outbound,
   ProposalActionRequest$outboundSchema,
 } from "./proposalaction.js";
-import {
-  ProposalOutcome,
-  ProposalOutcome$inboundSchema,
-  ProposalOutcome$outboundSchema,
-} from "./proposaloutcome.js";
-import {
-  ProposalStatus,
-  ProposalStatus$inboundSchema,
-  ProposalStatus$outboundSchema,
-} from "./proposalstatus.js";
 
 export type ProposalRequest = {
   organizationId: number;
   title: string;
   description: string;
-  status?: ProposalStatus | undefined;
-  outcome?: ProposalOutcome | undefined;
   actions?: Array<ProposalActionRequest> | undefined;
 };
 
@@ -41,8 +29,6 @@ export const ProposalRequest$inboundSchema: z.ZodType<
   organizationId: z.number().int(),
   title: z.string(),
   description: z.string(),
-  status: ProposalStatus$inboundSchema.optional(),
-  outcome: ProposalOutcome$inboundSchema.optional(),
   actions: z.array(ProposalActionRequest$inboundSchema).optional(),
 });
 
@@ -51,8 +37,6 @@ export type ProposalRequest$Outbound = {
   organizationId: number;
   title: string;
   description: string;
-  status?: string | undefined;
-  outcome?: string | undefined;
   actions?: Array<ProposalActionRequest$Outbound> | undefined;
 };
 
@@ -65,8 +49,6 @@ export const ProposalRequest$outboundSchema: z.ZodType<
   organizationId: z.number().int(),
   title: z.string(),
   description: z.string(),
-  status: ProposalStatus$outboundSchema.optional(),
-  outcome: ProposalOutcome$outboundSchema.optional(),
   actions: z.array(ProposalActionRequest$outboundSchema).optional(),
 });
 
