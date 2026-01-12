@@ -4,6 +4,7 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -11,17 +12,18 @@ import {
   MarketSide$inboundSchema,
   MarketSide$outboundSchema,
 } from "./marketside.js";
-import {
-  TradeDirection,
-  TradeDirection$inboundSchema,
-  TradeDirection$outboundSchema,
-} from "./tradedirection.js";
+
+export const Direction = {
+  Buy: "buy",
+  Sell: "sell",
+} as const;
+export type Direction = ClosedEnum<typeof Direction>;
 
 export type Trade = {
   id: number;
   side: MarketSide;
   address: string;
-  direction: TradeDirection;
+  direction: Direction;
   amount: number;
   price: number;
   txHash: string;
@@ -29,12 +31,31 @@ export type Trade = {
 };
 
 /** @internal */
+export const Direction$inboundSchema: z.ZodNativeEnum<typeof Direction> = z
+  .nativeEnum(Direction);
+
+/** @internal */
+export const Direction$outboundSchema: z.ZodNativeEnum<typeof Direction> =
+  Direction$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace Direction$ {
+  /** @deprecated use `Direction$inboundSchema` instead. */
+  export const inboundSchema = Direction$inboundSchema;
+  /** @deprecated use `Direction$outboundSchema` instead. */
+  export const outboundSchema = Direction$outboundSchema;
+}
+
+/** @internal */
 export const Trade$inboundSchema: z.ZodType<Trade, z.ZodTypeDef, unknown> = z
   .object({
     id: z.number().int(),
     side: MarketSide$inboundSchema,
     address: z.string(),
-    direction: TradeDirection$inboundSchema,
+    direction: Direction$inboundSchema,
     amount: z.number(),
     price: z.number(),
     txHash: z.string(),
@@ -62,7 +83,7 @@ export const Trade$outboundSchema: z.ZodType<
   id: z.number().int(),
   side: MarketSide$outboundSchema,
   address: z.string(),
-  direction: TradeDirection$outboundSchema,
+  direction: Direction$outboundSchema,
   amount: z.number(),
   price: z.number(),
   txHash: z.string(),

@@ -178,7 +178,6 @@ run();
 ### [organization](docs/sdks/organization/README.md)
 
 * [listOrganizations](docs/sdks/organization/README.md#listorganizations) - List organizations
-* [createOrganization](docs/sdks/organization/README.md#createorganization) - Create organization
 * [getOrganization](docs/sdks/organization/README.md#getorganization) - Get organization by slug
 * [editOrganization](docs/sdks/organization/README.md#editorganization) - Edit organization
 * [changeOrganizationStatus](docs/sdks/organization/README.md#changeorganizationstatus) - Change organization status
@@ -221,7 +220,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`authenticationLogout`](docs/sdks/authentication/README.md#logout) - Logout
 - [`organizationActivateRaise`](docs/sdks/organization/README.md#activateraise) - Activate raise
 - [`organizationChangeOrganizationStatus`](docs/sdks/organization/README.md#changeorganizationstatus) - Change organization status
-- [`organizationCreateOrganization`](docs/sdks/organization/README.md#createorganization) - Create organization
 - [`organizationEditOrganization`](docs/sdks/organization/README.md#editorganization) - Edit organization
 - [`organizationGetOrganization`](docs/sdks/organization/README.md#getorganization) - Get organization by slug
 - [`organizationListOrganizations`](docs/sdks/organization/README.md#listorganizations) - List organizations

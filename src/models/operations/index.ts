@@ -7,7 +7,6 @@ export * from "./cancelproposal.js";
 export * from "./changeorganizationstatus.js";
 export * from "./changeuserrole.js";
 export * from "./createnonce.js";
-export * from "./createorganization.js";
 export * from "./editorganization.js";
 export * from "./getorganization.js";
 export * from "./getproposal.js";
