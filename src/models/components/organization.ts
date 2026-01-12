@@ -25,22 +25,17 @@ import {
   OrganizationStatus$outboundSchema,
 } from "./organizationstatus.js";
 import {
-  RaiseAllocation,
-  RaiseAllocation$inboundSchema,
-  RaiseAllocation$Outbound,
-  RaiseAllocation$outboundSchema,
-} from "./raiseallocation.js";
+  Proposal,
+  Proposal$inboundSchema,
+  Proposal$Outbound,
+  Proposal$outboundSchema,
+} from "./proposal.js";
 import {
-  RaiseContribution,
-  RaiseContribution$inboundSchema,
-  RaiseContribution$Outbound,
-  RaiseContribution$outboundSchema,
-} from "./raisecontribution.js";
-import {
-  RaiseStatus,
-  RaiseStatus$inboundSchema,
-  RaiseStatus$outboundSchema,
-} from "./raisestatus.js";
+  Raise,
+  Raise$inboundSchema,
+  Raise$Outbound,
+  Raise$outboundSchema,
+} from "./raise.js";
 import {
   Token,
   Token$inboundSchema,
@@ -60,30 +55,23 @@ import {
   User$outboundSchema,
 } from "./user.js";
 
+/**
+ * Type of organization
+ */
 export const Type = {
   External: "external",
   Ico: "ico",
 } as const;
+/**
+ * Type of organization
+ */
 export type Type = ClosedEnum<typeof Type>;
-
-export type Raise = {
-  id?: number | undefined;
-  /**
-   * EVM address of the raise contract
-   */
-  address?: string | null | undefined;
-  softCap: number;
-  acceptedAmount?: number | undefined;
-  balance?: number | undefined;
-  startDate?: Date | null | undefined;
-  endDate?: Date | null | undefined;
-  status?: RaiseStatus | undefined;
-  allocations?: Array<RaiseAllocation> | undefined;
-  contributions?: Array<RaiseContribution> | undefined;
-};
 
 export type Organization = {
   id?: number | undefined;
+  /**
+   * Type of organization
+   */
   type: Type;
   name: string;
   slug?: string | undefined;
@@ -95,10 +83,11 @@ export type Organization = {
   contactInformation?: Array<ContactInformation> | undefined;
   token?: Token | undefined;
   treasury?: Treasury | undefined;
+  raise?: Raise | undefined;
   /**
-   * Only present for ICO organizations
+   * Organization proposals. Included when fetching by slug.
    */
-  raise?: Raise | null | undefined;
+  proposals?: Array<Proposal> | undefined;
   user?: User | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
@@ -125,84 +114,6 @@ export namespace Type$ {
 }
 
 /** @internal */
-export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
-  .object({
-    id: z.number().int().optional(),
-    address: z.nullable(z.string()).optional(),
-    softCap: z.number(),
-    acceptedAmount: z.number().optional(),
-    balance: z.number().optional(),
-    startDate: z.nullable(
-      z.string().datetime({ offset: true }).transform(v => new Date(v)),
-    ).optional(),
-    endDate: z.nullable(
-      z.string().datetime({ offset: true }).transform(v => new Date(v)),
-    ).optional(),
-    status: RaiseStatus$inboundSchema.optional(),
-    allocations: z.array(RaiseAllocation$inboundSchema).optional(),
-    contributions: z.array(RaiseContribution$inboundSchema).optional(),
-  });
-
-/** @internal */
-export type Raise$Outbound = {
-  id?: number | undefined;
-  address?: string | null | undefined;
-  softCap: number;
-  acceptedAmount?: number | undefined;
-  balance?: number | undefined;
-  startDate?: string | null | undefined;
-  endDate?: string | null | undefined;
-  status?: string | undefined;
-  allocations?: Array<RaiseAllocation$Outbound> | undefined;
-  contributions?: Array<RaiseContribution$Outbound> | undefined;
-};
-
-/** @internal */
-export const Raise$outboundSchema: z.ZodType<
-  Raise$Outbound,
-  z.ZodTypeDef,
-  Raise
-> = z.object({
-  id: z.number().int().optional(),
-  address: z.nullable(z.string()).optional(),
-  softCap: z.number(),
-  acceptedAmount: z.number().optional(),
-  balance: z.number().optional(),
-  startDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
-  endDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
-  status: RaiseStatus$outboundSchema.optional(),
-  allocations: z.array(RaiseAllocation$outboundSchema).optional(),
-  contributions: z.array(RaiseContribution$outboundSchema).optional(),
-});
-
-/**
- * @internal
- * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
- */
-export namespace Raise$ {
-  /** @deprecated use `Raise$inboundSchema` instead. */
-  export const inboundSchema = Raise$inboundSchema;
-  /** @deprecated use `Raise$outboundSchema` instead. */
-  export const outboundSchema = Raise$outboundSchema;
-  /** @deprecated use `Raise$Outbound` instead. */
-  export type Outbound = Raise$Outbound;
-}
-
-export function raiseToJSON(raise: Raise): string {
-  return JSON.stringify(Raise$outboundSchema.parse(raise));
-}
-
-export function raiseFromJSON(
-  jsonString: string,
-): SafeParseResult<Raise, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Raise$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Raise' from JSON`,
-  );
-}
-
-/** @internal */
 export const Organization$inboundSchema: z.ZodType<
   Organization,
   z.ZodTypeDef,
@@ -220,7 +131,8 @@ export const Organization$inboundSchema: z.ZodType<
   contactInformation: z.array(ContactInformation$inboundSchema).optional(),
   token: Token$inboundSchema.optional(),
   treasury: Treasury$inboundSchema.optional(),
-  raise: z.nullable(z.lazy(() => Raise$inboundSchema)).optional(),
+  raise: Raise$inboundSchema.optional(),
+  proposals: z.array(Proposal$inboundSchema).optional(),
   user: User$inboundSchema.optional(),
   created: z.string().datetime({ offset: true }).transform(v => new Date(v))
     .optional(),
@@ -242,7 +154,8 @@ export type Organization$Outbound = {
   contactInformation?: Array<ContactInformation$Outbound> | undefined;
   token?: Token$Outbound | undefined;
   treasury?: Treasury$Outbound | undefined;
-  raise?: Raise$Outbound | null | undefined;
+  raise?: Raise$Outbound | undefined;
+  proposals?: Array<Proposal$Outbound> | undefined;
   user?: User$Outbound | undefined;
   created?: string | undefined;
   updated?: string | undefined;
@@ -266,7 +179,8 @@ export const Organization$outboundSchema: z.ZodType<
   contactInformation: z.array(ContactInformation$outboundSchema).optional(),
   token: Token$outboundSchema.optional(),
   treasury: Treasury$outboundSchema.optional(),
-  raise: z.nullable(z.lazy(() => Raise$outboundSchema)).optional(),
+  raise: Raise$outboundSchema.optional(),
+  proposals: z.array(Proposal$outboundSchema).optional(),
   user: User$outboundSchema.optional(),
   created: z.date().transform(v => v.toISOString()).optional(),
   updated: z.date().transform(v => v.toISOString()).optional(),

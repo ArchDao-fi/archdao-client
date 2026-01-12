@@ -1,5 +1,7 @@
 # Type
 
+Type of organization
+
 ## Example Usage
 
 ```typescript

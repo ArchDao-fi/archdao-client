@@ -259,7 +259,7 @@ run();
 
 ### Response
 
-**Promise\<[operations.GetOrganizationResponseBody](../../models/operations/getorganizationresponsebody.md)\>**
+**Promise\<[components.OrganizationResponse](../../models/components/organizationresponse.md)\>**
 
 ### Errors
 

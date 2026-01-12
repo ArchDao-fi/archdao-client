@@ -11,7 +11,7 @@ export type CancelProposalRequest = {
   id: number;
 };
 
-export type CancelProposalData = {
+export type Data = {
   id?: number | undefined;
   status?: string | undefined;
 };
@@ -21,7 +21,7 @@ export type CancelProposalData = {
  */
 export type CancelProposalResponseBody = {
   success: true;
-  data?: CancelProposalData | undefined;
+  data?: Data | undefined;
 };
 
 /** @internal */
@@ -79,59 +79,49 @@ export function cancelProposalRequestFromJSON(
 }
 
 /** @internal */
-export const CancelProposalData$inboundSchema: z.ZodType<
-  CancelProposalData,
-  z.ZodTypeDef,
-  unknown
-> = z.object({
-  id: z.number().int().optional(),
-  status: z.string().optional(),
-});
+export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
+  .object({
+    id: z.number().int().optional(),
+    status: z.string().optional(),
+  });
 
 /** @internal */
-export type CancelProposalData$Outbound = {
+export type Data$Outbound = {
   id?: number | undefined;
   status?: string | undefined;
 };
 
 /** @internal */
-export const CancelProposalData$outboundSchema: z.ZodType<
-  CancelProposalData$Outbound,
-  z.ZodTypeDef,
-  CancelProposalData
-> = z.object({
-  id: z.number().int().optional(),
-  status: z.string().optional(),
-});
+export const Data$outboundSchema: z.ZodType<Data$Outbound, z.ZodTypeDef, Data> =
+  z.object({
+    id: z.number().int().optional(),
+    status: z.string().optional(),
+  });
 
 /**
  * @internal
  * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
  */
-export namespace CancelProposalData$ {
-  /** @deprecated use `CancelProposalData$inboundSchema` instead. */
-  export const inboundSchema = CancelProposalData$inboundSchema;
-  /** @deprecated use `CancelProposalData$outboundSchema` instead. */
-  export const outboundSchema = CancelProposalData$outboundSchema;
-  /** @deprecated use `CancelProposalData$Outbound` instead. */
-  export type Outbound = CancelProposalData$Outbound;
+export namespace Data$ {
+  /** @deprecated use `Data$inboundSchema` instead. */
+  export const inboundSchema = Data$inboundSchema;
+  /** @deprecated use `Data$outboundSchema` instead. */
+  export const outboundSchema = Data$outboundSchema;
+  /** @deprecated use `Data$Outbound` instead. */
+  export type Outbound = Data$Outbound;
 }
 
-export function cancelProposalDataToJSON(
-  cancelProposalData: CancelProposalData,
-): string {
-  return JSON.stringify(
-    CancelProposalData$outboundSchema.parse(cancelProposalData),
-  );
+export function dataToJSON(data: Data): string {
+  return JSON.stringify(Data$outboundSchema.parse(data));
 }
 
-export function cancelProposalDataFromJSON(
+export function dataFromJSON(
   jsonString: string,
-): SafeParseResult<CancelProposalData, SDKValidationError> {
+): SafeParseResult<Data, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => CancelProposalData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'CancelProposalData' from JSON`,
+    (x) => Data$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Data' from JSON`,
   );
 }
 
@@ -142,13 +132,13 @@ export const CancelProposalResponseBody$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   success: z.literal(true),
-  data: z.lazy(() => CancelProposalData$inboundSchema).optional(),
+  data: z.lazy(() => Data$inboundSchema).optional(),
 });
 
 /** @internal */
 export type CancelProposalResponseBody$Outbound = {
   success: true;
-  data?: CancelProposalData$Outbound | undefined;
+  data?: Data$Outbound | undefined;
 };
 
 /** @internal */
@@ -158,7 +148,7 @@ export const CancelProposalResponseBody$outboundSchema: z.ZodType<
   CancelProposalResponseBody
 > = z.object({
   success: z.literal(true),
-  data: z.lazy(() => CancelProposalData$outboundSchema).optional(),
+  data: z.lazy(() => Data$outboundSchema).optional(),
 });
 
 /**
