@@ -5,7 +5,7 @@ Filter by market side
 ## Example Usage
 
 ```typescript
-import { Side } from "@archdao/archdao-client/models/operations/listproposaltrades.js";
+import { Side } from "@archdao/archdao-client/models/operations";
 
 let value: Side = "fail";
 ```

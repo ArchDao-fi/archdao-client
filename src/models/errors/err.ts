@@ -3,12 +3,7 @@
  */
 
 import * as z from "zod";
-import {
-  ErrorDetails,
-  ErrorDetails$inboundSchema,
-  ErrorDetails$Outbound,
-  ErrorDetails$outboundSchema,
-} from "../components/errordetails.js";
+import * as components from "../components/index.js";
 import { ArchDaoError } from "./archdaoerror.js";
 
 /**
@@ -19,7 +14,7 @@ export type ErrData = {
   /**
    * Error details with code, message, and optional field errors
    */
-  error: ErrorDetails;
+  error: components.ErrorDetails;
 };
 
 /**
@@ -30,7 +25,7 @@ export class Err extends ArchDaoError {
   /**
    * Error details with code, message, and optional field errors
    */
-  error: ErrorDetails;
+  error: components.ErrorDetails;
 
   /** The original data that was passed to this error instance. */
   data$: ErrData;
@@ -55,7 +50,7 @@ export class Err extends ArchDaoError {
 export const Err$inboundSchema: z.ZodType<Err, z.ZodTypeDef, unknown> = z
   .object({
     success: z.literal(false),
-    error: ErrorDetails$inboundSchema,
+    error: components.ErrorDetails$inboundSchema,
     request$: z.instanceof(Request),
     response$: z.instanceof(Response),
     body$: z.string(),
@@ -71,7 +66,7 @@ export const Err$inboundSchema: z.ZodType<Err, z.ZodTypeDef, unknown> = z
 /** @internal */
 export type Err$Outbound = {
   success: false;
-  error: ErrorDetails$Outbound;
+  error: components.ErrorDetails$Outbound;
 };
 
 /** @internal */
@@ -80,7 +75,7 @@ export const Err$outboundSchema: z.ZodType<Err$Outbound, z.ZodTypeDef, Err> = z
   .transform(v => v.data$)
   .pipe(z.object({
     success: z.literal(false),
-    error: ErrorDetails$outboundSchema,
+    error: components.ErrorDetails$outboundSchema,
   }));
 
 /**

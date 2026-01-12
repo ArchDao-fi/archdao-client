@@ -5,7 +5,7 @@ Error details with code, message, and optional field errors
 ## Example Usage
 
 ```typescript
-import { ErrorDetails } from "@archdao/archdao-client/models/components/errordetails.js";
+import { ErrorDetails } from "@archdao/archdao-client/models/components";
 
 let value: ErrorDetails = {
   code: "PROPOSAL_ALREADY_ACTIVE",

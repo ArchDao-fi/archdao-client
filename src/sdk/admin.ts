@@ -6,12 +6,8 @@ import { adminChangeUserRole } from "../funcs/adminChangeUserRole.js";
 import { adminListAuditLogs } from "../funcs/adminListAuditLogs.js";
 import { adminListUsers } from "../funcs/adminListUsers.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import { PaginatedAuditLogs } from "../models/components/paginatedauditlogs.js";
-import { PaginatedUsers } from "../models/components/paginatedusers.js";
-import { UserResponse } from "../models/components/userresponse.js";
-import { ChangeUserRoleRequestBody } from "../models/operations/changeuserrole.js";
-import { ListAuditLogsRequest } from "../models/operations/listauditlogs.js";
-import { ListUsersRequest } from "../models/operations/listusers.js";
+import * as components from "../models/components/index.js";
+import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Admin extends ClientSDK {
@@ -26,9 +22,9 @@ export class Admin extends ClientSDK {
    * **Default search field:** `address`
    */
   async listUsers(
-    request: ListUsersRequest,
+    request: operations.ListUsersRequest,
     options?: RequestOptions,
-  ): Promise<PaginatedUsers> {
+  ): Promise<components.PaginatedUsers> {
     return unwrapAsync(adminListUsers(
       this,
       request,
@@ -45,14 +41,12 @@ export class Admin extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `USER_NOT_FOUND`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async changeUserRole(
-    id: number,
-    requestBody: ChangeUserRoleRequestBody,
+    request: operations.ChangeUserRoleRequest,
     options?: RequestOptions,
-  ): Promise<UserResponse> {
+  ): Promise<components.UserResponse> {
     return unwrapAsync(adminChangeUserRole(
       this,
-      id,
-      requestBody,
+      request,
       options,
     ));
   }
@@ -64,9 +58,9 @@ export class Admin extends ClientSDK {
    * Admin-only endpoint to view audit trail of admin actions.
    */
   async listAuditLogs(
-    request: ListAuditLogsRequest,
+    request: operations.ListAuditLogsRequest,
     options?: RequestOptions,
-  ): Promise<PaginatedAuditLogs> {
+  ): Promise<components.PaginatedAuditLogs> {
     return unwrapAsync(adminListAuditLogs(
       this,
       request,

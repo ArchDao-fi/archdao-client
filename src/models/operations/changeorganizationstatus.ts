@@ -6,15 +6,11 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  OrganizationStatus,
-  OrganizationStatus$inboundSchema,
-  OrganizationStatus$outboundSchema,
-} from "../components/organizationstatus.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ChangeOrganizationStatusRequestBody = {
-  status: OrganizationStatus;
+  status: components.OrganizationStatus;
   /**
    * Optional reason for status change
    */
@@ -32,7 +28,7 @@ export const ChangeOrganizationStatusRequestBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  status: OrganizationStatus$inboundSchema,
+  status: components.OrganizationStatus$inboundSchema,
   reason: z.string().optional(),
 });
 
@@ -48,7 +44,7 @@ export const ChangeOrganizationStatusRequestBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ChangeOrganizationStatusRequestBody
 > = z.object({
-  status: OrganizationStatus$outboundSchema,
+  status: components.OrganizationStatus$outboundSchema,
   reason: z.string().optional(),
 });
 

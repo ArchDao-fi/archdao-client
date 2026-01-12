@@ -5,7 +5,7 @@ All error codes that can be returned from the backend
 ## Example Usage
 
 ```typescript
-import { ErrCode } from "@archdao/archdao-client/models/components/errcode.js";
+import { ErrCode } from "@archdao/archdao-client/models/components";
 
 let value: ErrCode = "PROPOSAL_NOT_FOUND";
 ```

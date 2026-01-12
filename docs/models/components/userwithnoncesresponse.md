@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { UserWithNoncesResponse } from "@archdao/archdao-client/models/components/userwithnoncesresponse.js";
+import { UserWithNoncesResponse } from "@archdao/archdao-client/models/components";
 
 let value: UserWithNoncesResponse = {
   data: {

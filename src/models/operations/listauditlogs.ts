@@ -5,16 +5,7 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  AuditAction,
-  AuditAction$inboundSchema,
-  AuditAction$outboundSchema,
-} from "../components/auditaction.js";
-import {
-  TargetType,
-  TargetType$inboundSchema,
-  TargetType$outboundSchema,
-} from "../components/targettype.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListAuditLogsRequest = {
@@ -26,8 +17,8 @@ export type ListAuditLogsRequest = {
    * Items per page
    */
   limit?: number | undefined;
-  action?: AuditAction | undefined;
-  targetType?: TargetType | undefined;
+  action?: components.AuditAction | undefined;
+  targetType?: components.TargetType | undefined;
   /**
    * Filter by admin who performed the action
    */
@@ -42,8 +33,8 @@ export const ListAuditLogsRequest$inboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  action: AuditAction$inboundSchema.optional(),
-  targetType: TargetType$inboundSchema.optional(),
+  action: components.AuditAction$inboundSchema.optional(),
+  targetType: components.TargetType$inboundSchema.optional(),
   userId: z.number().int().optional(),
 });
 
@@ -64,8 +55,8 @@ export const ListAuditLogsRequest$outboundSchema: z.ZodType<
 > = z.object({
   page: z.number().int().default(1),
   limit: z.number().int().default(20),
-  action: AuditAction$outboundSchema.optional(),
-  targetType: TargetType$outboundSchema.optional(),
+  action: components.AuditAction$outboundSchema.optional(),
+  targetType: components.TargetType$outboundSchema.optional(),
   userId: z.number().int().optional(),
 });
 

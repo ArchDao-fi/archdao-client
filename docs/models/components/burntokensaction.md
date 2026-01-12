@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { BurnTokensAction } from "@archdao/archdao-client/models/components/proposalaction.js";
+import { BurnTokensAction } from "@archdao/archdao-client/models/components";
 
 let value: BurnTokensAction = {
   amount: 4266.31,

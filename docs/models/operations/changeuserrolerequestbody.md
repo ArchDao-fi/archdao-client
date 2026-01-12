@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ChangeUserRoleRequestBody } from "@archdao/archdao-client/models/operations/changeuserrole.js";
+import { ChangeUserRoleRequestBody } from "@archdao/archdao-client/models/operations";
 
 let value: ChangeUserRoleRequestBody = {
   role: "admin",

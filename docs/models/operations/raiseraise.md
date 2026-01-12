@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RaiseRaise } from "@archdao/archdao-client/models/operations/getorganization.js";
+import { RaiseRaise } from "@archdao/archdao-client/models/operations";
 
 let value: RaiseRaise = {
   softCap: 8423.63,

@@ -10,12 +10,8 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import {
-  PaginatedAuditLogs,
-  PaginatedAuditLogs$inboundSchema,
-} from "../models/components/paginatedauditlogs.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
-import { Err, Err$inboundSchema } from "../models/errors/err.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -23,12 +19,10 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
+import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import {
-  ListAuditLogsRequest,
-  ListAuditLogsRequest$outboundSchema,
-} from "../models/operations/listauditlogs.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -40,12 +34,12 @@ import { Result } from "../types/fp.js";
  */
 export function adminListAuditLogs(
   client: ArchDAOCore,
-  request: ListAuditLogsRequest,
+  request: operations.ListAuditLogsRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    PaginatedAuditLogs,
-    | Err
+    components.PaginatedAuditLogs,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -65,13 +59,13 @@ export function adminListAuditLogs(
 
 async function $do(
   client: ArchDAOCore,
-  request: ListAuditLogsRequest,
+  request: operations.ListAuditLogsRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      PaginatedAuditLogs,
-      | Err
+      components.PaginatedAuditLogs,
+      | errors.Err
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -86,7 +80,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => ListAuditLogsRequest$outboundSchema.parse(value),
+    (value) => operations.ListAuditLogsRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -160,8 +154,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    PaginatedAuditLogs,
-    | Err
+    components.PaginatedAuditLogs,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -171,8 +165,8 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, PaginatedAuditLogs$inboundSchema),
-    M.jsonErr([401, 403], Err$inboundSchema),
+    M.json(200, components.PaginatedAuditLogs$inboundSchema),
+    M.jsonErr([401, 403], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

@@ -100,8 +100,11 @@ const archDAO = new ArchDAO({
 });
 
 async function run() {
-  const result = await archDAO.admin.changeUserRole(282852, {
-    role: "user",
+  const result = await archDAO.admin.changeUserRole({
+    id: 282852,
+    requestBody: {
+      role: "user",
+    },
   });
 
   console.log(result);
@@ -125,8 +128,11 @@ const archDAO = new ArchDAOCore({
 });
 
 async function run() {
-  const res = await adminChangeUserRole(archDAO, 282852, {
-    role: "user",
+  const res = await adminChangeUserRole(archDAO, {
+    id: 282852,
+    requestBody: {
+      role: "user",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -143,8 +149,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `requestBody`                                                                                                                                                                  | [operations.ChangeUserRoleRequestBody](../../models/operations/changeuserrolerequestbody.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `request`                                                                                                                                                                      | [operations.ChangeUserRoleRequest](../../models/operations/changeuserrolerequest.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |

@@ -258,7 +258,9 @@ const archDAO = new ArchDAO({
 });
 
 async function run() {
-  const result = await archDAO.organization.editOrganization(384554);
+  const result = await archDAO.organization.editOrganization({
+    id: 384554,
+  });
 
   console.log(result);
 }
@@ -349,8 +351,7 @@ run();
 ### Example
 ```typescript
 import { ArchDAO } from "@archdao/archdao-client";
-import { ArchDaoError } from "@archdao/archdao-client/models/errors/archdaoerror.js.js";
-import { Err } from "@archdao/archdao-client/models/errors/err.js";
+import * as errors from "@archdao/archdao-client/models/errors";
 
 const archDAO = new ArchDAO();
 
@@ -363,14 +364,14 @@ async function run() {
     console.log(result);
   } catch (error) {
     // The base class for HTTP error responses
-    if (error instanceof ArchDaoError) {
+    if (error instanceof errors.ArchDaoError) {
       console.log(error.message);
       console.log(error.statusCode);
       console.log(error.body);
       console.log(error.headers);
 
       // Depending on the method different errors may be thrown
-      if (error instanceof Err) {
+      if (error instanceof errors.Err) {
         console.log(error.data$.success); // boolean
         console.log(error.data$.error); // components.ErrorDetails
       }

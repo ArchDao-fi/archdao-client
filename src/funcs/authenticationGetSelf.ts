@@ -8,12 +8,8 @@ import { compactMap } from "../lib/primitives.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import {
-  UserWithNoncesResponse,
-  UserWithNoncesResponse$inboundSchema,
-} from "../models/components/userwithnoncesresponse.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
-import { Err, Err$inboundSchema } from "../models/errors/err.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -21,6 +17,7 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
+import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
 import { APICall, APIPromise } from "../types/async.js";
@@ -39,8 +36,8 @@ export function authenticationGetSelf(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    UserWithNoncesResponse,
-    | Err
+    components.UserWithNoncesResponse,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -63,8 +60,8 @@ async function $do(
 ): Promise<
   [
     Result<
-      UserWithNoncesResponse,
-      | Err
+      components.UserWithNoncesResponse,
+      | errors.Err
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -132,8 +129,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    UserWithNoncesResponse,
-    | Err
+    components.UserWithNoncesResponse,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -143,8 +140,8 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, UserWithNoncesResponse$inboundSchema),
-    M.jsonErr(401, Err$inboundSchema),
+    M.json(200, components.UserWithNoncesResponse$inboundSchema),
+    M.jsonErr(401, errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

@@ -5,11 +5,7 @@
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  UserRole,
-  UserRole$inboundSchema,
-  UserRole$outboundSchema,
-} from "../components/userrole.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ListUsersRequest = {
@@ -32,7 +28,7 @@ export type ListUsersRequest = {
   /**
    * Filter by user role
    */
-  role?: UserRole | undefined;
+  role?: components.UserRole | undefined;
 };
 
 /** @internal */
@@ -45,7 +41,7 @@ export const ListUsersRequest$inboundSchema: z.ZodType<
   limit: z.number().int().default(20),
   search: z.string().optional(),
   fields: z.string().optional(),
-  role: UserRole$inboundSchema.optional(),
+  role: components.UserRole$inboundSchema.optional(),
 });
 
 /** @internal */
@@ -67,7 +63,7 @@ export const ListUsersRequest$outboundSchema: z.ZodType<
   limit: z.number().int().default(20),
   search: z.string().optional(),
   fields: z.string().optional(),
-  role: UserRole$outboundSchema.optional(),
+  role: components.UserRole$outboundSchema.optional(),
 });
 
 /**

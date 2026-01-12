@@ -6,64 +6,7 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  ContactInformation,
-  ContactInformation$inboundSchema,
-  ContactInformation$Outbound,
-  ContactInformation$outboundSchema,
-} from "../components/contactinformation.js";
-import {
-  Link,
-  Link$inboundSchema,
-  Link$Outbound,
-  Link$outboundSchema,
-} from "../components/link.js";
-import {
-  OrganizationStatus,
-  OrganizationStatus$inboundSchema,
-  OrganizationStatus$outboundSchema,
-} from "../components/organizationstatus.js";
-import {
-  Proposal,
-  Proposal$inboundSchema,
-  Proposal$Outbound,
-  Proposal$outboundSchema,
-} from "../components/proposal.js";
-import {
-  RaiseAllocation,
-  RaiseAllocation$inboundSchema,
-  RaiseAllocation$Outbound,
-  RaiseAllocation$outboundSchema,
-} from "../components/raiseallocation.js";
-import {
-  RaiseContribution,
-  RaiseContribution$inboundSchema,
-  RaiseContribution$Outbound,
-  RaiseContribution$outboundSchema,
-} from "../components/raisecontribution.js";
-import {
-  RaiseStatus,
-  RaiseStatus$inboundSchema,
-  RaiseStatus$outboundSchema,
-} from "../components/raisestatus.js";
-import {
-  Token,
-  Token$inboundSchema,
-  Token$Outbound,
-  Token$outboundSchema,
-} from "../components/token.js";
-import {
-  Treasury,
-  Treasury$inboundSchema,
-  Treasury$Outbound,
-  Treasury$outboundSchema,
-} from "../components/treasury.js";
-import {
-  User,
-  User$inboundSchema,
-  User$Outbound,
-  User$outboundSchema,
-} from "../components/user.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type GetOrganizationSecurity = {
@@ -91,9 +34,9 @@ export type RaiseRaise = {
   balance?: number | undefined;
   startDate?: Date | null | undefined;
   endDate?: Date | null | undefined;
-  status?: RaiseStatus | undefined;
-  allocations?: Array<RaiseAllocation> | undefined;
-  contributions?: Array<RaiseContribution> | undefined;
+  status?: components.RaiseStatus | undefined;
+  allocations?: Array<components.RaiseAllocation> | undefined;
+  contributions?: Array<components.RaiseContribution> | undefined;
 };
 
 export type Data = {
@@ -104,19 +47,19 @@ export type Data = {
   image?: string | undefined;
   banner?: string | undefined;
   description: string;
-  status?: OrganizationStatus | undefined;
-  links?: Array<Link> | undefined;
-  contactInformation?: Array<ContactInformation> | undefined;
-  token?: Token | undefined;
-  treasury?: Treasury | undefined;
+  status?: components.OrganizationStatus | undefined;
+  links?: Array<components.Link> | undefined;
+  contactInformation?: Array<components.ContactInformation> | undefined;
+  token?: components.Token | undefined;
+  treasury?: components.Treasury | undefined;
   /**
    * Only present for ICO organizations
    */
   raise?: RaiseRaise | null | undefined;
-  user?: User | undefined;
+  user?: components.User | undefined;
   created?: Date | undefined;
   updated?: Date | undefined;
-  proposals: Array<Proposal>;
+  proposals: Array<components.Proposal>;
 };
 
 /**
@@ -272,9 +215,9 @@ export const RaiseRaise$inboundSchema: z.ZodType<
   endDate: z.nullable(
     z.string().datetime({ offset: true }).transform(v => new Date(v)),
   ).optional(),
-  status: RaiseStatus$inboundSchema.optional(),
-  allocations: z.array(RaiseAllocation$inboundSchema).optional(),
-  contributions: z.array(RaiseContribution$inboundSchema).optional(),
+  status: components.RaiseStatus$inboundSchema.optional(),
+  allocations: z.array(components.RaiseAllocation$inboundSchema).optional(),
+  contributions: z.array(components.RaiseContribution$inboundSchema).optional(),
 });
 
 /** @internal */
@@ -287,8 +230,8 @@ export type RaiseRaise$Outbound = {
   startDate?: string | null | undefined;
   endDate?: string | null | undefined;
   status?: string | undefined;
-  allocations?: Array<RaiseAllocation$Outbound> | undefined;
-  contributions?: Array<RaiseContribution$Outbound> | undefined;
+  allocations?: Array<components.RaiseAllocation$Outbound> | undefined;
+  contributions?: Array<components.RaiseContribution$Outbound> | undefined;
 };
 
 /** @internal */
@@ -304,9 +247,10 @@ export const RaiseRaise$outboundSchema: z.ZodType<
   balance: z.number().optional(),
   startDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
   endDate: z.nullable(z.date().transform(v => v.toISOString())).optional(),
-  status: RaiseStatus$outboundSchema.optional(),
-  allocations: z.array(RaiseAllocation$outboundSchema).optional(),
-  contributions: z.array(RaiseContribution$outboundSchema).optional(),
+  status: components.RaiseStatus$outboundSchema.optional(),
+  allocations: z.array(components.RaiseAllocation$outboundSchema).optional(),
+  contributions: z.array(components.RaiseContribution$outboundSchema)
+    .optional(),
 });
 
 /**
@@ -346,18 +290,19 @@ export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
     image: z.string().optional(),
     banner: z.string().optional(),
     description: z.string(),
-    status: OrganizationStatus$inboundSchema.optional(),
-    links: z.array(Link$inboundSchema).optional(),
-    contactInformation: z.array(ContactInformation$inboundSchema).optional(),
-    token: Token$inboundSchema.optional(),
-    treasury: Treasury$inboundSchema.optional(),
+    status: components.OrganizationStatus$inboundSchema.optional(),
+    links: z.array(components.Link$inboundSchema).optional(),
+    contactInformation: z.array(components.ContactInformation$inboundSchema)
+      .optional(),
+    token: components.Token$inboundSchema.optional(),
+    treasury: components.Treasury$inboundSchema.optional(),
     raise: z.nullable(z.lazy(() => RaiseRaise$inboundSchema)).optional(),
-    user: User$inboundSchema.optional(),
+    user: components.User$inboundSchema.optional(),
     created: z.string().datetime({ offset: true }).transform(v => new Date(v))
       .optional(),
     updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
       .optional(),
-    proposals: z.array(Proposal$inboundSchema),
+    proposals: z.array(components.Proposal$inboundSchema),
   });
 
 /** @internal */
@@ -370,15 +315,17 @@ export type Data$Outbound = {
   banner?: string | undefined;
   description: string;
   status?: string | undefined;
-  links?: Array<Link$Outbound> | undefined;
-  contactInformation?: Array<ContactInformation$Outbound> | undefined;
-  token?: Token$Outbound | undefined;
-  treasury?: Treasury$Outbound | undefined;
+  links?: Array<components.Link$Outbound> | undefined;
+  contactInformation?:
+    | Array<components.ContactInformation$Outbound>
+    | undefined;
+  token?: components.Token$Outbound | undefined;
+  treasury?: components.Treasury$Outbound | undefined;
   raise?: RaiseRaise$Outbound | null | undefined;
-  user?: User$Outbound | undefined;
+  user?: components.User$Outbound | undefined;
   created?: string | undefined;
   updated?: string | undefined;
-  proposals: Array<Proposal$Outbound>;
+  proposals: Array<components.Proposal$Outbound>;
 };
 
 /** @internal */
@@ -391,16 +338,17 @@ export const Data$outboundSchema: z.ZodType<Data$Outbound, z.ZodTypeDef, Data> =
     image: z.string().optional(),
     banner: z.string().optional(),
     description: z.string(),
-    status: OrganizationStatus$outboundSchema.optional(),
-    links: z.array(Link$outboundSchema).optional(),
-    contactInformation: z.array(ContactInformation$outboundSchema).optional(),
-    token: Token$outboundSchema.optional(),
-    treasury: Treasury$outboundSchema.optional(),
+    status: components.OrganizationStatus$outboundSchema.optional(),
+    links: z.array(components.Link$outboundSchema).optional(),
+    contactInformation: z.array(components.ContactInformation$outboundSchema)
+      .optional(),
+    token: components.Token$outboundSchema.optional(),
+    treasury: components.Treasury$outboundSchema.optional(),
     raise: z.nullable(z.lazy(() => RaiseRaise$outboundSchema)).optional(),
-    user: User$outboundSchema.optional(),
+    user: components.User$outboundSchema.optional(),
     created: z.date().transform(v => v.toISOString()).optional(),
     updated: z.date().transform(v => v.toISOString()).optional(),
-    proposals: z.array(Proposal$outboundSchema),
+    proposals: z.array(components.Proposal$outboundSchema),
   });
 
 /**

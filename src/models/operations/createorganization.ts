@@ -6,24 +6,7 @@ import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
 import { blobLikeSchema } from "../../types/blobs.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  ContactInformationRequest,
-  ContactInformationRequest$inboundSchema,
-  ContactInformationRequest$Outbound,
-  ContactInformationRequest$outboundSchema,
-} from "../components/contactinformationrequest.js";
-import {
-  LinkRequest,
-  LinkRequest$inboundSchema,
-  LinkRequest$Outbound,
-  LinkRequest$outboundSchema,
-} from "../components/linkrequest.js";
-import {
-  RaiseAllocationRequest,
-  RaiseAllocationRequest$inboundSchema,
-  RaiseAllocationRequest$Outbound,
-  RaiseAllocationRequest$outboundSchema,
-} from "../components/raiseallocationrequest.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Raise = {
@@ -32,7 +15,7 @@ export type Raise = {
    * Token allowance amount
    */
   allowance?: number | undefined;
-  allocations?: Array<RaiseAllocationRequest> | undefined;
+  allocations?: Array<components.RaiseAllocationRequest> | undefined;
 };
 
 export type RequestBodyTreasury = {
@@ -55,8 +38,8 @@ export type RequestBodyBanner = {
 export type CreateIcoOrganization = {
   name: string;
   description: string;
-  links?: Array<LinkRequest> | undefined;
-  contactInformation: Array<ContactInformationRequest>;
+  links?: Array<components.LinkRequest> | undefined;
+  contactInformation: Array<components.ContactInformationRequest>;
   type: "ico";
   raise?: Raise | undefined;
   treasury: RequestBodyTreasury;
@@ -101,8 +84,8 @@ export type CreateOrganizationRequestBodyBanner = {
 export type CreateExternalOrganization = {
   name: string;
   description: string;
-  links?: Array<LinkRequest> | undefined;
-  contactInformation: Array<ContactInformationRequest>;
+  links?: Array<components.LinkRequest> | undefined;
+  contactInformation: Array<components.ContactInformationRequest>;
   type: "external";
   token: Token;
   treasury: Treasury;
@@ -125,14 +108,15 @@ export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
   .object({
     softCap: z.number().optional(),
     allowance: z.number().optional(),
-    allocations: z.array(RaiseAllocationRequest$inboundSchema).optional(),
+    allocations: z.array(components.RaiseAllocationRequest$inboundSchema)
+      .optional(),
   });
 
 /** @internal */
 export type Raise$Outbound = {
   softCap?: number | undefined;
   allowance?: number | undefined;
-  allocations?: Array<RaiseAllocationRequest$Outbound> | undefined;
+  allocations?: Array<components.RaiseAllocationRequest$Outbound> | undefined;
 };
 
 /** @internal */
@@ -143,7 +127,8 @@ export const Raise$outboundSchema: z.ZodType<
 > = z.object({
   softCap: z.number().optional(),
   allowance: z.number().optional(),
-  allocations: z.array(RaiseAllocationRequest$outboundSchema).optional(),
+  allocations: z.array(components.RaiseAllocationRequest$outboundSchema)
+    .optional(),
 });
 
 /**
@@ -369,8 +354,10 @@ export const CreateIcoOrganization$inboundSchema: z.ZodType<
 > = z.object({
   name: z.string(),
   description: z.string(),
-  links: z.array(LinkRequest$inboundSchema).optional(),
-  contactInformation: z.array(ContactInformationRequest$inboundSchema),
+  links: z.array(components.LinkRequest$inboundSchema).optional(),
+  contactInformation: z.array(
+    components.ContactInformationRequest$inboundSchema,
+  ),
   type: z.literal("ico"),
   raise: z.lazy(() => Raise$inboundSchema).optional(),
   treasury: z.lazy(() => RequestBodyTreasury$inboundSchema),
@@ -382,8 +369,8 @@ export const CreateIcoOrganization$inboundSchema: z.ZodType<
 export type CreateIcoOrganization$Outbound = {
   name: string;
   description: string;
-  links?: Array<LinkRequest$Outbound> | undefined;
-  contactInformation: Array<ContactInformationRequest$Outbound>;
+  links?: Array<components.LinkRequest$Outbound> | undefined;
+  contactInformation: Array<components.ContactInformationRequest$Outbound>;
   type: "ico";
   raise?: Raise$Outbound | undefined;
   treasury: RequestBodyTreasury$Outbound;
@@ -399,8 +386,10 @@ export const CreateIcoOrganization$outboundSchema: z.ZodType<
 > = z.object({
   name: z.string(),
   description: z.string(),
-  links: z.array(LinkRequest$outboundSchema).optional(),
-  contactInformation: z.array(ContactInformationRequest$outboundSchema),
+  links: z.array(components.LinkRequest$outboundSchema).optional(),
+  contactInformation: z.array(
+    components.ContactInformationRequest$outboundSchema,
+  ),
   type: z.literal("ico"),
   raise: z.lazy(() => Raise$outboundSchema).optional(),
   treasury: z.lazy(() => RequestBodyTreasury$outboundSchema),
@@ -691,8 +680,10 @@ export const CreateExternalOrganization$inboundSchema: z.ZodType<
 > = z.object({
   name: z.string(),
   description: z.string(),
-  links: z.array(LinkRequest$inboundSchema).optional(),
-  contactInformation: z.array(ContactInformationRequest$inboundSchema),
+  links: z.array(components.LinkRequest$inboundSchema).optional(),
+  contactInformation: z.array(
+    components.ContactInformationRequest$inboundSchema,
+  ),
   type: z.literal("external"),
   token: z.lazy(() => Token$inboundSchema),
   treasury: z.lazy(() => Treasury$inboundSchema),
@@ -705,8 +696,8 @@ export const CreateExternalOrganization$inboundSchema: z.ZodType<
 export type CreateExternalOrganization$Outbound = {
   name: string;
   description: string;
-  links?: Array<LinkRequest$Outbound> | undefined;
-  contactInformation: Array<ContactInformationRequest$Outbound>;
+  links?: Array<components.LinkRequest$Outbound> | undefined;
+  contactInformation: Array<components.ContactInformationRequest$Outbound>;
   type: "external";
   token: Token$Outbound;
   treasury: Treasury$Outbound;
@@ -722,8 +713,10 @@ export const CreateExternalOrganization$outboundSchema: z.ZodType<
 > = z.object({
   name: z.string(),
   description: z.string(),
-  links: z.array(LinkRequest$outboundSchema).optional(),
-  contactInformation: z.array(ContactInformationRequest$outboundSchema),
+  links: z.array(components.LinkRequest$outboundSchema).optional(),
+  contactInformation: z.array(
+    components.ContactInformationRequest$outboundSchema,
+  ),
   type: z.literal("external"),
   token: z.lazy(() => Token$outboundSchema),
   treasury: z.lazy(() => Treasury$outboundSchema),
