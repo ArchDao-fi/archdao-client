@@ -5,11 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { GetProposalResponseBody } from "@archdao/archdao-client/models/operations";
+import { GetProposalResponseBody } from "@archdao/archdao-client/models/operations/getproposal.js";
 
-let value: GetProposalResponseBody = {
-  success: false,
-};
+let value: GetProposalResponseBody = {};
 ```
 
 ## Fields

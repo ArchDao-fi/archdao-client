@@ -26,12 +26,12 @@ Returns proposals with visibility rules. Unauthenticated users see public propos
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.proposal.listProposals({
+  const result = await archDAO.proposal.listProposals({
     status: "draft,staking,active",
     organizationId: "1,2,3",
   });
@@ -47,15 +47,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposals } from "@archdao/archdao-client/funcs/proposalListProposals.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await proposalListProposals(archdao, {
+  const res = await proposalListProposals(archDAO, {
     status: "draft,staking,active",
     organizationId: "1,2,3",
   });
@@ -68,6 +68,34 @@ async function run() {
 }
 
 run();
+```
+
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Query hooks for fetching data.
+  useProposalListProposals,
+  useProposalListProposalsSuspense,
+
+  // Utility for prefetching data during server-side rendering and in React
+  // Server Components that will be immediately available to client components
+  // using the hooks.
+  prefetchProposalListProposals,
+  
+  // Utilities to invalidate the query cache for this query in response to
+  // mutations and other user actions.
+  invalidateProposalListProposals,
+  invalidateAllProposalListProposals,
+} from "@archdao/archdao-client/react-query/proposalListProposals.js";
 ```
 
 ### Parameters
@@ -86,9 +114,9 @@ run();
 
 ### Errors
 
-| Error Type      | Status Code     | Content Type    |
-| --------------- | --------------- | --------------- |
-| errors.APIError | 4XX, 5XX        | \*/\*           |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## createProposal
 
@@ -99,18 +127,17 @@ Creates a new proposal in draft status.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.createProposal({
+  const result = await archDAO.proposal.createProposal({
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
-    actions: [],
   });
 
   console.log(result);
@@ -124,21 +151,20 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalCreateProposal } from "@archdao/archdao-client/funcs/proposalCreateProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCreateProposal(archdao, {
+  const res = await proposalCreateProposal(archDAO, {
     organizationId: 816972,
     title: "<value>",
     description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
-    actions: [],
   });
   if (res.ok) {
     const { value: result } = res;
@@ -151,25 +177,41 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Mutation hook for triggering the API call.
+  useProposalCreateProposalMutation
+} from "@archdao/archdao-client/react-query/proposalCreateProposal.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [components.CreateProposalRequest](../../models/components/createproposalrequest.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [components.ProposalRequest](../../models/components/proposalrequest.md)                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.CreateProposalResponseBody](../../models/operations/createproposalresponsebody.md)\>**
+**Promise\<[operations.CreateProposalResponse](../../models/operations/createproposalresponse.md)\>**
 
 ### Errors
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.Err       | 400, 401, 404    | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## getProposal
 
@@ -180,14 +222,12 @@ Returns full proposal details. Draft proposals are only visible to authorized us
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.proposal.getProposal({
-    id: 264645,
-  });
+  const result = await archDAO.proposal.getProposal(264645);
 
   console.log(result);
 }
@@ -200,17 +240,15 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalGetProposal } from "@archdao/archdao-client/funcs/proposalGetProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore();
+const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await proposalGetProposal(archdao, {
-    id: 264645,
-  });
+  const res = await proposalGetProposal(archDAO, 264645);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -222,26 +260,53 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Query hooks for fetching data.
+  useProposalGetProposal,
+  useProposalGetProposalSuspense,
+
+  // Utility for prefetching data during server-side rendering and in React
+  // Server Components that will be immediately available to client components
+  // using the hooks.
+  prefetchProposalGetProposal,
+  
+  // Utilities to invalidate the query cache for this query in response to
+  // mutations and other user actions.
+  invalidateProposalGetProposal,
+  invalidateAllProposalGetProposal,
+} from "@archdao/archdao-client/react-query/proposalGetProposal.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetProposalRequest](../../models/operations/getproposalrequest.md)                                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `security`                                                                                                                                                                     | [operations.GetProposalSecurity](../../models/operations/getproposalsecurity.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The security requirements to use for the request.                                                                                                                              |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.GetProposalResponseBody](../../models/operations/getproposalresponsebody.md)\>**
+**Promise\<[operations.GetProposalResponse](../../models/operations/getproposalresponse.md)\>**
 
 ### Errors
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## cancelProposal
 
@@ -252,16 +317,14 @@ Cancels a proposal. Only allowed before trading begins (draft or staking status)
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.cancelProposal({
-    id: 330250,
-  });
+  const result = await archDAO.proposal.cancelProposal(330250);
 
   console.log(result);
 }
@@ -274,19 +337,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalCancelProposal } from "@archdao/archdao-client/funcs/proposalCancelProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalCancelProposal(archdao, {
-    id: 330250,
-  });
+  const res = await proposalCancelProposal(archDAO, 330250);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -298,25 +359,41 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Mutation hook for triggering the API call.
+  useProposalCancelProposalMutation
+} from "@archdao/archdao-client/react-query/proposalCancelProposal.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.CancelProposalRequest](../../models/operations/cancelproposalrequest.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.CancelProposalResponseBody](../../models/operations/cancelproposalresponsebody.md)\>**
+**Promise\<[operations.CancelProposalResponse](../../models/operations/cancelproposalresponse.md)\>**
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| errors.Err         | 400, 401, 403, 404 | application/json   |
-| errors.APIError    | 4XX, 5XX           | \*/\*              |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## initializeProposal
 
@@ -327,16 +404,14 @@ Submits a draft proposal to the staking phase.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.initializeProposal({
-    id: 301133,
-  });
+  const result = await archDAO.proposal.initializeProposal(301133);
 
   console.log(result);
 }
@@ -349,19 +424,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalInitializeProposal } from "@archdao/archdao-client/funcs/proposalInitializeProposal.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalInitializeProposal(archdao, {
-    id: 301133,
-  });
+  const res = await proposalInitializeProposal(archDAO, 301133);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -373,25 +446,41 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Mutation hook for triggering the API call.
+  useProposalInitializeProposalMutation
+} from "@archdao/archdao-client/react-query/proposalInitializeProposal.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.InitializeProposalRequest](../../models/operations/initializeproposalrequest.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.InitializeProposalResponseBody](../../models/operations/initializeproposalresponsebody.md)\>**
+**Promise\<[operations.InitializeProposalResponse](../../models/operations/initializeproposalresponse.md)\>**
 
 ### Errors
 
-| Error Type              | Status Code             | Content Type            |
-| ----------------------- | ----------------------- | ----------------------- |
-| errors.Err              | 400, 401, 403, 404, 409 | application/json        |
-| errors.APIError         | 4XX, 5XX                | \*/\*                   |
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## listProposalStakes
 
@@ -400,16 +489,14 @@ Returns a paginated list of stakes for a proposal.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.listProposalStakes({
-    id: 854415,
-  });
+  const result = await archDAO.proposal.listProposalStakes(854415);
 
   console.log(result);
 }
@@ -422,19 +509,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposalStakes } from "@archdao/archdao-client/funcs/proposalListProposalStakes.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalStakes(archdao, {
-    id: 854415,
-  });
+  const res = await proposalListProposalStakes(archDAO, 854415);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -446,25 +531,54 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Query hooks for fetching data.
+  useProposalListProposalStakes,
+  useProposalListProposalStakesSuspense,
+
+  // Utility for prefetching data during server-side rendering and in React
+  // Server Components that will be immediately available to client components
+  // using the hooks.
+  prefetchProposalListProposalStakes,
+  
+  // Utilities to invalidate the query cache for this query in response to
+  // mutations and other user actions.
+  invalidateProposalListProposalStakes,
+  invalidateAllProposalListProposalStakes,
+} from "@archdao/archdao-client/react-query/proposalListProposalStakes.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListProposalStakesRequest](../../models/operations/listproposalstakesrequest.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `page`                                                                                                                                                                         | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Page number (1-indexed)                                                                                                                                                        |
+| `limit`                                                                                                                                                                        | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Items per page                                                                                                                                                                 |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.ListProposalStakesResponseBody](../../models/operations/listproposalstakesresponsebody.md)\>**
+**Promise\<[operations.ListProposalStakesResponse](../../models/operations/listproposalstakesresponse.md)\>**
 
 ### Errors
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
 
 ## listProposalTrades
 
@@ -473,16 +587,14 @@ Returns a paginated list of trades for a proposal's decision markets.
 ### Example Usage
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.proposal.listProposalTrades({
-    id: 977484,
-  });
+  const result = await archDAO.proposal.listProposalTrades(977484);
 
   console.log(result);
 }
@@ -495,19 +607,17 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { proposalListProposalTrades } from "@archdao/archdao-client/funcs/proposalListProposalTrades.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await proposalListProposalTrades(archdao, {
-    id: 977484,
-  });
+  const res = await proposalListProposalTrades(archDAO, 977484);
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -519,22 +629,52 @@ async function run() {
 run();
 ```
 
+### React hooks and utilities
+
+This method can be used in React components through the following hooks and
+associated utilities.
+
+> Check out [this guide][hook-guide] for information about each of the utilities
+> below and how to get started using React hooks.
+
+[hook-guide]: ../../../REACT_QUERY.md
+
+```tsx
+import {
+  // Query hooks for fetching data.
+  useProposalListProposalTrades,
+  useProposalListProposalTradesSuspense,
+
+  // Utility for prefetching data during server-side rendering and in React
+  // Server Components that will be immediately available to client components
+  // using the hooks.
+  prefetchProposalListProposalTrades,
+  
+  // Utilities to invalidate the query cache for this query in response to
+  // mutations and other user actions.
+  invalidateProposalListProposalTrades,
+  invalidateAllProposalListProposalTrades,
+} from "@archdao/archdao-client/react-query/proposalListProposalTrades.js";
+```
+
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListProposalTradesRequest](../../models/operations/listproposaltradesrequest.md)                                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `page`                                                                                                                                                                         | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Page number (1-indexed)                                                                                                                                                        |
+| `limit`                                                                                                                                                                        | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Items per page                                                                                                                                                                 |
+| `side`                                                                                                                                                                         | [operations.Side](../../models/operations/side.md)                                                                                                                             | :heavy_minus_sign:                                                                                                                                                             | Filter by market side                                                                                                                                                          |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.ListProposalTradesResponseBody](../../models/operations/listproposaltradesresponsebody.md)\>**
+**Promise\<[operations.ListProposalTradesResponse](../../models/operations/listproposaltradesresponse.md)\>**
 
 ### Errors
 
 | Error Type       | Status Code      | Content Type     |
 | ---------------- | ---------------- | ---------------- |
-| errors.Err       | 404              | application/json |
-| errors.APIError  | 4XX, 5XX         | \*/\*            |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |

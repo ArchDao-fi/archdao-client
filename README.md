@@ -26,6 +26,7 @@ ArchDAO API: Backend API for the ArchDAO futarchy-based governance platform. All
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
+  * [React hooks with TanStack Query](#react-hooks-with-tanstack-query)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -47,24 +48,32 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 
 ```bash
 npm add @archdao/archdao-client
+# Install optional peer dependencies if you plan to use React hooks
+npm add @tanstack/react-query react react-dom
 ```
 
 ### PNPM
 
 ```bash
 pnpm add @archdao/archdao-client
+# Install optional peer dependencies if you plan to use React hooks
+pnpm add @tanstack/react-query react react-dom
 ```
 
 ### Bun
 
 ```bash
 bun add @archdao/archdao-client
+# Install optional peer dependencies if you plan to use React hooks
+bun add @tanstack/react-query react react-dom
 ```
 
 ### Yarn
 
 ```bash
 yarn add @archdao/archdao-client zod
+# Install optional peer dependencies if you plan to use React hooks
+yarn add @tanstack/react-query react react-dom
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -72,6 +81,90 @@ yarn add @archdao/archdao-client zod
 
 > [!NOTE]
 > This package is published with CommonJS and ES Modules (ESM) support.
+
+
+### Model Context Protocol (MCP) Server
+
+This SDK is also an installable MCP server where the various SDK methods are
+exposed as tools that can be invoked by AI applications.
+
+> Node.js v20 or greater is required to run the MCP server from npm.
+
+<details>
+<summary>Claude installation steps</summary>
+
+Add the following server definition to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "ArchDAO": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@archdao/archdao-client",
+        "--",
+        "mcp", "start",
+        "--bearer-auth", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Cursor installation steps</summary>
+
+Create a `.cursor/mcp.json` file in your project root with the following content:
+
+```json
+{
+  "mcpServers": {
+    "ArchDAO": {
+      "command": "npx",
+      "args": [
+        "-y", "--package", "@archdao/archdao-client",
+        "--",
+        "mcp", "start",
+        "--bearer-auth", "..."
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+You can also run MCP servers as a standalone binary with no additional dependencies. You must pull these binaries from available Github releases:
+
+```bash
+curl -L -o mcp-server \
+    https://github.com/{org}/{repo}/releases/download/{tag}/mcp-server-bun-darwin-arm64 && \
+chmod +x mcp-server
+```
+
+If the repo is a private repo you must add your Github PAT to download a release `-H "Authorization: Bearer {GITHUB_PAT}"`.
+
+
+```json
+{
+  "mcpServers": {
+    "Todos": {
+      "command": "./DOWNLOAD/PATH/mcp-server",
+      "args": [
+        "start"
+      ]
+    }
+  }
+}
+```
+
+For a full list of server arguments, run:
+
+```sh
+npx -y --package @archdao/archdao-client -- mcp start --help
+```
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
@@ -86,14 +179,14 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ### Example
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -118,14 +211,14 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -140,12 +233,12 @@ run();
 
 Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.organization.listOrganizations({
+  const result = await archDAO.organization.listOrganizations({
     status: "approved,active",
   }, {});
 
@@ -238,6 +331,52 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
 
+<!-- Start React hooks with TanStack Query [react-query] -->
+## React hooks with TanStack Query
+
+React hooks built on [TanStack Query][tanstack-query] are included in this SDK.
+These hooks and the utility functions provided alongside them can be used to
+build rich applications that pull data from the API using one of the most
+popular asynchronous state management library.
+
+[tanstack-query]: https://tanstack.com/query/v5/docs/framework/react/overview
+
+To learn about this feature and how to get started, check
+[REACT_QUERY.md](./REACT_QUERY.md).
+
+> [!WARNING]
+>
+> This feature is currently in **preview** and is subject to breaking changes
+> within the current major version of the SDK as we gather user feedback on it.
+
+<details>
+
+<summary>Available React hooks</summary>
+
+- [`useAdminChangeUserRoleMutation`](docs/sdks/admin/README.md#changeuserrole) - Change user role
+- [`useAdminListAuditLogs`](docs/sdks/admin/README.md#listauditlogs) - List audit logs
+- [`useAdminListUsers`](docs/sdks/admin/README.md#listusers) - List users
+- [`useAuthenticationCreateNonceMutation`](docs/sdks/authentication/README.md#createnonce) - Create Nonce
+- [`useAuthenticationGetSelf`](docs/sdks/authentication/README.md#getself) - Get Self
+- [`useAuthenticationLoginMutation`](docs/sdks/authentication/README.md#login) - Login
+- [`useAuthenticationLogoutMutation`](docs/sdks/authentication/README.md#logout) - Logout
+- [`useOrganizationActivateRaiseMutation`](docs/sdks/organization/README.md#activateraise) - Activate raise
+- [`useOrganizationChangeOrganizationStatusMutation`](docs/sdks/organization/README.md#changeorganizationstatus) - Change organization status
+- [`useOrganizationCreateOrganizationMutation`](docs/sdks/organization/README.md#createorganization) - Create organization
+- [`useOrganizationEditOrganizationMutation`](docs/sdks/organization/README.md#editorganization) - Edit organization
+- [`useOrganizationGetOrganization`](docs/sdks/organization/README.md#getorganization) - Get organization by slug
+- [`useOrganizationListOrganizations`](docs/sdks/organization/README.md#listorganizations) - List organizations
+- [`useProposalCancelProposalMutation`](docs/sdks/proposal/README.md#cancelproposal) - Cancel proposal
+- [`useProposalCreateProposalMutation`](docs/sdks/proposal/README.md#createproposal) - Create proposal
+- [`useProposalGetProposal`](docs/sdks/proposal/README.md#getproposal) - Get proposal details
+- [`useProposalInitializeProposalMutation`](docs/sdks/proposal/README.md#initializeproposal) - Initialize proposal
+- [`useProposalListProposals`](docs/sdks/proposal/README.md#listproposals) - List proposals
+- [`useProposalListProposalStakes`](docs/sdks/proposal/README.md#listproposalstakes) - List proposal stakes
+- [`useProposalListProposalTrades`](docs/sdks/proposal/README.md#listproposaltrades) - List proposal trades
+
+</details>
+<!-- End React hooks with TanStack Query [react-query] -->
+
 <!-- Start File uploads [file-upload] -->
 ## File uploads
 
@@ -253,18 +392,14 @@ Certain SDK methods accept files as part of a multi-part request. It is possible
 > - **Node.js v18:** A file stream can be created using the `fileFrom` helper from [`fetch-blob/from.js`](https://www.npmjs.com/package/fetch-blob).
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.createOrganization({
-    name: "<value>",
-    description: "since unto hollow fedora greatly hmph",
-    contactInformation: "<value>",
-  });
+  const result = await archDAO.organization.editOrganization(384554);
 
   console.log(result);
 }
@@ -281,14 +416,14 @@ Some of the endpoints in this SDK support retries.  If you use the SDK without a
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   }, {
     retries: {
@@ -312,9 +447,9 @@ run();
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -329,7 +464,7 @@ const archdao = new Archdao({
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -344,46 +479,38 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`ArchdaoError`](./src/models/errors/archdaoerror.ts) is the base class for all HTTP error responses. It has the following properties:
+[`ArchDaoError`](./src/models/errors/archdaoerror.ts) is the base class for all HTTP error responses. It has the following properties:
 
-| Property            | Type       | Description                                                                             |
-| ------------------- | ---------- | --------------------------------------------------------------------------------------- |
-| `error.message`     | `string`   | Error message                                                                           |
-| `error.statusCode`  | `number`   | HTTP response status code eg `404`                                                      |
-| `error.headers`     | `Headers`  | HTTP response headers                                                                   |
-| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned.                                  |
-| `error.rawResponse` | `Response` | Raw HTTP response                                                                       |
-| `error.data$`       |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
+| Property            | Type       | Description                                            |
+| ------------------- | ---------- | ------------------------------------------------------ |
+| `error.message`     | `string`   | Error message                                          |
+| `error.statusCode`  | `number`   | HTTP response status code eg `404`                     |
+| `error.headers`     | `Headers`  | HTTP response headers                                  |
+| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned. |
+| `error.rawResponse` | `Response` | Raw HTTP response                                      |
 
 ### Example
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
-import * as errors from "@archdao/archdao-client/models/errors";
+import { ArchDAO } from "@archdao/archdao-client";
+import { ArchDaoError } from "@archdao/archdao-client/models/errors/archdaoerror.js.js";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
   try {
-    const result = await archdao.authentication.createNonce({
+    const result = await archDAO.authentication.createNonce({
       address: "0x1234567890abcdef1234567890abcdef12345678",
     });
 
     console.log(result);
   } catch (error) {
-    // The base class for HTTP error responses
-    if (error instanceof errors.ArchdaoError) {
+    if (error instanceof ArchDaoError) {
       console.log(error.message);
       console.log(error.statusCode);
       console.log(error.body);
       console.log(error.headers);
-
-      // Depending on the method different errors may be thrown
-      if (error instanceof errors.Err) {
-        console.log(error.data$.success); // boolean
-        console.log(error.data$.error); // errors.ErrorT
-      }
     }
   }
 }
@@ -393,9 +520,8 @@ run();
 ```
 
 ### Error Classes
-**Primary errors:**
-* [`ArchdaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
-  * [`Err`](docs/models/errors/err.md): Error response returned when an operation fails. *
+**Primary error:**
+* [`ArchDaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
 
 <details><summary>Less common errors (6)</summary>
 
@@ -409,12 +535,10 @@ run();
 * [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
 
 
-**Inherit from [`ArchdaoError`](./src/models/errors/archdaoerror.ts)**:
+**Inherit from [`ArchDaoError`](./src/models/errors/archdaoerror.ts)**:
 * [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
-
-\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -424,15 +548,15 @@ run();
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   serverURL: "https://api.archdao.fi/v1",
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -462,7 +586,7 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 import { HTTPClient } from "@archdao/archdao-client/lib/http";
 
 const httpClient = new HTTPClient({
@@ -489,7 +613,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Archdao({ httpClient });
+const sdk = new ArchDAO({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -504,9 +628,9 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const sdk = new Archdao({ debugLogger: console });
+const sdk = new ArchDAO({ debugLogger: console });
 ```
 <!-- End Debugging [debug] -->
 

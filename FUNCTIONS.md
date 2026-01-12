@@ -19,17 +19,17 @@ specific category of applications.
 ## Example
 
 ```typescript
-import { ArchdaoCore } from "@archdao/archdao-client/core.js";
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
 import { authenticationCreateNonce } from "@archdao/archdao-client/funcs/authenticationCreateNonce.js";
 
-// Use `ArchdaoCore` for best tree-shaking performance.
+// Use `ArchDAOCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const archdao = new ArchdaoCore({
+const archDAO = new ArchDAOCore({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const res = await authenticationCreateNonce(archdao, {
+  const res = await authenticationCreateNonce(archDAO, {
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
   if (res.ok) {
