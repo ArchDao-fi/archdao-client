@@ -68,7 +68,7 @@ export class Organization extends ClientSDK {
     request: operations.GetOrganizationRequest,
     security?: operations.GetOrganizationSecurity | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetOrganizationResponseBody> {
+  ): Promise<components.OrganizationResponse> {
     return unwrapAsync(organizationGetOrganization(
       this,
       request,

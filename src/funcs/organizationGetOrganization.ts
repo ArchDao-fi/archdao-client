@@ -10,6 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { resolveSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
 import {
   ConnectionError,
@@ -40,7 +41,7 @@ export function organizationGetOrganization(
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetOrganizationResponseBody,
+    components.OrganizationResponse,
     | errors.Err
     | ArchDaoError
     | ResponseValidationError
@@ -68,7 +69,7 @@ async function $do(
 ): Promise<
   [
     Result<
-      operations.GetOrganizationResponseBody,
+      components.OrganizationResponse,
       | errors.Err
       | ArchDaoError
       | ResponseValidationError
@@ -162,7 +163,7 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetOrganizationResponseBody,
+    components.OrganizationResponse,
     | errors.Err
     | ArchDaoError
     | ResponseValidationError
@@ -173,7 +174,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetOrganizationResponseBody$inboundSchema),
+    M.json(200, components.OrganizationResponse$inboundSchema),
     M.jsonErr(404, errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),

@@ -35,6 +35,7 @@ export * from "./proposalrequest.js";
 export * from "./proposalresponse.js";
 export * from "./proposalstake.js";
 export * from "./proposalstatus.js";
+export * from "./raise.js";
 export * from "./raiseallocation.js";
 export * from "./raiseallocationrequest.js";
 export * from "./raisecontribution.js";
