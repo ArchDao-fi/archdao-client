@@ -4,7 +4,6 @@
 
 import { organizationActivateRaise } from "../funcs/organizationActivateRaise.js";
 import { organizationChangeOrganizationStatus } from "../funcs/organizationChangeOrganizationStatus.js";
-import { organizationCreateOrganization } from "../funcs/organizationCreateOrganization.js";
 import { organizationEditOrganization } from "../funcs/organizationEditOrganization.js";
 import { organizationGetOrganization } from "../funcs/organizationGetOrganization.js";
 import { organizationListOrganizations } from "../funcs/organizationListOrganizations.js";
@@ -33,25 +32,6 @@ export class Organization extends ClientSDK {
       this,
       request,
       security,
-      options,
-    ));
-  }
-
-  /**
-   * Create organization
-   *
-   * @remarks
-   * Creates a new organization (external or ICO type). Uses multipart/form-data for image uploads.
-   *
-   * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ORG_TYPE`, `INVALID_TOKEN`, `EXPIRED_TOKEN`
-   */
-  async createOrganization(
-    request: operations.CreateOrganizationRequestBody,
-    options?: RequestOptions,
-  ): Promise<components.OrganizationResponse> {
-    return unwrapAsync(organizationCreateOrganization(
-      this,
-      request,
       options,
     ));
   }

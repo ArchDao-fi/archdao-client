@@ -4,6 +4,7 @@
 
 import * as z from "zod";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 import {
@@ -18,11 +19,15 @@ import {
   RaiseContribution$Outbound,
   RaiseContribution$outboundSchema,
 } from "./raisecontribution.js";
-import {
-  RaiseStatus,
-  RaiseStatus$inboundSchema,
-  RaiseStatus$outboundSchema,
-} from "./raisestatus.js";
+
+export const RaiseStatus = {
+  Pending: "pending",
+  Active: "active",
+  Finalizing: "finalizing",
+  Completed: "completed",
+  Failed: "failed",
+} as const;
+export type RaiseStatus = ClosedEnum<typeof RaiseStatus>;
 
 export type Raise = {
   id?: number | undefined;
@@ -39,6 +44,25 @@ export type Raise = {
   allocations?: Array<RaiseAllocation> | undefined;
   contributions?: Array<RaiseContribution> | undefined;
 };
+
+/** @internal */
+export const RaiseStatus$inboundSchema: z.ZodNativeEnum<typeof RaiseStatus> = z
+  .nativeEnum(RaiseStatus);
+
+/** @internal */
+export const RaiseStatus$outboundSchema: z.ZodNativeEnum<typeof RaiseStatus> =
+  RaiseStatus$inboundSchema;
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace RaiseStatus$ {
+  /** @deprecated use `RaiseStatus$inboundSchema` instead. */
+  export const inboundSchema = RaiseStatus$inboundSchema;
+  /** @deprecated use `RaiseStatus$outboundSchema` instead. */
+  export const outboundSchema = RaiseStatus$outboundSchema;
+}
 
 /** @internal */
 export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
