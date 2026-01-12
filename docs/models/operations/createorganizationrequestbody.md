@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CreateOrganizationRequestBody } from "@archdao/archdao-client/models/operations";
+import { CreateOrganizationRequestBody } from "@archdao/archdao-client/models/operations/createorganization.js";
 
 // No examples available for this model
 ```

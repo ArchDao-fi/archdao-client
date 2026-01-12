@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Raise } from "@archdao/archdao-client/models/components";
+import { Raise } from "@archdao/archdao-client/models/components/raise.js";
 
 let value: Raise = {};
 ```
@@ -21,3 +21,4 @@ let value: Raise = {};
 | `endDate`                                                                                     | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
 | `status`                                                                                      | [components.RaiseStatus](../../models/components/raisestatus.md)                              | :heavy_minus_sign:                                                                            | N/A                                                                                           |
 | `allocations`                                                                                 | [components.RaiseAllocation](../../models/components/raiseallocation.md)[]                    | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `contributions`                                                                               | [components.RaiseContribution](../../models/components/raisecontribution.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
