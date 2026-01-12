@@ -1,0 +1,517 @@
+# Proposal
+(*proposal*)
+
+## Overview
+
+Proposal and governance endpoints
+
+### Available Operations
+
+* [listProposals](#listproposals) - List proposals
+* [createProposal](#createproposal) - Create proposal
+* [getProposal](#getproposal) - Get proposal details
+* [cancelProposal](#cancelproposal) - Cancel proposal
+* [initializeProposal](#initializeproposal) - Initialize proposal
+* [listProposalStakes](#listproposalstakes) - List proposal stakes
+* [listProposalTrades](#listproposaltrades) - List proposal trades
+
+## listProposals
+
+Returns proposals with visibility rules. Unauthenticated users see public proposals (staking, active, resolved, executed). Authenticated users also see their own drafts. Admins see all.
+
+**Searchable fields:** `title`
+
+**Default search field:** `title`
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO();
+
+async function run() {
+  const result = await archDAO.proposal.listProposals({
+    status: "draft,staking,active",
+    organizationId: "1,2,3",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposals } from "@archdao/archdao-client/funcs/proposalListProposals.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore();
+
+async function run() {
+  const res = await proposalListProposals(archDAO, {
+    status: "draft,staking,active",
+    organizationId: "1,2,3",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalListProposals failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ListProposalsRequest](../../models/operations/listproposalsrequest.md)                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `security`                                                                                                                                                                     | [operations.ListProposalsSecurity](../../models/operations/listproposalssecurity.md)                                                                                           | :heavy_check_mark:                                                                                                                                                             | The security requirements to use for the request.                                                                                                                              |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListProposalsResponseBody](../../models/operations/listproposalsresponsebody.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## createProposal
+
+Creates a new proposal in draft status.
+
+**Error Codes:** `VALIDATION_ERROR`, `INVALID_ACTION_DATA`, `EMPTY_ACTIONS`, `ORGANIZATION_NOT_FOUND`, `INSUFFICIENT_TOKEN_BALANCE`, `INVALID_TOKEN`
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await archDAO.proposal.createProposal({
+    organizationId: 816972,
+    title: "<value>",
+    description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalCreateProposal } from "@archdao/archdao-client/funcs/proposalCreateProposal.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await proposalCreateProposal(archDAO, {
+    organizationId: 816972,
+    title: "<value>",
+    description: "hence alarmed but doubtfully unknown swanling plus tame stratify mmm",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalCreateProposal failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [components.ProposalRequest](../../models/components/proposalrequest.md)                                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.CreateProposalResponse](../../models/operations/createproposalresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## getProposal
+
+Returns full proposal details. Draft proposals are only visible to authorized users.
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `NOT_AUTHORIZED`
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO();
+
+async function run() {
+  const result = await archDAO.proposal.getProposal(264645);
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalGetProposal } from "@archdao/archdao-client/funcs/proposalGetProposal.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore();
+
+async function run() {
+  const res = await proposalGetProposal(archDAO, 264645);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalGetProposal failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `security`                                                                                                                                                                     | [operations.GetProposalSecurity](../../models/operations/getproposalsecurity.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The security requirements to use for the request.                                                                                                                              |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.GetProposalResponse](../../models/operations/getproposalresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## cancelProposal
+
+Cancels a proposal. Only allowed before trading begins (draft or staking status).
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await archDAO.proposal.cancelProposal(330250);
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalCancelProposal } from "@archdao/archdao-client/funcs/proposalCancelProposal.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await proposalCancelProposal(archDAO, 330250);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalCancelProposal failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.CancelProposalResponse](../../models/operations/cancelproposalresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## initializeProposal
+
+Submits a draft proposal to the staking phase.
+
+**Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `PROPOSAL_ALREADY_ACTIVE`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await archDAO.proposal.initializeProposal(301133);
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalInitializeProposal } from "@archdao/archdao-client/funcs/proposalInitializeProposal.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await proposalInitializeProposal(archDAO, 301133);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalInitializeProposal failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.InitializeProposalResponse](../../models/operations/initializeproposalresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## listProposalStakes
+
+Returns a paginated list of stakes for a proposal.
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await archDAO.proposal.listProposalStakes(854415);
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposalStakes } from "@archdao/archdao-client/funcs/proposalListProposalStakes.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await proposalListProposalStakes(archDAO, 854415);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalListProposalStakes failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `page`                                                                                                                                                                         | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Page number (1-indexed)                                                                                                                                                        |
+| `limit`                                                                                                                                                                        | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Items per page                                                                                                                                                                 |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListProposalStakesResponse](../../models/operations/listproposalstakesresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
+
+## listProposalTrades
+
+Returns a paginated list of trades for a proposal's decision markets.
+
+### Example Usage
+
+```typescript
+import { ArchDAO } from "@archdao/archdao-client";
+
+const archDAO = new ArchDAO({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const result = await archDAO.proposal.listProposalTrades(977484);
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { ArchDAOCore } from "@archdao/archdao-client/core.js";
+import { proposalListProposalTrades } from "@archdao/archdao-client/funcs/proposalListProposalTrades.js";
+
+// Use `ArchDAOCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const archDAO = new ArchDAOCore({
+  bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+});
+
+async function run() {
+  const res = await proposalListProposalTrades(archDAO, 977484);
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("proposalListProposalTrades failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `page`                                                                                                                                                                         | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Page number (1-indexed)                                                                                                                                                        |
+| `limit`                                                                                                                                                                        | *number*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                             | Items per page                                                                                                                                                                 |
+| `side`                                                                                                                                                                         | [operations.Side](../../models/operations/side.md)                                                                                                                             | :heavy_minus_sign:                                                                                                                                                             | Filter by market side                                                                                                                                                          |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListProposalTradesResponse](../../models/operations/listproposaltradesresponse.md)\>**
+
+### Errors
+
+| Error Type       | Status Code      | Content Type     |
+| ---------------- | ---------------- | ---------------- |
+| errors.ArchError | 4XX, 5XX         | \*/\*            |
