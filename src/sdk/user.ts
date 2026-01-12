@@ -31,12 +31,12 @@ export class User extends ClientSDK {
    * Get user
    */
   async getUser(
-    request: operations.GetUserRequest,
+    id: number,
     options?: RequestOptions,
   ): Promise<operations.GetUserResponseBody> {
     return unwrapAsync(userGetUser(
       this,
-      request,
+      id,
       options,
     ));
   }

@@ -13,8 +13,6 @@ let value: ListNoncesResponseBody = {
       nonce: 368015,
       userAgent: "<value>",
       ipAddress: "22.59.181.122",
-      created: new Date("2025-06-08T03:24:50.693Z"),
-      updated: new Date("2025-01-05T01:39:19.490Z"),
     },
   ],
 };
