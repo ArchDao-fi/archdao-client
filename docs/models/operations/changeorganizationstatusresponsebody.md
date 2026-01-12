@@ -5,10 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ChangeOrganizationStatusResponseBody } from "@archdao/archdao-client/models/operations";
+import { ChangeOrganizationStatusResponseBody } from "@archdao/archdao-client/models/operations/changeorganizationstatus.js";
 
 let value: ChangeOrganizationStatusResponseBody = {
-  success: true,
   data: {
     token: {
       name: "Example Token",
@@ -16,18 +15,15 @@ let value: ChangeOrganizationStatusResponseBody = {
       address: "0x1234...abcd",
       supply: 1000000000,
     },
-    user: {
-      id: 1,
-      address: "0x1234567890abcdef1234567890abcdef12345678",
-      name: "0x1234...5678",
-    },
+    tokenSupply: 3529.93,
+    usdcSupply: 5669.45,
   },
 };
 ```
 
 ## Fields
 
-| Field                                                              | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `success`                                                          | *boolean*                                                          | :heavy_check_mark:                                                 | N/A                                                                |
-| `data`                                                             | [components.Organization](../../models/components/organization.md) | :heavy_minus_sign:                                                 | N/A                                                                |
+| Field                     | Type                      | Required                  | Description               |
+| ------------------------- | ------------------------- | ------------------------- | ------------------------- |
+| `success`                 | *boolean*                 | :heavy_check_mark:        | N/A                       |
+| `data`                    | *components.Organization* | :heavy_minus_sign:        | N/A                       |

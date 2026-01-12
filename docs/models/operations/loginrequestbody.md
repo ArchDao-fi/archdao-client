@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LoginRequestBody } from "@archdao/archdao-client/models/operations";
+import { LoginRequestBody } from "@archdao/archdao-client/models/operations/login.js";
 
 let value: LoginRequestBody = {
   address: "0x1234567890abcdef1234567890abcdef12345678",

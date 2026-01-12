@@ -1,21 +1,47 @@
 # ProposalAction
 
-## Example Usage
+
+## Supported Types
+
+### `components.TreasurySpendAction`
 
 ```typescript
-import { ProposalAction } from "@archdao/archdao-client/models/components";
-
-let value: ProposalAction = {};
+const value: components.TreasurySpendAction = {
+  recipientAddress: "<value>",
+  amount: 7007.96,
+  token: "<value>",
+};
 ```
 
-## Fields
+### `components.MintTokensAction`
 
-| Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
-| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `id`                                                                                          | *number*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
-| `proposalId`                                                                                  | *number*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
-| `order`                                                                                       | *number*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
-| `actionType`                                                                                  | [components.ActionType](../../models/components/actiontype.md)                                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
-| `actionData`                                                                                  | [components.ActionData](../../models/components/actiondata.md)                                | :heavy_minus_sign:                                                                            | Type-specific parameters for the action                                                       |
-| `created`                                                                                     | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
-| `updated`                                                                                     | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+```typescript
+const value: components.MintTokensAction = {
+  amount: 2314.02,
+};
+```
+
+### `components.BurnTokensAction`
+
+```typescript
+const value: components.BurnTokensAction = {
+  amount: 4266.31,
+};
+```
+
+### `components.AdjustLpAction`
+
+```typescript
+const value: components.AdjustLpAction = {
+  action: "add",
+};
+```
+
+### `components.UpdateMetadataAction`
+
+```typescript
+const value: components.UpdateMetadataAction = {
+  uri: "https://cheerful-unibody.biz",
+};
+```
+

@@ -5,15 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations";
+import { ListUsersResponseBody } from "@archdao/archdao-client/models/operations/listusers.js";
 
 let value: ListUsersResponseBody = {
-  success: false,
-  pagination: {
-    page: 1,
-    limit: 20,
-    total: 100,
-  },
   data: [
     {
       id: 1,
@@ -21,13 +15,16 @@ let value: ListUsersResponseBody = {
       name: "0x1234...5678",
     },
   ],
+  pagination: {
+    total: 100,
+  },
 };
 ```
 
 ## Fields
 
-| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `success`                                                                        | *boolean*                                                                        | :heavy_check_mark:                                                               | N/A                                                                              |
-| `pagination`                                                                     | [operations.ListUsersPagination](../../models/operations/listuserspagination.md) | :heavy_minus_sign:                                                               | N/A                                                                              |
-| `data`                                                                           | [components.User](../../models/components/user.md)[]                             | :heavy_minus_sign:                                                               | N/A                                                                              |
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `success`                                                                                              | *boolean*                                                                                              | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `data`                                                                                                 | [components.User](../../models/components/user.md)[]                                                   | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `pagination`                                                                                           | [components.Pagination](../../models/components/pagination.md)                                         | :heavy_check_mark:                                                                                     | Pagination parameters for list endpoints. Use page/limit for requests, total is returned in responses. |

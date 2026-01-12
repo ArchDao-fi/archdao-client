@@ -5,10 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { GetSelfResponseBody } from "@archdao/archdao-client/models/operations";
+import { GetSelfResponseBody } from "@archdao/archdao-client/models/operations/getself.js";
 
 let value: GetSelfResponseBody = {
-  success: true,
   data: {
     id: 1,
     address: "0x1234567890abcdef1234567890abcdef12345678",

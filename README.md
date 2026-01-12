@@ -86,14 +86,14 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ### Example
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -118,14 +118,14 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `bearerAuth` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -140,12 +140,12 @@ run();
 
 Some operations in this SDK require the security scheme to be specified at the request level. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao();
+const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archdao.organization.listOrganizations({
+  const result = await archDAO.organization.listOrganizations({
     status: "approved,active",
   }, {});
 
@@ -253,18 +253,14 @@ Certain SDK methods accept files as part of a multi-part request. It is possible
 > - **Node.js v18:** A file stream can be created using the `fileFrom` helper from [`fetch-blob/from.js`](https://www.npmjs.com/package/fetch-blob).
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.organization.createOrganization({
-    name: "<value>",
-    description: "since unto hollow fedora greatly hmph",
-    contactInformation: "<value>",
-  });
+  const result = await archDAO.organization.editOrganization(384554);
 
   console.log(result);
 }
@@ -281,14 +277,14 @@ Some of the endpoints in this SDK support retries.  If you use the SDK without a
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   }, {
     retries: {
@@ -312,9 +308,9 @@ run();
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -329,7 +325,7 @@ const archdao = new Archdao({
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -344,46 +340,38 @@ run();
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`ArchdaoError`](./src/models/errors/archdaoerror.ts) is the base class for all HTTP error responses. It has the following properties:
+[`ArchDaoError`](./src/models/errors/archdaoerror.ts) is the base class for all HTTP error responses. It has the following properties:
 
-| Property            | Type       | Description                                                                             |
-| ------------------- | ---------- | --------------------------------------------------------------------------------------- |
-| `error.message`     | `string`   | Error message                                                                           |
-| `error.statusCode`  | `number`   | HTTP response status code eg `404`                                                      |
-| `error.headers`     | `Headers`  | HTTP response headers                                                                   |
-| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned.                                  |
-| `error.rawResponse` | `Response` | Raw HTTP response                                                                       |
-| `error.data$`       |            | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
+| Property            | Type       | Description                                            |
+| ------------------- | ---------- | ------------------------------------------------------ |
+| `error.message`     | `string`   | Error message                                          |
+| `error.statusCode`  | `number`   | HTTP response status code eg `404`                     |
+| `error.headers`     | `Headers`  | HTTP response headers                                  |
+| `error.body`        | `string`   | HTTP body. Can be empty string if no body is returned. |
+| `error.rawResponse` | `Response` | Raw HTTP response                                      |
 
 ### Example
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
-import * as errors from "@archdao/archdao-client/models/errors";
+import { ArchDAO } from "@archdao/archdao-client";
+import { ArchDaoError } from "@archdao/archdao-client/models/errors/archdaoerror.js.js";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
   try {
-    const result = await archdao.authentication.createNonce({
+    const result = await archDAO.authentication.createNonce({
       address: "0x1234567890abcdef1234567890abcdef12345678",
     });
 
     console.log(result);
   } catch (error) {
-    // The base class for HTTP error responses
-    if (error instanceof errors.ArchdaoError) {
+    if (error instanceof ArchDaoError) {
       console.log(error.message);
       console.log(error.statusCode);
       console.log(error.body);
       console.log(error.headers);
-
-      // Depending on the method different errors may be thrown
-      if (error instanceof errors.Err) {
-        console.log(error.data$.success); // boolean
-        console.log(error.data$.error); // errors.ErrorT
-      }
     }
   }
 }
@@ -393,9 +381,8 @@ run();
 ```
 
 ### Error Classes
-**Primary errors:**
-* [`ArchdaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
-  * [`Err`](docs/models/errors/err.md): Error response returned when an operation fails. *
+**Primary error:**
+* [`ArchDaoError`](./src/models/errors/archdaoerror.ts): The base class for HTTP error responses.
 
 <details><summary>Less common errors (6)</summary>
 
@@ -409,12 +396,10 @@ run();
 * [`UnexpectedClientError`](./src/models/errors/httpclienterrors.ts): Unrecognised or unexpected error.
 
 
-**Inherit from [`ArchdaoError`](./src/models/errors/archdaoerror.ts)**:
+**Inherit from [`ArchDaoError`](./src/models/errors/archdaoerror.ts)**:
 * [`ResponseValidationError`](./src/models/errors/responsevalidationerror.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
-
-\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -424,15 +409,15 @@ run();
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const archdao = new Archdao({
+const archDAO = new ArchDAO({
   serverURL: "https://api.archdao.fi/v1",
   bearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
 });
 
 async function run() {
-  const result = await archdao.authentication.createNonce({
+  const result = await archDAO.authentication.createNonce({
     address: "0x1234567890abcdef1234567890abcdef12345678",
   });
 
@@ -462,7 +447,7 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 import { HTTPClient } from "@archdao/archdao-client/lib/http";
 
 const httpClient = new HTTPClient({
@@ -489,7 +474,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Archdao({ httpClient });
+const sdk = new ArchDAO({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -504,9 +489,9 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { Archdao } from "@archdao/archdao-client";
+import { ArchDAO } from "@archdao/archdao-client";
 
-const sdk = new Archdao({ debugLogger: console });
+const sdk = new ArchDAO({ debugLogger: console });
 ```
 <!-- End Debugging [debug] -->
 

@@ -1,22 +1,53 @@
 # CreateOrganizationRequestBody
 
-## Example Usage
+
+## Supported Types
+
+### `operations.ExternalOrganization`
 
 ```typescript
-import { CreateOrganizationRequestBody } from "@archdao/archdao-client/models/operations";
-
-// No examples available for this model
+const value: operations.ExternalOrganization = {
+  token: {
+    name: "Example Token",
+    symbol: "EXT",
+    address: "0x1234...abcd",
+    supply: 1000000000,
+  },
+  tokenSupply: 8378.08,
+  usdcSupply: 512.4,
+  name: "<value>",
+  image: await openAsBlob("example.file"),
+  description:
+    "dulcimer gratefully tense ah lender meanwhile closely old-fashioned",
+  contactInformation: [
+    {},
+  ],
+  user: {
+    address: "0x1234567890abcdef1234567890abcdef12345678",
+    name: "0x1234...5678",
+  },
+};
 ```
 
-## Fields
+### `operations.IcoOrganization`
 
-| Field                                                                                                                                                                                  | Type                                                                                                                                                                                   | Required                                                                                                                                                                               | Description                                                                                                                                                                            |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                                                                                 | *string*                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                     | Organization name                                                                                                                                                                      |
-| `description`                                                                                                                                                                          | *string*                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                     | Long description in markdown                                                                                                                                                           |
-| `links`                                                                                                                                                                                | *string*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                     | JSON array of links                                                                                                                                                                    |
-| `image`                                                                                                                                                                                | [File](https://developer.mozilla.org/en-US/docs/Web/API/File) \| [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) \| [operations.Image](../../models/operations/image.md) | :heavy_minus_sign:                                                                                                                                                                     | Square image (400x400 min, 1MB max)                                                                                                                                                    |
-| `banner`                                                                                                                                                                               | [File](https://developer.mozilla.org/en-US/docs/Web/API/File) \| [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) \| [operations.Banner](../../models/operations/banner.md) | :heavy_minus_sign:                                                                                                                                                                     | Banner image (1500x500, 5MB max)                                                                                                                                                       |
-| `contactInformation`                                                                                                                                                                   | *string*                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                     | JSON array of contact info                                                                                                                                                             |
-| `external`                                                                                                                                                                             | *string*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                     | JSON object for external org details                                                                                                                                                   |
-| `ico`                                                                                                                                                                                  | *string*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                     | JSON object for ICO org details                                                                                                                                                        |
+```typescript
+const value: operations.IcoOrganization = {
+  raise: {},
+  name: "<value>",
+  image: await openAsBlob("example.file"),
+  description: "pear expensive before ah terribly zowie excluding meanwhile",
+  contactInformation: [],
+  token: {
+    name: "Example Token",
+    symbol: "EXT",
+    address: "0x1234...abcd",
+    supply: 1000000000,
+  },
+  user: {
+    address: "0x1234567890abcdef1234567890abcdef12345678",
+    name: "0x1234...5678",
+  },
+};
+```
+

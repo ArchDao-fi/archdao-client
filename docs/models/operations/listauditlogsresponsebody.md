@@ -5,15 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ListAuditLogsResponseBody } from "@archdao/archdao-client/models/operations";
+import { ListAuditLogsResponseBody } from "@archdao/archdao-client/models/operations/listauditlogs.js";
 
 let value: ListAuditLogsResponseBody = {
-  success: false,
-  pagination: {
-    page: 1,
-    limit: 20,
-    total: 100,
-  },
   data: [
     {
       user: {
@@ -23,13 +17,16 @@ let value: ListAuditLogsResponseBody = {
       },
     },
   ],
+  pagination: {
+    total: 100,
+  },
 };
 ```
 
 ## Fields
 
-| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `success`                                                                                | *boolean*                                                                                | :heavy_check_mark:                                                                       | N/A                                                                                      |
-| `pagination`                                                                             | [operations.ListAuditLogsPagination](../../models/operations/listauditlogspagination.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
-| `data`                                                                                   | [components.AuditLog](../../models/components/auditlog.md)[]                             | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `success`                                                                                              | *boolean*                                                                                              | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `data`                                                                                                 | [components.AuditLog](../../models/components/auditlog.md)[]                                           | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `pagination`                                                                                           | [components.Pagination](../../models/components/pagination.md)                                         | :heavy_check_mark:                                                                                     | Pagination parameters for list endpoints. Use page/limit for requests, total is returned in responses. |
