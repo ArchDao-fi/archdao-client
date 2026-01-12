@@ -10,10 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { resolveSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import {
-  PaginatedOrganizations,
-  PaginatedOrganizations$inboundSchema,
-} from "../models/components/paginatedorganizations.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
 import {
   ConnectionError,
@@ -24,11 +21,7 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import {
-  ListOrganizationsRequest,
-  ListOrganizationsRequest$outboundSchema,
-  ListOrganizationsSecurity,
-} from "../models/operations/listorganizations.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -44,12 +37,12 @@ import { Result } from "../types/fp.js";
  */
 export function organizationListOrganizations(
   client: ArchDAOCore,
-  request: ListOrganizationsRequest,
-  security?: ListOrganizationsSecurity | undefined,
+  request: operations.ListOrganizationsRequest,
+  security?: operations.ListOrganizationsSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    PaginatedOrganizations,
+    components.PaginatedOrganizations,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -70,13 +63,13 @@ export function organizationListOrganizations(
 
 async function $do(
   client: ArchDAOCore,
-  request: ListOrganizationsRequest,
-  security?: ListOrganizationsSecurity | undefined,
+  request: operations.ListOrganizationsRequest,
+  security?: operations.ListOrganizationsSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      PaginatedOrganizations,
+      components.PaginatedOrganizations,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -91,7 +84,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => ListOrganizationsRequest$outboundSchema.parse(value),
+    (value) => operations.ListOrganizationsRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -167,7 +160,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    PaginatedOrganizations,
+    components.PaginatedOrganizations,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -177,7 +170,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, PaginatedOrganizations$inboundSchema),
+    M.json(200, components.PaginatedOrganizations$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req);

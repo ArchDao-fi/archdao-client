@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { PaginatedOrganizations } from "@archdao/archdao-client/models/components/paginatedorganizations.js";
+import { PaginatedOrganizations } from "@archdao/archdao-client/models/components";
 
 let value: PaginatedOrganizations = {
   data: [

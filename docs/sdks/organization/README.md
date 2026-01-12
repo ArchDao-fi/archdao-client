@@ -210,7 +210,9 @@ import { ArchDAO } from "@archdao/archdao-client";
 const archDAO = new ArchDAO();
 
 async function run() {
-  const result = await archDAO.organization.getOrganization("<value>");
+  const result = await archDAO.organization.getOrganization({
+    slug: "<value>",
+  });
 
   console.log(result);
 }
@@ -231,7 +233,9 @@ import { organizationGetOrganization } from "@archdao/archdao-client/funcs/organ
 const archDAO = new ArchDAOCore();
 
 async function run() {
-  const res = await organizationGetOrganization(archDAO, "<value>");
+  const res = await organizationGetOrganization(archDAO, {
+    slug: "<value>",
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -247,8 +251,8 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.GetOrganizationRequest](../../models/operations/getorganizationrequest.md)                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `security`                                                                                                                                                                     | [operations.GetOrganizationSecurity](../../models/operations/getorganizationsecurity.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The security requirements to use for the request.                                                                                                                              |
-| `slug`                                                                                                                                                                         | *string*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -280,7 +284,9 @@ const archDAO = new ArchDAO({
 });
 
 async function run() {
-  const result = await archDAO.organization.editOrganization(384554);
+  const result = await archDAO.organization.editOrganization({
+    id: 384554,
+  });
 
   console.log(result);
 }
@@ -303,7 +309,9 @@ const archDAO = new ArchDAOCore({
 });
 
 async function run() {
-  const res = await organizationEditOrganization(archDAO, 384554);
+  const res = await organizationEditOrganization(archDAO, {
+    id: 384554,
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -319,8 +327,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `requestBody`                                                                                                                                                                  | [operations.EditOrganizationRequestBody](../../models/operations/editorganizationrequestbody.md)                                                                               | :heavy_minus_sign:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `request`                                                                                                                                                                      | [operations.EditOrganizationRequest](../../models/operations/editorganizationrequest.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -352,8 +359,11 @@ const archDAO = new ArchDAO({
 });
 
 async function run() {
-  const result = await archDAO.organization.changeOrganizationStatus(985976, {
-    status: "failed",
+  const result = await archDAO.organization.changeOrganizationStatus({
+    id: 985976,
+    requestBody: {
+      status: "failed",
+    },
   });
 
   console.log(result);
@@ -377,8 +387,11 @@ const archDAO = new ArchDAOCore({
 });
 
 async function run() {
-  const res = await organizationChangeOrganizationStatus(archDAO, 985976, {
-    status: "failed",
+  const res = await organizationChangeOrganizationStatus(archDAO, {
+    id: 985976,
+    requestBody: {
+      status: "failed",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -395,8 +408,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
-| `requestBody`                                                                                                                                                                  | [operations.ChangeOrganizationStatusRequestBody](../../models/operations/changeorganizationstatusrequestbody.md)                                                               | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `request`                                                                                                                                                                      | [operations.ChangeOrganizationStatusRequest](../../models/operations/changeorganizationstatusrequest.md)                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
@@ -428,7 +440,9 @@ const archDAO = new ArchDAO({
 });
 
 async function run() {
-  const result = await archDAO.organization.activateRaise(398388);
+  const result = await archDAO.organization.activateRaise({
+    id: 398388,
+  });
 
   console.log(result);
 }
@@ -451,7 +465,9 @@ const archDAO = new ArchDAOCore({
 });
 
 async function run() {
-  const res = await organizationActivateRaise(archDAO, 398388);
+  const res = await organizationActivateRaise(archDAO, {
+    id: 398388,
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -467,7 +483,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                                                                                                                                                                           | *number*                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                             | N/A                                                                                                                                                                            |
+| `request`                                                                                                                                                                      | [operations.ActivateRaiseRequest](../../models/operations/activateraiserequest.md)                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |

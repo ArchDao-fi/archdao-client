@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { Ok } from "@archdao/archdao-client/models/components/ok.js";
+import { Ok } from "@archdao/archdao-client/models/components";
 
 let value: Ok = {};
 ```

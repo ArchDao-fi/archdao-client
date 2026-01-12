@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RaiseAllocationRequest } from "@archdao/archdao-client/models/components/raiseallocationrequest.js";
+import { RaiseAllocationRequest } from "@archdao/archdao-client/models/components";
 
 let value: RaiseAllocationRequest = {
   title: "<value>",

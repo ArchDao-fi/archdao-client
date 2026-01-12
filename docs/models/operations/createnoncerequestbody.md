@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CreateNonceRequestBody } from "@archdao/archdao-client/models/operations/createnonce.js";
+import { CreateNonceRequestBody } from "@archdao/archdao-client/models/operations";
 
 let value: CreateNonceRequestBody = {
   address: "0x1234567890abcdef1234567890abcdef12345678",

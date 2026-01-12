@@ -5,7 +5,7 @@ Error response returned when an operation fails
 ## Example Usage
 
 ```typescript
-import { Err } from "@archdao/archdao-client/models/errors/err.js";
+import { Err } from "@archdao/archdao-client/models/errors";
 
 // No examples available for this model
 ```

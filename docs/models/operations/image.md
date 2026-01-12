@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Image } from "@archdao/archdao-client/models/operations/editorganization.js";
+import { Image } from "@archdao/archdao-client/models/operations";
 
 // No examples available for this model
 ```

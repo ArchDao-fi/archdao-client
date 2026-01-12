@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Data } from "@archdao/archdao-client/models/components/nonceresponse.js";
+import { Data } from "@archdao/archdao-client/models/components";
 
 let value: Data = {
   nonce: 1704067200000,

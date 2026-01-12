@@ -9,12 +9,8 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import {
-  OrganizationResponse,
-  OrganizationResponse$inboundSchema,
-} from "../models/components/organizationresponse.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
-import { Err, Err$inboundSchema } from "../models/errors/err.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -22,12 +18,10 @@ import {
   RequestTimeoutError,
   UnexpectedClientError,
 } from "../models/errors/httpclienterrors.js";
+import * as errors from "../models/errors/index.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import {
-  CreateOrganizationRequestBody,
-  CreateOrganizationRequestBody$outboundSchema,
-} from "../models/operations/createorganization.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -41,12 +35,12 @@ import { Result } from "../types/fp.js";
  */
 export function organizationCreateOrganization(
   client: ArchDAOCore,
-  request: CreateOrganizationRequestBody,
+  request: operations.CreateOrganizationRequestBody,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    OrganizationResponse,
-    | Err
+    components.OrganizationResponse,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -66,13 +60,13 @@ export function organizationCreateOrganization(
 
 async function $do(
   client: ArchDAOCore,
-  request: CreateOrganizationRequestBody,
+  request: operations.CreateOrganizationRequestBody,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      OrganizationResponse,
-      | Err
+      components.OrganizationResponse,
+      | errors.Err
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -87,7 +81,8 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => CreateOrganizationRequestBody$outboundSchema.parse(value),
+    (value) =>
+      operations.CreateOrganizationRequestBody$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -152,8 +147,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    OrganizationResponse,
-    | Err
+    components.OrganizationResponse,
+    | errors.Err
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -163,8 +158,8 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(201, OrganizationResponse$inboundSchema),
-    M.jsonErr([400, 401], Err$inboundSchema),
+    M.json(201, components.OrganizationResponse$inboundSchema),
+    M.jsonErr([400, 401], errors.Err$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

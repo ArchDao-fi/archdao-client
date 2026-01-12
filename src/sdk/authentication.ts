@@ -7,13 +7,8 @@ import { authenticationGetSelf } from "../funcs/authenticationGetSelf.js";
 import { authenticationLogin } from "../funcs/authenticationLogin.js";
 import { authenticationLogout } from "../funcs/authenticationLogout.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import { NonceResponse } from "../models/components/nonceresponse.js";
-import { Ok } from "../models/components/ok.js";
-import { TokenResponse } from "../models/components/tokenresponse.js";
-import { UserWithNoncesResponse } from "../models/components/userwithnoncesresponse.js";
-import { CreateNonceRequestBody } from "../models/operations/createnonce.js";
-import { LoginRequestBody } from "../models/operations/login.js";
-import { LogoutRequestBody } from "../models/operations/logout.js";
+import * as components from "../models/components/index.js";
+import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Authentication extends ClientSDK {
@@ -26,9 +21,9 @@ export class Authentication extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`
    */
   async createNonce(
-    request: CreateNonceRequestBody,
+    request: operations.CreateNonceRequestBody,
     options?: RequestOptions,
-  ): Promise<NonceResponse> {
+  ): Promise<components.NonceResponse> {
     return unwrapAsync(authenticationCreateNonce(
       this,
       request,
@@ -45,9 +40,9 @@ export class Authentication extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `INVALID_SIGNATURE`, `USER_NOT_FOUND`, `NONCE_NOT_FOUND`, `INACTIVE_NONCE`
    */
   async login(
-    request: LoginRequestBody,
+    request: operations.LoginRequestBody,
     options?: RequestOptions,
-  ): Promise<TokenResponse> {
+  ): Promise<components.TokenResponse> {
     return unwrapAsync(authenticationLogin(
       this,
       request,
@@ -64,9 +59,9 @@ export class Authentication extends ClientSDK {
    * **Error Codes:** `INVALID_TOKEN`, `EXPIRED_TOKEN`
    */
   async logout(
-    request?: LogoutRequestBody | undefined,
+    request?: operations.LogoutRequestBody | undefined,
     options?: RequestOptions,
-  ): Promise<Ok> {
+  ): Promise<components.Ok> {
     return unwrapAsync(authenticationLogout(
       this,
       request,
@@ -84,7 +79,7 @@ export class Authentication extends ClientSDK {
    */
   async getSelf(
     options?: RequestOptions,
-  ): Promise<UserWithNoncesResponse> {
+  ): Promise<components.UserWithNoncesResponse> {
     return unwrapAsync(authenticationGetSelf(
       this,
       options,

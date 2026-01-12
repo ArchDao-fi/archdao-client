@@ -10,18 +10,8 @@ import { proposalListProposals } from "../funcs/proposalListProposals.js";
 import { proposalListProposalStakes } from "../funcs/proposalListProposalStakes.js";
 import { proposalListProposalTrades } from "../funcs/proposalListProposalTrades.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import { PaginatedProposals } from "../models/components/paginatedproposals.js";
-import { PaginatedStakes } from "../models/components/paginatedstakes.js";
-import { PaginatedTrades } from "../models/components/paginatedtrades.js";
-import { ProposalRequest } from "../models/components/proposalrequest.js";
-import { ProposalResponse } from "../models/components/proposalresponse.js";
-import { CancelProposalResponseBody } from "../models/operations/cancelproposal.js";
-import { GetProposalSecurity } from "../models/operations/getproposal.js";
-import {
-  ListProposalsRequest,
-  ListProposalsSecurity,
-} from "../models/operations/listproposals.js";
-import { Side } from "../models/operations/listproposaltrades.js";
+import * as components from "../models/components/index.js";
+import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Proposal extends ClientSDK {
@@ -36,10 +26,10 @@ export class Proposal extends ClientSDK {
    * **Default search field:** `title`
    */
   async listProposals(
-    request: ListProposalsRequest,
-    security?: ListProposalsSecurity | undefined,
+    request: operations.ListProposalsRequest,
+    security?: operations.ListProposalsSecurity | undefined,
     options?: RequestOptions,
-  ): Promise<PaginatedProposals> {
+  ): Promise<components.PaginatedProposals> {
     return unwrapAsync(proposalListProposals(
       this,
       request,
@@ -57,9 +47,9 @@ export class Proposal extends ClientSDK {
    * **Error Codes:** `VALIDATION_ERROR`, `INVALID_ACTION_DATA`, `EMPTY_ACTIONS`, `ORGANIZATION_NOT_FOUND`, `INSUFFICIENT_TOKEN_BALANCE`, `INVALID_TOKEN`
    */
   async createProposal(
-    request: ProposalRequest,
+    request: components.ProposalRequest,
     options?: RequestOptions,
-  ): Promise<ProposalResponse> {
+  ): Promise<components.ProposalResponse> {
     return unwrapAsync(proposalCreateProposal(
       this,
       request,
@@ -76,13 +66,13 @@ export class Proposal extends ClientSDK {
    * **Error Codes:** `PROPOSAL_NOT_FOUND`, `NOT_AUTHORIZED`
    */
   async getProposal(
-    id: number,
-    security?: GetProposalSecurity | undefined,
+    request: operations.GetProposalRequest,
+    security?: operations.GetProposalSecurity | undefined,
     options?: RequestOptions,
-  ): Promise<ProposalResponse> {
+  ): Promise<components.ProposalResponse> {
     return unwrapAsync(proposalGetProposal(
       this,
-      id,
+      request,
       security,
       options,
     ));
@@ -97,12 +87,12 @@ export class Proposal extends ClientSDK {
    * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async cancelProposal(
-    id: number,
+    request: operations.CancelProposalRequest,
     options?: RequestOptions,
-  ): Promise<CancelProposalResponseBody> {
+  ): Promise<operations.CancelProposalResponseBody> {
     return unwrapAsync(proposalCancelProposal(
       this,
-      id,
+      request,
       options,
     ));
   }
@@ -116,12 +106,12 @@ export class Proposal extends ClientSDK {
    * **Error Codes:** `PROPOSAL_NOT_FOUND`, `INVALID_STATUS_TRANSITION`, `PROPOSAL_ALREADY_ACTIVE`, `NOT_AUTHORIZED`, `INVALID_TOKEN`
    */
   async initializeProposal(
-    id: number,
+    request: operations.InitializeProposalRequest,
     options?: RequestOptions,
-  ): Promise<ProposalResponse> {
+  ): Promise<components.ProposalResponse> {
     return unwrapAsync(proposalInitializeProposal(
       this,
-      id,
+      request,
       options,
     ));
   }
@@ -133,16 +123,12 @@ export class Proposal extends ClientSDK {
    * Returns a paginated list of stakes for a proposal.
    */
   async listProposalStakes(
-    id: number,
-    page?: number | undefined,
-    limit?: number | undefined,
+    request: operations.ListProposalStakesRequest,
     options?: RequestOptions,
-  ): Promise<PaginatedStakes> {
+  ): Promise<components.PaginatedStakes> {
     return unwrapAsync(proposalListProposalStakes(
       this,
-      id,
-      page,
-      limit,
+      request,
       options,
     ));
   }
@@ -154,18 +140,12 @@ export class Proposal extends ClientSDK {
    * Returns a paginated list of trades for a proposal's decision markets.
    */
   async listProposalTrades(
-    id: number,
-    page?: number | undefined,
-    limit?: number | undefined,
-    side?: Side | undefined,
+    request: operations.ListProposalTradesRequest,
     options?: RequestOptions,
-  ): Promise<PaginatedTrades> {
+  ): Promise<components.PaginatedTrades> {
     return unwrapAsync(proposalListProposalTrades(
       this,
-      id,
-      page,
-      limit,
-      side,
+      request,
       options,
     ));
   }

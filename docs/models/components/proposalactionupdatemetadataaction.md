@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ProposalActionUpdateMetadataAction } from "@archdao/archdao-client/models/components/proposalaction.js";
+import { ProposalActionUpdateMetadataAction } from "@archdao/archdao-client/models/components";
 
 let value: ProposalActionUpdateMetadataAction = {
   uri: "https://self-assured-yeast.info/",

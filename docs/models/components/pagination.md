@@ -5,7 +5,7 @@ Pagination parameters for list endpoints. Use page/limit for requests, total is 
 ## Example Usage
 
 ```typescript
-import { Pagination } from "@archdao/archdao-client/models/components/pagination.js";
+import { Pagination } from "@archdao/archdao-client/models/components";
 
 let value: Pagination = {
   total: 100,

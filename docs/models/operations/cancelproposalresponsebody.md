@@ -5,7 +5,7 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { CancelProposalResponseBody } from "@archdao/archdao-client/models/operations/cancelproposal.js";
+import { CancelProposalResponseBody } from "@archdao/archdao-client/models/operations";
 
 let value: CancelProposalResponseBody = {
   data: {

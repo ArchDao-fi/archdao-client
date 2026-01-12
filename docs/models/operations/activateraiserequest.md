@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ActivateRaiseRequest } from "@archdao/archdao-client/models/operations/activateraise.js";
+import { ActivateRaiseRequest } from "@archdao/archdao-client/models/operations";
 
 let value: ActivateRaiseRequest = {
   id: 126002,

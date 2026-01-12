@@ -10,10 +10,7 @@ import { safeParse } from "../lib/schemas.js";
 import { RequestOptions } from "../lib/sdks.js";
 import { resolveSecurity } from "../lib/security.js";
 import { pathToFunc } from "../lib/url.js";
-import {
-  PaginatedProposals,
-  PaginatedProposals$inboundSchema,
-} from "../models/components/paginatedproposals.js";
+import * as components from "../models/components/index.js";
 import { ArchDaoError } from "../models/errors/archdaoerror.js";
 import {
   ConnectionError,
@@ -24,11 +21,7 @@ import {
 } from "../models/errors/httpclienterrors.js";
 import { ResponseValidationError } from "../models/errors/responsevalidationerror.js";
 import { SDKValidationError } from "../models/errors/sdkvalidationerror.js";
-import {
-  ListProposalsRequest,
-  ListProposalsRequest$outboundSchema,
-  ListProposalsSecurity,
-} from "../models/operations/listproposals.js";
+import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
@@ -44,12 +37,12 @@ import { Result } from "../types/fp.js";
  */
 export function proposalListProposals(
   client: ArchDAOCore,
-  request: ListProposalsRequest,
-  security?: ListProposalsSecurity | undefined,
+  request: operations.ListProposalsRequest,
+  security?: operations.ListProposalsSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    PaginatedProposals,
+    components.PaginatedProposals,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -70,13 +63,13 @@ export function proposalListProposals(
 
 async function $do(
   client: ArchDAOCore,
-  request: ListProposalsRequest,
-  security?: ListProposalsSecurity | undefined,
+  request: operations.ListProposalsRequest,
+  security?: operations.ListProposalsSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      PaginatedProposals,
+      components.PaginatedProposals,
       | ArchDaoError
       | ResponseValidationError
       | ConnectionError
@@ -91,7 +84,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => ListProposalsRequest$outboundSchema.parse(value),
+    (value) => operations.ListProposalsRequest$outboundSchema.parse(value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -168,7 +161,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    PaginatedProposals,
+    components.PaginatedProposals,
     | ArchDaoError
     | ResponseValidationError
     | ConnectionError
@@ -178,7 +171,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, PaginatedProposals$inboundSchema),
+    M.json(200, components.PaginatedProposals$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req);

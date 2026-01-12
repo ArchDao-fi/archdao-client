@@ -6,15 +6,11 @@ import * as z from "zod";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
-import {
-  UserRole,
-  UserRole$inboundSchema,
-  UserRole$outboundSchema,
-} from "../components/userrole.js";
+import * as components from "../components/index.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type ChangeUserRoleRequestBody = {
-  role: UserRole;
+  role: components.UserRole;
 };
 
 export type ChangeUserRoleRequest = {
@@ -28,7 +24,7 @@ export const ChangeUserRoleRequestBody$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
-  role: UserRole$inboundSchema,
+  role: components.UserRole$inboundSchema,
 });
 
 /** @internal */
@@ -42,7 +38,7 @@ export const ChangeUserRoleRequestBody$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   ChangeUserRoleRequestBody
 > = z.object({
-  role: UserRole$outboundSchema,
+  role: components.UserRole$outboundSchema,
 });
 
 /**
