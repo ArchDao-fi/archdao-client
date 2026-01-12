@@ -67,34 +67,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useOrganizationListOrganizations,
-  useOrganizationListOrganizationsSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchOrganizationListOrganizations,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateOrganizationListOrganizations,
-  invalidateAllOrganizationListOrganizations,
-} from "@archdao/archdao-client/react-query/organizationListOrganizations.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -196,23 +168,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useOrganizationCreateOrganizationMutation
-} from "@archdao/archdao-client/react-query/organizationCreateOrganization.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -277,34 +232,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useOrganizationGetOrganization,
-  useOrganizationGetOrganizationSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchOrganizationGetOrganization,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateOrganizationGetOrganization,
-  invalidateAllOrganizationGetOrganization,
-} from "@archdao/archdao-client/react-query/organizationGetOrganization.js";
 ```
 
 ### Parameters
@@ -376,23 +303,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useOrganizationEditOrganizationMutation
-} from "@archdao/archdao-client/react-query/organizationEditOrganization.js";
 ```
 
 ### Parameters
@@ -470,23 +380,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useOrganizationChangeOrganizationStatusMutation
-} from "@archdao/archdao-client/react-query/organizationChangeOrganizationStatus.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -556,23 +449,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useOrganizationActivateRaiseMutation
-} from "@archdao/archdao-client/react-query/organizationActivateRaise.js";
 ```
 
 ### Parameters

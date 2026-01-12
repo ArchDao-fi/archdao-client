@@ -70,34 +70,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useProposalListProposals,
-  useProposalListProposalsSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchProposalListProposals,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateProposalListProposals,
-  invalidateAllProposalListProposals,
-} from "@archdao/archdao-client/react-query/proposalListProposals.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -177,23 +149,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useProposalCreateProposalMutation
-} from "@archdao/archdao-client/react-query/proposalCreateProposal.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -258,34 +213,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useProposalGetProposal,
-  useProposalGetProposalSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchProposalGetProposal,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateProposalGetProposal,
-  invalidateAllProposalGetProposal,
-} from "@archdao/archdao-client/react-query/proposalGetProposal.js";
 ```
 
 ### Parameters
@@ -359,23 +286,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useProposalCancelProposalMutation
-} from "@archdao/archdao-client/react-query/proposalCancelProposal.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -446,23 +356,6 @@ async function run() {
 run();
 ```
 
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Mutation hook for triggering the API call.
-  useProposalInitializeProposalMutation
-} from "@archdao/archdao-client/react-query/proposalInitializeProposal.js";
-```
-
 ### Parameters
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
@@ -529,34 +422,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useProposalListProposalStakes,
-  useProposalListProposalStakesSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchProposalListProposalStakes,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateProposalListProposalStakes,
-  invalidateAllProposalListProposalStakes,
-} from "@archdao/archdao-client/react-query/proposalListProposalStakes.js";
 ```
 
 ### Parameters
@@ -627,34 +492,6 @@ async function run() {
 }
 
 run();
-```
-
-### React hooks and utilities
-
-This method can be used in React components through the following hooks and
-associated utilities.
-
-> Check out [this guide][hook-guide] for information about each of the utilities
-> below and how to get started using React hooks.
-
-[hook-guide]: ../../../REACT_QUERY.md
-
-```tsx
-import {
-  // Query hooks for fetching data.
-  useProposalListProposalTrades,
-  useProposalListProposalTradesSuspense,
-
-  // Utility for prefetching data during server-side rendering and in React
-  // Server Components that will be immediately available to client components
-  // using the hooks.
-  prefetchProposalListProposalTrades,
-  
-  // Utilities to invalidate the query cache for this query in response to
-  // mutations and other user actions.
-  invalidateProposalListProposalTrades,
-  invalidateAllProposalListProposalTrades,
-} from "@archdao/archdao-client/react-query/proposalListProposalTrades.js";
 ```
 
 ### Parameters
