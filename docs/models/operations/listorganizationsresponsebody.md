@@ -5,15 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ListOrganizationsResponseBody } from "@archdao/archdao-client/models/operations";
+import { ListOrganizationsResponseBody } from "@archdao/archdao-client/models/operations/listorganizations.js";
 
 let value: ListOrganizationsResponseBody = {
-  success: false,
-  pagination: {
-    page: 1,
-    limit: 20,
-    total: 100,
-  },
   data: [
     {
       token: {
@@ -29,13 +23,16 @@ let value: ListOrganizationsResponseBody = {
       },
     },
   ],
+  pagination: {
+    total: 100,
+  },
 };
 ```
 
 ## Fields
 
-| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `success`                                                            | *boolean*                                                            | :heavy_check_mark:                                                   | N/A                                                                  |
-| `pagination`                                                         | [operations.Pagination](../../models/operations/pagination.md)       | :heavy_minus_sign:                                                   | N/A                                                                  |
-| `data`                                                               | [components.Organization](../../models/components/organization.md)[] | :heavy_minus_sign:                                                   | N/A                                                                  |
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `success`                                                                                              | *boolean*                                                                                              | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `data`                                                                                                 | [components.Organization](../../models/components/organization.md)[]                                   | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `pagination`                                                                                           | [components.Pagination](../../models/components/pagination.md)                                         | :heavy_check_mark:                                                                                     | Pagination parameters for list endpoints. Use page/limit for requests, total is returned in responses. |

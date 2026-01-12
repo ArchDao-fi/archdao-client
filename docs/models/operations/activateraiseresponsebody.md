@@ -5,10 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ActivateRaiseResponseBody } from "@archdao/archdao-client/models/operations";
+import { ActivateRaiseResponseBody } from "@archdao/archdao-client/models/operations/activateraise.js";
 
 let value: ActivateRaiseResponseBody = {
-  success: true,
   data: {
     token: {
       name: "Example Token",
@@ -27,7 +26,7 @@ let value: ActivateRaiseResponseBody = {
 
 ## Fields
 
-| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `success`                                                                            | *boolean*                                                                            | :heavy_check_mark:                                                                   | N/A                                                                                  |
-| `data`                                                                               | [components.OrganizationWithRaise](../../models/components/organizationwithraise.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `success`                                                                    | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [operations.ActivateRaiseData](../../models/operations/activateraisedata.md) | :heavy_minus_sign:                                                           | N/A                                                                          |

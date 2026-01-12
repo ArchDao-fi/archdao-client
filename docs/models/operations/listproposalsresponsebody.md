@@ -5,13 +5,13 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ListProposalsResponseBody } from "@archdao/archdao-client/models/operations";
+import { ListProposalsResponseBody } from "@archdao/archdao-client/models/operations/listproposals.js";
 
 let value: ListProposalsResponseBody = {
-  success: false,
+  data: [
+    {},
+  ],
   pagination: {
-    page: 1,
-    limit: 20,
     total: 100,
   },
 };
@@ -19,8 +19,8 @@ let value: ListProposalsResponseBody = {
 
 ## Fields
 
-| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `success`                                                                                | *boolean*                                                                                | :heavy_check_mark:                                                                       | N/A                                                                                      |
-| `pagination`                                                                             | [operations.ListProposalsPagination](../../models/operations/listproposalspagination.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
-| `data`                                                                                   | [components.BaseProposal](../../models/components/baseproposal.md)[]                     | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `success`                                                                                              | *boolean*                                                                                              | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `data`                                                                                                 | [components.Proposal](../../models/components/proposal.md)[]                                           | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `pagination`                                                                                           | [components.Pagination](../../models/components/pagination.md)                                         | :heavy_check_mark:                                                                                     | Pagination parameters for list endpoints. Use page/limit for requests, total is returned in responses. |

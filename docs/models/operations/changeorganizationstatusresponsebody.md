@@ -5,10 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { ChangeOrganizationStatusResponseBody } from "@archdao/archdao-client/models/operations";
+import { ChangeOrganizationStatusResponseBody } from "@archdao/archdao-client/models/operations/changeorganizationstatus.js";
 
 let value: ChangeOrganizationStatusResponseBody = {
-  success: true,
   data: {
     token: {
       name: "Example Token",

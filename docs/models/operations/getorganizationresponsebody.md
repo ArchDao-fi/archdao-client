@@ -5,10 +5,9 @@ Success response wrapper
 ## Example Usage
 
 ```typescript
-import { GetOrganizationResponseBody } from "@archdao/archdao-client/models/operations";
+import { GetOrganizationResponseBody } from "@archdao/archdao-client/models/operations/getorganization.js";
 
 let value: GetOrganizationResponseBody = {
-  success: false,
   data: {
     token: {
       name: "Example Token",
@@ -27,7 +26,7 @@ let value: GetOrganizationResponseBody = {
 
 ## Fields
 
-| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `success`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
-| `data`                                                                         | [components.OrganizationDetail](../../models/components/organizationdetail.md) | :heavy_minus_sign:                                                             | N/A                                                                            |
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `success`                                                                        | *boolean*                                                                        | :heavy_check_mark:                                                               | N/A                                                                              |
+| `data`                                                                           | [operations.GetOrganizationData](../../models/operations/getorganizationdata.md) | :heavy_minus_sign:                                                               | N/A                                                                              |
