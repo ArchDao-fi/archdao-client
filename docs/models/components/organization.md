@@ -1,0 +1,42 @@
+# Organization
+
+## Example Usage
+
+```typescript
+import { Organization } from "@archdao/archdao-client/models/components";
+
+let value: Organization = {
+  id: 876527,
+  type: "external",
+  name: "<value>",
+  slug: "<value>",
+  description: "right bob since blah weighty wherever downshift",
+  status: "rejected",
+  userId: 771547,
+  created: new Date("2026-06-06T04:04:51.195Z"),
+  updated: new Date("2026-05-26T17:58:55.542Z"),
+};
+```
+
+## Fields
+
+| Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `id`                                                                                          | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `type`                                                                                        | [components.Type](../../models/components/type.md)                                            | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `name`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `slug`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `imageUrl`                                                                                    | *string*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `bannerUrl`                                                                                   | *string*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `description`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `status`                                                                                      | [components.OrganizationStatus](../../models/components/organizationstatus.md)                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `links`                                                                                       | [components.Link](../../models/components/link.md)[]                                          | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `contactInformation`                                                                          | [components.ContactInformation](../../models/components/contactinformation.md)[]              | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `token`                                                                                       | [components.Token](../../models/components/token.md)                                          | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `treasury`                                                                                    | [components.Treasury](../../models/components/treasury.md)                                    | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `raise`                                                                                       | [components.Raise](../../models/components/raise.md)                                          | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `proposals`                                                                                   | [components.Proposal](../../models/components/proposal.md)[]                                  | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `user`                                                                                        | [components.User](../../models/components/user.md)                                            | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `userId`                                                                                      | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `created`                                                                                     | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `updated`                                                                                     | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
