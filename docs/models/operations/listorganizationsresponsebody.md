@@ -17,14 +17,12 @@ let value: ListOrganizationsResponseBody = {
       description: "phew instead dreary how under hence if who the",
       status: "active",
       userId: 131839,
-      created: new Date("2026-01-07T18:14:23.834Z"),
-      updated: new Date("2025-01-23T00:02:51.708Z"),
     },
   ],
   pagination: {
-    page: 769659,
-    limit: 367168,
-    total: 914445,
+    page: 971887,
+    limit: 693437,
+    total: 769659,
   },
 };
 ```
