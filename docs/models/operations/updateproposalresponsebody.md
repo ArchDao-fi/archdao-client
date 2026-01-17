@@ -15,8 +15,6 @@ let value: UpdateProposalResponseBody = {
     title: "<value>",
     description: "functional lobster taxicab teammate carpool",
     status: "active",
-    created: new Date("2025-09-06T07:52:15.120Z"),
-    updated: new Date("2026-10-18T09:40:15.016Z"),
   },
 };
 ```
