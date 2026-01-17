@@ -32,6 +32,8 @@ export const Outcome = {
 export type Outcome = ClosedEnum<typeof Outcome>;
 
 export type Proposal = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   organizationId: number;
   userId: number;
@@ -51,8 +53,6 @@ export type Proposal = {
   executedAt?: Date | undefined;
   actions?: Array<ProposalAction> | undefined;
   decisionMarkets?: Array<DecisionMarket> | undefined;
-  created: Date;
-  updated: Date;
 };
 
 /** @internal */
@@ -80,6 +80,10 @@ export const Proposal$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
+  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
   id: z.number().int(),
   organizationId: z.number().int(),
   userId: z.number().int(),
@@ -105,12 +109,12 @@ export const Proposal$inboundSchema: z.ZodType<
     .optional(),
   actions: z.array(ProposalAction$inboundSchema).optional(),
   decisionMarkets: z.array(DecisionMarket$inboundSchema).optional(),
-  created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
-  updated: z.string().datetime({ offset: true }).transform(v => new Date(v)),
 });
 
 /** @internal */
 export type Proposal$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   organizationId: number;
   userId: number;
@@ -130,8 +134,6 @@ export type Proposal$Outbound = {
   executedAt?: string | undefined;
   actions?: Array<ProposalAction$Outbound> | undefined;
   decisionMarkets?: Array<DecisionMarket$Outbound> | undefined;
-  created: string;
-  updated: string;
 };
 
 /** @internal */
@@ -140,6 +142,8 @@ export const Proposal$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Proposal
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   id: z.number().int(),
   organizationId: z.number().int(),
   userId: z.number().int(),
@@ -159,8 +163,6 @@ export const Proposal$outboundSchema: z.ZodType<
   executedAt: z.date().transform(v => v.toISOString()).optional(),
   actions: z.array(ProposalAction$outboundSchema).optional(),
   decisionMarkets: z.array(DecisionMarket$outboundSchema).optional(),
-  created: z.date().transform(v => v.toISOString()),
-  updated: z.date().transform(v => v.toISOString()),
 });
 
 /**

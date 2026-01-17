@@ -15,6 +15,7 @@ export type ProposalStakeUser = {
 
 export type ProposalStake = {
   id: number;
+  proposalId?: number | undefined;
   user: ProposalStakeUser;
   amount: number;
   created: Date;
@@ -87,6 +88,7 @@ export const ProposalStake$inboundSchema: z.ZodType<
   unknown
 > = z.object({
   id: z.number().int(),
+  proposalId: z.number().int().optional(),
   user: z.lazy(() => ProposalStakeUser$inboundSchema),
   amount: z.number(),
   created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
@@ -95,6 +97,7 @@ export const ProposalStake$inboundSchema: z.ZodType<
 /** @internal */
 export type ProposalStake$Outbound = {
   id: number;
+  proposalId?: number | undefined;
   user: ProposalStakeUser$Outbound;
   amount: number;
   created: string;
@@ -107,6 +110,7 @@ export const ProposalStake$outboundSchema: z.ZodType<
   ProposalStake
 > = z.object({
   id: z.number().int(),
+  proposalId: z.number().int().optional(),
   user: z.lazy(() => ProposalStakeUser$outboundSchema),
   amount: z.number(),
   created: z.date().transform(v => v.toISOString()),
