@@ -8,30 +8,32 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type Nonce = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   nonce: number;
   userAgent: string;
   ipAddress: string;
-  created: Date;
-  updated: Date;
 };
 
 /** @internal */
 export const Nonce$inboundSchema: z.ZodType<Nonce, z.ZodTypeDef, unknown> = z
   .object({
+    created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
+    updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
     nonce: z.number().int(),
     userAgent: z.string(),
     ipAddress: z.string(),
-    created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
-    updated: z.string().datetime({ offset: true }).transform(v => new Date(v)),
   });
 
 /** @internal */
 export type Nonce$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   nonce: number;
   userAgent: string;
   ipAddress: string;
-  created: string;
-  updated: string;
 };
 
 /** @internal */
@@ -40,11 +42,11 @@ export const Nonce$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Nonce
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   nonce: z.number().int(),
   userAgent: z.string(),
   ipAddress: z.string(),
-  created: z.date().transform(v => v.toISOString()),
-  updated: z.date().transform(v => v.toISOString()),
 });
 
 /**
