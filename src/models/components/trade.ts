@@ -22,6 +22,7 @@ export type Direction = ClosedEnum<typeof Direction>;
 
 export type Trade = {
   id: number;
+  proposalId?: number | undefined;
   side: TradeSide;
   address: string;
   direction: Direction;
@@ -73,6 +74,7 @@ export namespace Direction$ {
 export const Trade$inboundSchema: z.ZodType<Trade, z.ZodTypeDef, unknown> = z
   .object({
     id: z.number().int(),
+    proposalId: z.number().int().optional(),
     side: TradeSide$inboundSchema,
     address: z.string(),
     direction: Direction$inboundSchema,
@@ -85,6 +87,7 @@ export const Trade$inboundSchema: z.ZodType<Trade, z.ZodTypeDef, unknown> = z
 /** @internal */
 export type Trade$Outbound = {
   id: number;
+  proposalId?: number | undefined;
   side: string;
   address: string;
   direction: string;
@@ -101,6 +104,7 @@ export const Trade$outboundSchema: z.ZodType<
   Trade
 > = z.object({
   id: z.number().int(),
+  proposalId: z.number().int().optional(),
   side: TradeSide$outboundSchema,
   address: z.string(),
   direction: Direction$outboundSchema,

@@ -62,6 +62,8 @@ export const Type = {
 export type Type = ClosedEnum<typeof Type>;
 
 export type Organization = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   type: Type;
   name: string;
@@ -78,8 +80,6 @@ export type Organization = {
   proposals?: Array<Proposal> | undefined;
   user?: User | undefined;
   userId: number;
-  created: Date;
-  updated: Date;
 };
 
 /** @internal */
@@ -108,6 +108,10 @@ export const Organization$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
+  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
   id: z.number().int(),
   type: Type$inboundSchema,
   name: z.string(),
@@ -124,12 +128,12 @@ export const Organization$inboundSchema: z.ZodType<
   proposals: z.array(Proposal$inboundSchema).optional(),
   user: User$inboundSchema.optional(),
   userId: z.number().int(),
-  created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
-  updated: z.string().datetime({ offset: true }).transform(v => new Date(v)),
 });
 
 /** @internal */
 export type Organization$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   type: string;
   name: string;
@@ -146,8 +150,6 @@ export type Organization$Outbound = {
   proposals?: Array<Proposal$Outbound> | undefined;
   user?: User$Outbound | undefined;
   userId: number;
-  created: string;
-  updated: string;
 };
 
 /** @internal */
@@ -156,6 +158,8 @@ export const Organization$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Organization
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   id: z.number().int(),
   type: Type$outboundSchema,
   name: z.string(),
@@ -172,8 +176,6 @@ export const Organization$outboundSchema: z.ZodType<
   proposals: z.array(Proposal$outboundSchema).optional(),
   user: User$outboundSchema.optional(),
   userId: z.number().int(),
-  created: z.date().transform(v => v.toISOString()),
-  updated: z.date().transform(v => v.toISOString()),
 });
 
 /**

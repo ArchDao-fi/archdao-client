@@ -15,6 +15,8 @@ export const Side = {
 export type Side = ClosedEnum<typeof Side>;
 
 export type DecisionMarket = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   proposalId: number;
   side: Side;
@@ -23,8 +25,6 @@ export type DecisionMarket = {
   conditionalUsdcAddress: string;
   price: number;
   twapObservation: number;
-  created?: Date | undefined;
-  updated?: Date | undefined;
 };
 
 /** @internal */
@@ -53,6 +53,10 @@ export const DecisionMarket$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
+  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
   id: z.number().int(),
   proposalId: z.number().int(),
   side: Side$inboundSchema,
@@ -61,14 +65,12 @@ export const DecisionMarket$inboundSchema: z.ZodType<
   conditionalUsdcAddress: z.string(),
   price: z.number(),
   twapObservation: z.number(),
-  created: z.string().datetime({ offset: true }).transform(v => new Date(v))
-    .optional(),
-  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
-    .optional(),
 });
 
 /** @internal */
 export type DecisionMarket$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   proposalId: number;
   side: string;
@@ -77,8 +79,6 @@ export type DecisionMarket$Outbound = {
   conditionalUsdcAddress: string;
   price: number;
   twapObservation: number;
-  created?: string | undefined;
-  updated?: string | undefined;
 };
 
 /** @internal */
@@ -87,6 +87,8 @@ export const DecisionMarket$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   DecisionMarket
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   id: z.number().int(),
   proposalId: z.number().int(),
   side: Side$outboundSchema,
@@ -95,8 +97,6 @@ export const DecisionMarket$outboundSchema: z.ZodType<
   conditionalUsdcAddress: z.string(),
   price: z.number(),
   twapObservation: z.number(),
-  created: z.date().transform(v => v.toISOString()).optional(),
-  updated: z.date().transform(v => v.toISOString()).optional(),
 });
 
 /**
