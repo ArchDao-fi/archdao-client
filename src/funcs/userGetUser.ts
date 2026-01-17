@@ -30,7 +30,7 @@ import { Result } from "../types/fp.js";
  */
 export function userGetUser(
   client: ArchDAOCore,
-  id: number,
+  request: operations.GetUserRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -48,14 +48,14 @@ export function userGetUser(
 > {
   return new APIPromise($do(
     client,
-    id,
+    request,
     options,
   ));
 }
 
 async function $do(
   client: ArchDAOCore,
-  id: number,
+  request: operations.GetUserRequest,
   options?: RequestOptions,
 ): Promise<
   [
@@ -74,12 +74,8 @@ async function $do(
     APICall,
   ]
 > {
-  const input: operations.GetUserRequest = {
-    id: id,
-  };
-
   const parsed = safeParse(
-    input,
+    request,
     (value) => operations.GetUserRequest$outboundSchema.parse(value),
     "Input validation failed",
   );

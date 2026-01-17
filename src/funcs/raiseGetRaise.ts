@@ -33,7 +33,7 @@ import { Result } from "../types/fp.js";
  */
 export function raiseGetRaise(
   client: ArchDAOCore,
-  id: number,
+  request: operations.GetRaiseRequest,
   security?: operations.GetRaiseSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
@@ -52,7 +52,7 @@ export function raiseGetRaise(
 > {
   return new APIPromise($do(
     client,
-    id,
+    request,
     security,
     options,
   ));
@@ -60,7 +60,7 @@ export function raiseGetRaise(
 
 async function $do(
   client: ArchDAOCore,
-  id: number,
+  request: operations.GetRaiseRequest,
   security?: operations.GetRaiseSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
@@ -80,12 +80,8 @@ async function $do(
     APICall,
   ]
 > {
-  const input: operations.GetRaiseRequest = {
-    id: id,
-  };
-
   const parsed = safeParse(
-    input,
+    request,
     (value) => operations.GetRaiseRequest$outboundSchema.parse(value),
     "Input validation failed",
   );

@@ -37,13 +37,13 @@ export class Raise extends ClientSDK {
    * Returns raise details including allocations.
    */
   async getRaise(
-    id: number,
+    request: operations.GetRaiseRequest,
     security?: operations.GetRaiseSecurity | undefined,
     options?: RequestOptions,
   ): Promise<operations.GetRaiseResponseBody> {
     return unwrapAsync(raiseGetRaise(
       this,
-      id,
+      request,
       security,
       options,
     ));

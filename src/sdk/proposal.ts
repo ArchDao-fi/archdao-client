@@ -58,13 +58,13 @@ export class Proposal extends ClientSDK {
    * Returns proposal details. Drafts only visible to owner.
    */
   async getProposal(
-    id: number,
+    request: operations.GetProposalRequest,
     security?: operations.GetProposalSecurity | undefined,
     options?: RequestOptions,
   ): Promise<operations.GetProposalResponseBody> {
     return unwrapAsync(proposalGetProposal(
       this,
-      id,
+      request,
       security,
       options,
     ));
@@ -94,12 +94,12 @@ export class Proposal extends ClientSDK {
    * Soft delete. Owner or admin can delete draft/staking proposals.
    */
   async deleteProposal(
-    id: number,
+    request: operations.DeleteProposalRequest,
     options?: RequestOptions,
   ): Promise<operations.DeleteProposalResponseBody> {
     return unwrapAsync(proposalDeleteProposal(
       this,
-      id,
+      request,
       options,
     ));
   }
