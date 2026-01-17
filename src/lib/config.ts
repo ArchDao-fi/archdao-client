@@ -12,13 +12,17 @@ import { Params, pathToFunc } from "./url.js";
  */
 export const ServerList = [
   /**
+   * Local Development
+   */
+  "http://localhost:3001",
+  /**
+   * Test Server
+   */
+  "https://mocks.archdao.fi/v1",
+  /**
    * Production
    */
   "https://api.archdao.fi/v1",
-  /**
-   * Mock Server
-   */
-  "https://mocks.archdao.fi/v1",
 ] as const;
 
 export type SDKOptions = {
@@ -64,9 +68,9 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 
 export const SDK_METADATA = {
   language: "typescript",
-  openapiDocVersion: "2.0.1",
-  sdkVersion: "2.0.1",
+  openapiDocVersion: "2.1.5",
+  sdkVersion: "2.1.5",
   genVersion: "2.634.2",
   userAgent:
-    "speakeasy-sdk/typescript 2.0.1 2.634.2 2.0.1 @archdao/archdao-client",
+    "speakeasy-sdk/typescript 2.1.5 2.634.2 2.1.5 @archdao/archdao-client",
 } as const;

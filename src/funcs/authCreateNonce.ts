@@ -150,7 +150,7 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.CreateNonceResponseBody$inboundSchema),
+    M.json(201, operations.CreateNonceResponseBody$inboundSchema),
     M.jsonErr(422, errors.ErrorResponse$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
