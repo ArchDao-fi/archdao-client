@@ -17,14 +17,12 @@ let value: ListProposalsResponseBody = {
       description:
         "pfft colour after chainstay shipper punctually pant but hence",
       status: "draft",
-      created: new Date("2024-07-25T15:12:26.953Z"),
-      updated: new Date("2024-07-03T10:40:56.848Z"),
     },
   ],
   pagination: {
-    page: 769659,
-    limit: 367168,
-    total: 914445,
+    page: 971887,
+    limit: 693437,
+    total: 769659,
   },
 };
 ```
