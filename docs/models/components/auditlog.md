@@ -12,8 +12,6 @@ let value: AuditLog = {
     address: "7518 Tanya Prairie",
     name: "<value>",
     role: "user",
-    created: new Date("2024-01-25T08:32:57.064Z"),
-    updated: new Date("2025-09-07T08:36:03.519Z"),
   },
   action: "role_change",
   targetType: "user",

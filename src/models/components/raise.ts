@@ -19,6 +19,8 @@ import {
 } from "./raisestatus.js";
 
 export type Raise = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   organizationId: number;
   address?: string | undefined;
@@ -29,13 +31,15 @@ export type Raise = {
   endDate?: Date | undefined;
   status: RaiseStatus;
   allocations?: Array<RaiseAllocation> | undefined;
-  created?: Date | undefined;
-  updated?: Date | undefined;
 };
 
 /** @internal */
 export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
   .object({
+    created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
+    updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
     id: z.number().int(),
     organizationId: z.number().int(),
     address: z.string().optional(),
@@ -48,14 +52,12 @@ export const Raise$inboundSchema: z.ZodType<Raise, z.ZodTypeDef, unknown> = z
       .optional(),
     status: RaiseStatus$inboundSchema,
     allocations: z.array(RaiseAllocation$inboundSchema).optional(),
-    created: z.string().datetime({ offset: true }).transform(v => new Date(v))
-      .optional(),
-    updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
-      .optional(),
   });
 
 /** @internal */
 export type Raise$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   organizationId: number;
   address?: string | undefined;
@@ -66,8 +68,6 @@ export type Raise$Outbound = {
   endDate?: string | undefined;
   status: string;
   allocations?: Array<RaiseAllocation$Outbound> | undefined;
-  created?: string | undefined;
-  updated?: string | undefined;
 };
 
 /** @internal */
@@ -76,6 +76,8 @@ export const Raise$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   Raise
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   id: z.number().int(),
   organizationId: z.number().int(),
   address: z.string().optional(),
@@ -86,8 +88,6 @@ export const Raise$outboundSchema: z.ZodType<
   endDate: z.date().transform(v => v.toISOString()).optional(),
   status: RaiseStatus$outboundSchema,
   allocations: z.array(RaiseAllocation$outboundSchema).optional(),
-  created: z.date().transform(v => v.toISOString()).optional(),
-  updated: z.date().transform(v => v.toISOString()).optional(),
 });
 
 /**

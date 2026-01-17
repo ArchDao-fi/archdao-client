@@ -33,7 +33,7 @@ import { Result } from "../types/fp.js";
  */
 export function organizationGetOrganization(
   client: ArchDAOCore,
-  request: operations.GetOrganizationRequest,
+  slug: string,
   security?: operations.GetOrganizationSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
@@ -52,7 +52,7 @@ export function organizationGetOrganization(
 > {
   return new APIPromise($do(
     client,
-    request,
+    slug,
     security,
     options,
   ));
@@ -60,7 +60,7 @@ export function organizationGetOrganization(
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.GetOrganizationRequest,
+  slug: string,
   security?: operations.GetOrganizationSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
@@ -80,8 +80,12 @@ async function $do(
     APICall,
   ]
 > {
+  const input: operations.GetOrganizationRequest = {
+    slug: slug,
+  };
+
   const parsed = safeParse(
-    request,
+    input,
     (value) => operations.GetOrganizationRequest$outboundSchema.parse(value),
     "Input validation failed",
   );

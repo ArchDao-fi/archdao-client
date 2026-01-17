@@ -33,7 +33,7 @@ import { Result } from "../types/fp.js";
  */
 export function proposalGetProposal(
   client: ArchDAOCore,
-  request: operations.GetProposalRequest,
+  id: number,
   security?: operations.GetProposalSecurity | undefined,
   options?: RequestOptions,
 ): APIPromise<
@@ -52,7 +52,7 @@ export function proposalGetProposal(
 > {
   return new APIPromise($do(
     client,
-    request,
+    id,
     security,
     options,
   ));
@@ -60,7 +60,7 @@ export function proposalGetProposal(
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.GetProposalRequest,
+  id: number,
   security?: operations.GetProposalSecurity | undefined,
   options?: RequestOptions,
 ): Promise<
@@ -80,8 +80,12 @@ async function $do(
     APICall,
   ]
 > {
+  const input: operations.GetProposalRequest = {
+    id: id,
+  };
+
   const parsed = safeParse(
-    request,
+    input,
     (value) => operations.GetProposalRequest$outboundSchema.parse(value),
     "Input validation failed",
   );

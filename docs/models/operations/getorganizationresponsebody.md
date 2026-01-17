@@ -16,8 +16,6 @@ let value: GetOrganizationResponseBody = {
     description: "following joyfully round fax",
     status: "raise",
     userId: 751956,
-    created: new Date("2026-07-24T00:25:24.486Z"),
-    updated: new Date("2026-12-02T12:44:33.761Z"),
   },
 };
 ```

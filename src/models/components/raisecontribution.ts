@@ -8,12 +8,12 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdkvalidationerror.js";
 
 export type RaiseContribution = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   raiseId: number;
   address: string;
   amountInvested: number;
-  created: Date;
-  updated: Date;
 };
 
 /** @internal */
@@ -22,22 +22,24 @@ export const RaiseContribution$inboundSchema: z.ZodType<
   z.ZodTypeDef,
   unknown
 > = z.object({
+  created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
+  updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+    .optional(),
   id: z.number().int(),
   raiseId: z.number().int(),
   address: z.string(),
   amountInvested: z.number(),
-  created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
-  updated: z.string().datetime({ offset: true }).transform(v => new Date(v)),
 });
 
 /** @internal */
 export type RaiseContribution$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   raiseId: number;
   address: string;
   amountInvested: number;
-  created: string;
-  updated: string;
 };
 
 /** @internal */
@@ -46,12 +48,12 @@ export const RaiseContribution$outboundSchema: z.ZodType<
   z.ZodTypeDef,
   RaiseContribution
 > = z.object({
+  created: z.date().transform(v => v.toISOString()).optional(),
+  updated: z.date().transform(v => v.toISOString()).optional(),
   id: z.number().int(),
   raiseId: z.number().int(),
   address: z.string(),
   amountInvested: z.number(),
-  created: z.date().transform(v => v.toISOString()),
-  updated: z.date().transform(v => v.toISOString()),
 });
 
 /**

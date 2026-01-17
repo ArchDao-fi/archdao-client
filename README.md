@@ -388,10 +388,11 @@ run();
 
 You can override the default server globally by passing a server index to the `serverIdx: number` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| #   | Server                        | Description |
-| --- | ----------------------------- | ----------- |
-| 0   | `https://api.archdao.fi/v1`   | Production  |
-| 1   | `https://mocks.archdao.fi/v1` | Mock Server |
+| #   | Server                        | Description       |
+| --- | ----------------------------- | ----------------- |
+| 0   | `http://localhost:3001`       | Local Development |
+| 1   | `https://mocks.archdao.fi/v1` | Test Server       |
+| 2   | `https://api.archdao.fi/v1`   | Production        |
 
 #### Example
 
@@ -399,7 +400,7 @@ You can override the default server globally by passing a server index to the `s
 import { ArchDAO } from "@archdao/archdao-client";
 
 const archDAO = new ArchDAO({
-  serverIdx: 1,
+  serverIdx: 2,
 });
 
 async function run() {
@@ -421,7 +422,7 @@ The default server can also be overridden globally by passing a URL to the `serv
 import { ArchDAO } from "@archdao/archdao-client";
 
 const archDAO = new ArchDAO({
-  serverURL: "https://mocks.archdao.fi/v1",
+  serverURL: "https://api.archdao.fi/v1",
 });
 
 async function run() {

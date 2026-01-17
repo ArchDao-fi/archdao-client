@@ -35,13 +35,13 @@ export class Organization extends ClientSDK {
    * Returns full organization details including proposals.
    */
   async getOrganization(
-    request: operations.GetOrganizationRequest,
+    slug: string,
     security?: operations.GetOrganizationSecurity | undefined,
     options?: RequestOptions,
   ): Promise<operations.GetOrganizationResponseBody> {
     return unwrapAsync(organizationGetOrganization(
       this,
-      request,
+      slug,
       security,
       options,
     ));

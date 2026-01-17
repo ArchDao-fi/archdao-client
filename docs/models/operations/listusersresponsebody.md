@@ -14,14 +14,12 @@ let value: ListUsersResponseBody = {
       address: "58430 N Railroad Street",
       name: "<value>",
       role: "user",
-      created: new Date("2026-12-01T04:30:58.253Z"),
-      updated: new Date("2026-01-30T00:09:25.946Z"),
     },
   ],
   pagination: {
-    page: 769659,
-    limit: 367168,
-    total: 914445,
+    page: 971887,
+    limit: 693437,
+    total: 769659,
   },
 };
 ```

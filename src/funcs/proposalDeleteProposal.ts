@@ -33,7 +33,7 @@ import { Result } from "../types/fp.js";
  */
 export function proposalDeleteProposal(
   client: ArchDAOCore,
-  request: operations.DeleteProposalRequest,
+  id: number,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -51,14 +51,14 @@ export function proposalDeleteProposal(
 > {
   return new APIPromise($do(
     client,
-    request,
+    id,
     options,
   ));
 }
 
 async function $do(
   client: ArchDAOCore,
-  request: operations.DeleteProposalRequest,
+  id: number,
   options?: RequestOptions,
 ): Promise<
   [
@@ -77,8 +77,12 @@ async function $do(
     APICall,
   ]
 > {
+  const input: operations.DeleteProposalRequest = {
+    id: id,
+  };
+
   const parsed = safeParse(
-    request,
+    input,
     (value) => operations.DeleteProposalRequest$outboundSchema.parse(value),
     "Input validation failed",
   );

@@ -13,48 +13,50 @@ import {
 } from "./userrole.js";
 
 export type User = {
+  created?: Date | undefined;
+  updated?: Date | undefined;
   id: number;
   address: string;
   name: string;
   imageUrl?: string | undefined;
   role: UserRole;
-  created: Date;
-  updated: Date;
 };
 
 /** @internal */
 export const User$inboundSchema: z.ZodType<User, z.ZodTypeDef, unknown> = z
   .object({
+    created: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
+    updated: z.string().datetime({ offset: true }).transform(v => new Date(v))
+      .optional(),
     id: z.number().int(),
     address: z.string(),
     name: z.string(),
     imageUrl: z.string().optional(),
     role: UserRole$inboundSchema,
-    created: z.string().datetime({ offset: true }).transform(v => new Date(v)),
-    updated: z.string().datetime({ offset: true }).transform(v => new Date(v)),
   });
 
 /** @internal */
 export type User$Outbound = {
+  created?: string | undefined;
+  updated?: string | undefined;
   id: number;
   address: string;
   name: string;
   imageUrl?: string | undefined;
   role: string;
-  created: string;
-  updated: string;
 };
 
 /** @internal */
 export const User$outboundSchema: z.ZodType<User$Outbound, z.ZodTypeDef, User> =
   z.object({
+    created: z.date().transform(v => v.toISOString()).optional(),
+    updated: z.date().transform(v => v.toISOString()).optional(),
     id: z.number().int(),
     address: z.string(),
     name: z.string(),
     imageUrl: z.string().optional(),
     role: UserRole$outboundSchema,
-    created: z.date().transform(v => v.toISOString()),
-    updated: z.date().transform(v => v.toISOString()),
   });
 
 /**
